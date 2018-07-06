@@ -3,21 +3,19 @@
 Short description of your app: Streamlined job search for odd jobs or microjobs.
 
 Required (core) user stories for your app in a bulleted list:
-* [ ] 
+* Scrolling job postings
+  * interface like tinder
+  * you swipe up or down on job postings
+  * presents image, title and brief description or only part of the description 
+  * click on this for it to open up like tinder and provide more info
+* Creating job postings
+  * interface like facebook event event creation
+  * place to enter name of person posting job, profile picture, link to social media so you get some sense of the person, job title, job description, image, time/date, location of job, radius from location where you're seeking ppl to apply for job
 
 Optional (nice to have) user stories listed separately:
 * [ ]
 
 - Job posting
-    - Story:
-        - screen 1:
-            - interface like tinder
-            - you swipe up or down on job postings
-            - presents image, title and brief description or only part of the description 
-            - click on this for it to open up like tinder and provide more info
-        - screen 2:
-            - interface like facebook event event creation
-            - place to enter name of person posting job, profile picture, link to social media so you get some sense of the person, job title, job description, image, time/date, location of job, radius from location where you're seeking ppl to apply for job
         - screen 3:
             - not accessible from tab bar at the bottom but a cog/settings like button
             - place for person looking for jobs to present their background/credentials
