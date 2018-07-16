@@ -17,7 +17,7 @@ public class ParseApp extends Application {
                 .clientKey("fbu-2018-key")
                 .server("http://fbu-2018-jumble.herokuapp.com/parse")
                 .build();
-        
+
         Parse.initialize(configuration);
     }
 }
