@@ -91,7 +91,6 @@ public class HomeActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-
                         bottomNavigation.setSelectedItemId(R.id.action_home);
 //                        homePageRecycler.refresh();
                         break;
@@ -148,19 +147,8 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
 
-        ImageView cameraButton = (ImageView) findViewById(R.id.ivCamera);
-        cameraButton.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ViewPager thisPager = (ViewPager) findViewById(R.id.pager);
-                thisPager.setCurrentItem(1);
-
-            }
-        });
-
-
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(myToolbar);
+        // Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        // setSupportActionBar(myToolbar);
 
 //        final Post.Query postQuery = new Post.Query();
 //
