@@ -16,12 +16,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 
 import com.parse.GetCallback;
 import com.parse.LogOutCallback;
@@ -69,9 +66,9 @@ public class HomeActivity extends AppCompatActivity {
 
         // Add fragments
 
-        fragments.add(new EmptyFragment());
-        fragments.add(new EmptyFragment());
-        fragments.add(new EmptyFragment());
+        fragments.add(new FeedFragment());
+        fragments.add(new FeedFragment());
+        fragments.add(new FeedFragment());
 
 
         // Grab a reference to our view pager.
