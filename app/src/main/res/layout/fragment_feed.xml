@@ -4,31 +4,11 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ImageView
-        android:id="@+id/job_iv"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="99dp"
-        app:srcCompat="@color/black" />
-
-    <TextView
-        android:id="@+id/job_title_tv"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/job_iv"
-        android:layout_centerHorizontal="true"
-        android:text="Title"
-        android:textSize="25sp" />
-
-    <TextView
-        android:id="@+id/job_description_tv"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/job_title_tv"
-        android:layout_centerHorizontal="true"
-        android:text="Description"
-        android:textSize="25sp" />
+    <com.lorentzos.flingswipe.SwipeFlingAdapterView
+        android:id="@+id/frame"
+        android:background="#ffeee9e2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:rotation_degrees="0" />
 
 </RelativeLayout>
