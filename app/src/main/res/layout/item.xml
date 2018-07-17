@@ -8,9 +8,22 @@
     android:background="@color/white">
 
     <TextView
+        android:id="@+id/helloText2"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/helloText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-50dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="Job Description"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <TextView
         android:id="@+id/helloText"
-        android:layout_width="350dp"
-        android:layout_height="300dp"
+        android:layout_width="300dp"
+        android:layout_height="75dp"
         android:layout_below="@+id/imageView2"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="50dp"
@@ -20,7 +33,7 @@
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="40sp"
-        tools:text="job name \nand description" />
+        tools:text="Job Title" />
 
     <ImageView
         android:id="@+id/imageView2"
