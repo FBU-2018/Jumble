@@ -16,12 +16,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 
 import com.parse.GetCallback;
 import com.parse.LogOutCallback;
@@ -69,9 +66,9 @@ public class HomeActivity extends AppCompatActivity {
 
         // Add fragments
 
-        fragments.add(new EmptyFragment());
-        fragments.add(new EmptyFragment());
-        fragments.add(new EmptyFragment());
+        fragments.add(new FeedFragment());
+        fragments.add(new FeedFragment());
+        fragments.add(new FeedFragment());
 
 
         // Grab a reference to our view pager.
@@ -91,7 +88,6 @@ public class HomeActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-
                         bottomNavigation.setSelectedItemId(R.id.action_home);
 //                        homePageRecycler.refresh();
                         break;
@@ -148,19 +144,8 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
 
-        ImageView cameraButton = (ImageView) findViewById(R.id.ivCamera);
-        cameraButton.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ViewPager thisPager = (ViewPager) findViewById(R.id.pager);
-                thisPager.setCurrentItem(1);
-
-            }
-        });
-
-
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(myToolbar);
+        // Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        // setSupportActionBar(myToolbar);
 
 //        final Post.Query postQuery = new Post.Query();
 //
