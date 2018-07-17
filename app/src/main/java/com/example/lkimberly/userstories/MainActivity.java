@@ -14,7 +14,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button homeButton;
+    Button signinBtn;
+    Button signupBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +40,21 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Intent is safe", "NOT SAFE MY GUY");
         }
 
-        homeButton = findViewById(R.id.home_btn);
+        signinBtn = findViewById(R.id.sign_in_btn);
+        signupBtn = findViewById(R.id.sign_up_btn);
 
-        homeButton.setOnClickListener(new View.OnClickListener() {
+        signinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        signupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SignupActivity.class);
                 startActivity(intent);
             }
         });
