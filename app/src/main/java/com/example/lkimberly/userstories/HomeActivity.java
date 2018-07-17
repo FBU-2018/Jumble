@@ -68,7 +68,7 @@ public class HomeActivity extends AppCompatActivity {
 
         fragments.add(new FeedFragment());
         fragments.add(new FeedFragment());
-        fragments.add(new FeedFragment());
+        fragments.add(new ProfileFragment());
 
 
         // Grab a reference to our view pager.
