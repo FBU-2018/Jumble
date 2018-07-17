@@ -27,12 +27,14 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
     ParseUser user;
+    static File photoFile;
 
     /**
      * The list of fragments used in the view pager. They live in the activity and we pass them down
@@ -67,7 +69,7 @@ public class HomeActivity extends AppCompatActivity {
         // Add fragments
 
         fragments.add(new FeedFragment());
-        fragments.add(new FeedFragment());
+        fragments.add(new CreatePostFragment());
         fragments.add(new ProfileFragment());
 
 

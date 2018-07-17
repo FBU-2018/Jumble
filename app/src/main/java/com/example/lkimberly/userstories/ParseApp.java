@@ -2,6 +2,7 @@ package com.example.lkimberly.userstories;
 
 import android.app.Application;
 
+import com.example.lkimberly.userstories.models.Job;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -10,7 +11,7 @@ public class ParseApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        // ParseObject.registerSubclass(Post.class);
+        ParseObject.registerSubclass(Job.class);
 
         final Parse.Configuration configuration = new Parse.Configuration.Builder(this)
                 .applicationId("fbu-2018-jumble")
