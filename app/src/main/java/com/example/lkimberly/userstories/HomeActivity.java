@@ -7,21 +7,20 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 
 import com.parse.GetCallback;
 import com.parse.LogOutCallback;
@@ -30,12 +29,14 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
     ParseUser user;
+    static File photoFile;
 
     /**
      * The list of fragments used in the view pager. They live in the activity and we pass them down
@@ -60,19 +61,18 @@ public class HomeActivity extends AppCompatActivity {
 
     JumbleFragmentAdapter adapter;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        photoFile = getPhotoFileUri("photo.jpg");
+
         // Add fragments
-
-        fragments.add(new EmptyFragment());
-        fragments.add(new EmptyFragment());
-        fragments.add(new EmptyFragment());
-
+        fragments.add(new FeedFragment());
+        fragments.add(new CreatePostFragment());
+        fragments.add(new ProfileFragment());
+        fragments.add(new EditProfileFragment());
 
         // Grab a reference to our view pager.
         viewPager = findViewById(R.id.pager);
@@ -157,7 +157,6 @@ public class HomeActivity extends AppCompatActivity {
 //        setUser();
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -249,6 +248,21 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    // Returns the File for a photo stored on disk given the fileName
+    public File getPhotoFileUri(String fileName) {
+        // Get safe storage directory for photos
+        // Use `getExternalFilesDir` on Context to access package-specific directories.
+        // This way, we don't need to request external read/write runtime permissions.
+        File mediaStorageDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "HomeActivity");
 
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
+            Log.d("HomeActivity", "failed to create directory");
+        }
 
+        // Return the file target for the photo based on filename
+        File file = new File(mediaStorageDir.getPath() + File.separator + fileName);
+
+        return file;
+    }
 }

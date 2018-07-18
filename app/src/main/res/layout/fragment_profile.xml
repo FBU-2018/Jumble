@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileFragment"
+    android:id="@+id/action_view_profile">
+
+    <Button
+        android:id="@+id/edit_profile_btn"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:text="Edit" />
+
+    <ImageView
+        android:id="@+id/profile_iv"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        app:srcCompat="@color/black" />
+
+    <TextView
+        android:id="@+id/profile_name"
+        android:layout_width="200dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/profile_iv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        tools:text="Name" />
+
+    <TextView
+        android:id="@+id/profile_institution"
+        android:layout_width="200dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/profile_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        tools:text="Institution" />
+
+    <TextView
+        android:id="@+id/profile_phone_number"
+        android:layout_width="200dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/profile_institution"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:inputType="phone"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        tools:text="Phone number  " />
+
+    <TextView
+        android:id="@+id/profile_social_media"
+        android:layout_width="200dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/profile_phone_number"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        tools:text="Link to social media" />
+</RelativeLayout>
