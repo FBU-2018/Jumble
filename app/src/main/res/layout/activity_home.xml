@@ -34,6 +34,14 @@
                 tools:context=".HomeActivity"
                 tools:showIn="@layout/activity_home">
 
+                <ImageButton
+                    android:id="@+id/ib_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="30dp"
+                    app:srcCompat="@drawable/ic_instagram_profile" />
             </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>

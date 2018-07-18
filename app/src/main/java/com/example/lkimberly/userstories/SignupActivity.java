@@ -36,13 +36,13 @@ public class SignupActivity extends AppCompatActivity {
                 final String password =  passwordInput.getText().toString();
                 final String email = emailInput.getText().toString();
 
-                signup(username, password, email);
+                signUp(username, password, email);
             }
         });
 
     }
 
-    private void signup(String username, String password, String email) {
+    private void signUp(String username, String password, String email) {
         // Create the ParseUser
         ParseUser user = new ParseUser();
         // Set core properties
