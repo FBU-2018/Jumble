@@ -90,10 +90,10 @@ public class Job  extends ParseObject {
             return  this;
         }
 
-//        public Query withUser() {
-//            include("user");
-//            return this;
-//        }
+        public Query withUser() {
+            include("user");
+            return this;
+        }
     }
 
 
