@@ -35,7 +35,7 @@ public class EditProfileFragment extends Fragment {
         saveProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(3);
             }
         });
     }

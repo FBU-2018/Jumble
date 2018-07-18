@@ -82,8 +82,8 @@ public class HomeActivity extends AppCompatActivity {
         fragments.add(new FeedFragment());
         fragments.add(new CreatePostFragment());
         fragments.add(new MatchPageFragment());
-//        fragments.add(new ProfileFragment());
-//        fragments.add(new EditProfileFragment());
+        fragments.add(new ProfileFragment());
+        fragments.add(new EditProfileFragment());
 
         // Grab a reference to our view pager.
         viewPager = findViewById(R.id.pager);
@@ -151,12 +151,13 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+
         ib_profile = findViewById(R.id.ib_profile);
 
         ib_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(3);
             }
         });
 
