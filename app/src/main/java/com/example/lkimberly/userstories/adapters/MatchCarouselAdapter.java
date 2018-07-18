@@ -1,4 +1,4 @@
-package com.example.lkimberly.userstories;
+package com.example.lkimberly.userstories.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.models.User;
 import com.parse.ParseUser;
 

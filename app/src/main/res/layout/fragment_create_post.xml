@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreatePostFragment">
+    tools:context=".fragments.CreatePostFragment">
 
     <ImageView
         android:id="@+id/ivPhoto"
@@ -22,7 +22,8 @@
         android:layout_alignBaseline="@+id/etTitle"
         android:layout_alignStart="@+id/tvTime"
         android:text="@string/title"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_alignLeft="@+id/tvTime" />
 
     <TextView
         android:id="@+id/tvDescription"
@@ -31,7 +32,8 @@
         android:layout_alignBaseline="@+id/etDescription"
         android:layout_alignStart="@+id/tvTitle"
         android:text="@string/description"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_alignLeft="@+id/tvTitle" />
 
     <TextView
         android:id="@+id/tvTime"
@@ -42,7 +44,9 @@
         android:layout_marginBottom="191dp"
         android:layout_marginStart="43dp"
         android:text="@string/time"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="43dp" />
 
     <TextView
         android:id="@+id/tvDate"
@@ -51,7 +55,8 @@
         android:layout_alignBaseline="@+id/etDate"
         android:layout_alignStart="@+id/tvTitle"
         android:text="@string/date"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_alignLeft="@+id/tvTitle" />
 
     <TextView
         android:id="@+id/tvLocation"
@@ -60,7 +65,8 @@
         android:layout_alignBaseline="@+id/etLocation"
         android:layout_alignStart="@+id/tvTitle"
         android:text="@string/location"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_alignLeft="@+id/tvTitle" />
 
     <EditText
         android:id="@+id/etTitle"
@@ -74,7 +80,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPhoto" />
+        app:layout_constraintTop_toBottomOf="@+id/ivPhoto"
+        android:layout_alignLeft="@+id/ivPhoto" />
 
     <EditText
         android:id="@+id/etDescription"
@@ -87,7 +94,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPhoto" />
+        app:layout_constraintTop_toBottomOf="@+id/ivPhoto"
+        android:layout_alignLeft="@+id/ivPhoto" />
 
     <EditText
         android:id="@+id/etDate"
@@ -96,7 +104,8 @@
         android:layout_alignStart="@+id/ivPhoto"
         android:layout_below="@+id/etDescription"
         android:ems="10"
-        android:inputType="date" />
+        android:inputType="date"
+        android:layout_alignLeft="@+id/ivPhoto" />
 
     <EditText
         android:id="@+id/etTime"
@@ -105,7 +114,8 @@
         android:layout_alignBottom="@+id/tvTime"
         android:layout_alignStart="@+id/ivPhoto"
         android:ems="10"
-        android:inputType="time" />
+        android:inputType="time"
+        android:layout_alignLeft="@+id/ivPhoto" />
 
     <EditText
         android:id="@+id/etLocation"
@@ -119,7 +129,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPhoto" />
+        app:layout_constraintTop_toBottomOf="@+id/ivPhoto"
+        android:layout_alignLeft="@+id/ivPhoto" />
 
     <Button
         android:id="@+id/bCreateJob"
@@ -143,6 +154,8 @@
         android:layout_marginEnd="122dp"
         android:layout_marginTop="97dp"
         android:background="@drawable/button_rounded_corners"
-        android:src="@drawable/ic_instagram_new_post" />
+        android:src="@drawable/ic_instagram_new_post"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="122dp" />
 
 </RelativeLayout>

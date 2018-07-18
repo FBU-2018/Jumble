@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/action_view_home"
-    tools:context=".HomeActivity">
+    tools:context=".activities.HomeActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:context=".HomeActivity"
+                tools:context=".activities.HomeActivity"
                 tools:showIn="@layout/activity_home">
 
                 <ImageButton
@@ -41,7 +41,9 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginEnd="30dp"
-                    app:srcCompat="@drawable/ic_instagram_profile" />
+                    app:srcCompat="@drawable/ic_instagram_profile"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp" />
             </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>

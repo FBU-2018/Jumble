@@ -1,4 +1,4 @@
-package com.example.lkimberly.userstories;
+package com.example.lkimberly.userstories.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +17,8 @@ import com.parse.ParseUser;
 import org.w3c.dom.Text;
 
 import static com.parse.ParseUser.getCurrentUser;
+
+import com.example.lkimberly.userstories.R;
 
 public class EditProfileFragment extends Fragment {
 
