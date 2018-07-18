@@ -9,37 +9,34 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/profile_name"
-        android:layout_toStartOf="@+id/profile_name"
-        android:text="Name"
-        android:layout_toLeftOf="@+id/profile_name" />
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="38dp"
+        android:text="Name" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="52dp"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/textView1"
-        android:layout_below="@+id/profile_institution"
-        android:text="Phone Number"
-        android:layout_alignRight="@+id/textView1" />
+        android:layout_alignBottom="@+id/profile_phone_number"
+        android:layout_alignStart="@+id/textView1"
+        android:text="Phone Number" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="44dp"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/textView1"
-        android:layout_below="@+id/profile_phone_number"
-        android:text="Link to social media"
-        android:layout_alignRight="@+id/textView1" />
+        android:layout_alignBaseline="@+id/profile_link"
+        android:layout_alignStart="@+id/textView1"
+        android:text="Link to social media" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/profile_institution"
-        android:layout_alignEnd="@+id/textView1"
-        android:text="Institution"
-        android:layout_alignRight="@+id/textView1" />
+        android:layout_alignStart="@+id/textView1"
+        android:text="Institution" />
 
     <Button
         android:id="@+id/save_profile_btn"
@@ -64,8 +61,9 @@
         android:id="@+id/profile_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/profile_iv"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="52dp"
         android:ems="10"
         android:hint="Edit name"
         android:inputType="textPersonName" />
@@ -74,8 +72,8 @@
         android:id="@+id/profile_institution"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/profile_name"
         android:layout_below="@+id/profile_name"
-        android:layout_centerHorizontal="true"
         android:ems="10"
         android:hint="Edit institution "
         android:inputType="textPersonName" />
@@ -84,18 +82,18 @@
         android:id="@+id/profile_phone_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/profile_name"
         android:layout_below="@+id/profile_institution"
-        android:layout_centerHorizontal="true"
         android:ems="10"
         android:hint="Edit phone number "
         android:inputType="phone" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/profile_link"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/profile_name"
         android:layout_below="@+id/profile_phone_number"
-        android:layout_centerHorizontal="true"
         android:ems="10"
         android:hint="Edit link to social media"
         android:inputType="textPersonName" />

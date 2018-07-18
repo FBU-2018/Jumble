@@ -1,13 +1,9 @@
 package com.example.lkimberly.userstories;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,16 +52,16 @@ public class ProfileFragment extends Fragment {
         currentUser = ParseUser.getCurrentUser();
 
         ivProfile = view.findViewById(R.id.profile_iv);
-        tvUsername = view.findViewById(R.id.profile_name);
-        tvInstution = view.findViewById(R.id.profile_institution);
-        tvPhoneNumber = view.findViewById(R.id.profile_phone_number);
-        tvSocialMedia = view.findViewById(R.id.profile_social_media);
+        tvUsername = view.findViewById(R.id.tv_profile_name);
+        tvInstution = view.findViewById(R.id.tv_profile_institution);
+        tvPhoneNumber = view.findViewById(R.id.tv_profile_phone_number);
+        tvSocialMedia = view.findViewById(R.id.tv_profile_link);
         ivProfile = view.findViewById(R.id.profile_iv);
 
         tvUsername.setText(currentUser.getUsername());
-        //tvInstution.setText(currentUser.get("institution").toString());
-        //tvPhoneNumber.setText(currentUser.get("phoneNumber").toString());
-        //tvSocialMedia.setText(currentUser.get("facebook").toString());
+        tvInstution.setText(currentUser.get("institution").toString());
+        tvPhoneNumber.setText(currentUser.get("phoneNumber").toString());
+        tvSocialMedia.setText(currentUser.get("linkedin").toString());
 
         try {
             Glide.with(ProfileFragment.this).load(currentUser.getParseFile("profilePicture").getUrl()).into(ivProfile);

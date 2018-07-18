@@ -6,15 +6,16 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 
-@ParseClassName("User")
-public class User extends ParseUser{
+@ParseClassName("_User")
+public class User extends ParseUser {
 
-    private  static final String KEY_NAME = "name";
-    private  static final String KEY_LINKEDIN = "linkedin";
-    private  static final String KEY_FACEBOOK = "facebook";
-    private  static final String KEY_TWITTER = "twitter";
-    private  static final String KEY_IMAGE = "image";
-    private  static final String KEY_USER = "user";
+    private static final String KEY_NAME = "name";
+    private static final String KEY_PHONE_NUMBER = "phoneNumber";
+    private static final String KEY_LINKEDIN = "linkedin";
+    private static final String KEY_FACEBOOK = "facebook";
+    private static final String KEY_TWITTER = "twitter";
+    private static final String KEY_IMAGE = "image";
+    private static final String KEY_USER = "user";
     private static final String KEY_DATE = "createdAt";
     private static final String KEY_INSTITUTION = "institution";
 
@@ -25,10 +26,13 @@ public class User extends ParseUser{
         return  getString(KEY_NAME);
     }
 
-    public void setDescription(String name) {
-        put(KEY_NAME, name);
+    public void setName(String name) { put(KEY_NAME, name); }
+
+    public String getPhoneNumber() {
+        return  getString(KEY_PHONE_NUMBER);
     }
 
+    public void setPhoneNumber(String phoneNumber) { put(KEY_PHONE_NUMBER, phoneNumber); }
 
     // Get profile pic
     public ParseFile getImage() {

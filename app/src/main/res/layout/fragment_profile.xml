@@ -11,7 +11,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/profile_name"
+        android:layout_alignTop="@+id/tv_profile_name"
         android:layout_toStartOf="@+id/profile_iv"
         android:text="Name"
         android:layout_toLeftOf="@+id/profile_iv" />
@@ -20,7 +20,7 @@
         android:id="@+id/textView5"
         android:layout_width="52dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/profile_phone_number"
+        android:layout_alignTop="@+id/tv_profile_phone_number"
         android:layout_toStartOf="@+id/profile_iv"
         android:text="Phone Number"
         android:layout_toLeftOf="@+id/profile_iv" />
@@ -29,16 +29,15 @@
         android:id="@+id/textView6"
         android:layout_width="44dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/profile_social_media"
-        android:layout_toStartOf="@+id/profile_iv"
-        android:text="Link to social media"
-        android:layout_toLeftOf="@+id/profile_iv" />
+        android:layout_alignStart="@+id/textView5"
+        android:layout_alignTop="@+id/tv_profile_link"
+        android:text="Link to social media" />
 
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/profile_institution"
+        android:layout_alignTop="@+id/tv_profile_institution"
         android:layout_toStartOf="@+id/profile_iv"
         android:text="Institution"
         android:layout_toLeftOf="@+id/profile_iv" />
@@ -63,7 +62,7 @@
         app:srcCompat="@color/black" />
 
     <TextView
-        android:id="@+id/profile_name"
+        android:id="@+id/tv_profile_name"
         android:layout_width="200dp"
         android:layout_height="25dp"
         android:layout_below="@+id/profile_iv"
@@ -77,10 +76,10 @@
         tools:text="Name" />
 
     <TextView
-        android:id="@+id/profile_institution"
+        android:id="@+id/tv_profile_institution"
         android:layout_width="200dp"
         android:layout_height="25dp"
-        android:layout_below="@+id/profile_name"
+        android:layout_below="@+id/tv_profile_name"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
@@ -91,10 +90,10 @@
         tools:text="Institution" />
 
     <TextView
-        android:id="@+id/profile_phone_number"
+        android:id="@+id/tv_profile_phone_number"
         android:layout_width="200dp"
         android:layout_height="25dp"
-        android:layout_below="@+id/profile_institution"
+        android:layout_below="@+id/tv_profile_institution"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
@@ -105,10 +104,10 @@
         tools:text="Phone number  " />
 
     <TextView
-        android:id="@+id/profile_social_media"
+        android:id="@+id/tv_profile_link"
         android:layout_width="200dp"
         android:layout_height="25dp"
-        android:layout_below="@+id/profile_phone_number"
+        android:layout_below="@+id/tv_profile_phone_number"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"

@@ -7,11 +7,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.example.lkimberly.userstories.models.Job;
+import com.example.lkimberly.userstories.models.User;
+import com.parse.ParseUser;
+
+import org.w3c.dom.Text;
+
+import static com.parse.ParseUser.getCurrentUser;
 
 public class EditProfileFragment extends Fragment {
 
     Button saveProfileBtn;
     private ViewPager viewPager;
+
+    TextView tv_name;
+    TextView tv_institution;
+    TextView tv_phoneNumber;
+    TextView tv_link;
+
+    EditText et_name;
+    EditText et_institution;
+    EditText et_phoneNumber;
+    EditText et_link;
 
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
@@ -32,9 +52,51 @@ public class EditProfileFragment extends Fragment {
         viewPager = getActivity().findViewById(R.id.pager);
         saveProfileBtn = getActivity().findViewById(R.id.save_profile_btn);
 
+        tv_name = getActivity().findViewById(R.id.tv_profile_name);
+        tv_institution = getActivity().findViewById(R.id.tv_profile_institution);
+        tv_phoneNumber = getActivity().findViewById(R.id.tv_profile_phone_number);
+        tv_link = getActivity().findViewById(R.id.tv_profile_link);
+
+        et_name = getActivity().findViewById(R.id.profile_name);
+        et_institution = getActivity().findViewById(R.id.profile_institution);
+        et_phoneNumber = getActivity().findViewById(R.id.profile_phone_number);
+        et_link = getActivity().findViewById(R.id.profile_link);
+
         saveProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                User user = (User) ParseUser.getCurrentUser();
+
+                String name = et_name.getText().toString();
+                if (!name.equals("")) {
+                    tv_name.setText(name);
+                    user.setName(name);
+                }
+
+                String institution = et_institution.getText().toString();
+                if (!institution.equals("")) {
+                    tv_institution.setText(institution);
+                    user.setInstitution(institution);
+                }
+
+                String phoneNumber = et_phoneNumber.getText().toString();
+                if (!phoneNumber.equals("")) {
+                    tv_phoneNumber.setText(phoneNumber);
+                    user.setPhoneNumber(phoneNumber);
+                }
+
+                String link = et_link.getText().toString();
+                if (!link.equals("")) {
+                    tv_link.setText(link);
+                    user.setLinkedIn(link);
+                }
+
+                //et_name.setText("");
+                //et_institution.setText("");
+                //et_phoneNumber.setText("");
+                //et_link.setText("");
+
                 viewPager.setCurrentItem(3);
             }
         });
