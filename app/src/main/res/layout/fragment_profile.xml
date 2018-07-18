@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileFragment">
+    tools:context=".ProfileFragment"
+    android:id="@+id/action_view_profile">
 
     <TextView
         android:id="@+id/tvName"
@@ -28,14 +29,14 @@
         android:stepSize="0.5"/>
 
     <Button
-        android:id="@+id/bHire"
+        android:id="@+id/edit_profile_btn"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="15dp"
-        android:text="Hire" />
+        android:text="Edit" />
 
     <ImageView
         android:id="@+id/imageView"

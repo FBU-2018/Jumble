@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -59,8 +60,6 @@ public class HomeActivity extends AppCompatActivity {
 
     JumbleFragmentAdapter adapter;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +70,7 @@ public class HomeActivity extends AppCompatActivity {
         fragments.add(new FeedFragment());
         fragments.add(new CreatePostFragment());
         fragments.add(new ProfileFragment());
+        fragments.add(new EditProfileFragment());
 
 
         // Grab a reference to our view pager.
@@ -156,7 +156,6 @@ public class HomeActivity extends AppCompatActivity {
 //        setUser();
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
