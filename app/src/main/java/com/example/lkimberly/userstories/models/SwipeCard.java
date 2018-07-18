@@ -1,11 +1,12 @@
 package com.example.lkimberly.userstories.models;
 
 public class SwipeCard {
-    private String text1,text2;
+    private String text1, text2, url;
 
-    public SwipeCard(String text1, String text2) {
+    public SwipeCard(String text1, String text2, String url) {
         this.text1 = text1;
         this.text2 = text2;
+        this.url = url;
     }
 
     public String getText1() {
@@ -23,4 +24,13 @@ public class SwipeCard {
     public void setText2(String text2) {
         this.text2 = text2;
     }
+
+    public String getImageUrl() {
+        return url;
+    }
+
+    public void setImageUrl(String url) {
+        this.url = url;
+    }
+
 }
