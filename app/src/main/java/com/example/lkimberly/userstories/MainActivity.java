@@ -28,22 +28,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Uri number = Uri.parse("tel:");
-
-        Intent intent = new Intent(Intent.ACTION_SEND, number);
-        intent.putExtra(Intent.EXTRA_PHONE_NUMBER, "7049099021");
-        intent.putExtra(Intent.EXTRA_TEXT, "Hi");
-        PackageManager packageManager = getPackageManager();
-        List<ResolveInfo> activities = packageManager.queryIntentActivities(intent,
-                PackageManager.MATCH_DEFAULT_ONLY);
-        boolean isIntentSafe = activities.size() > 0;
-
-        startActivity(Intent.createChooser(intent, getResources().getText(R.string.send_to)));
-        if (isIntentSafe){
-            startActivity(intent);
-        } else {
-            Log.d("Intent is safe", "NOT SAFE MY GUY");
-        }
+//        Uri number = Uri.parse("tel:");
+//
+//        Intent intent = new Intent(Intent.ACTION_SEND, number);
+//        intent.putExtra(Intent.EXTRA_PHONE_NUMBER, "7049099021");
+//        intent.putExtra(Intent.EXTRA_TEXT, "Hi");
+//        PackageManager packageManager = getPackageManager();
+//        List<ResolveInfo> activities = packageManager.queryIntentActivities(intent,
+//                PackageManager.MATCH_DEFAULT_ONLY);
+//        boolean isIntentSafe = activities.size() > 0;
+//
+//        startActivity(Intent.createChooser(intent, getResources().getText(R.string.send_to)));
+//        if (isIntentSafe){
+//            startActivity(intent);
+//        } else {
+//            Log.d("Intent is safe", "NOT SAFE MY GUY");
+//        }
 
         signInButton = findViewById(R.id.sign_in_btn);
         username_et = findViewById(R.id.username_et);
