@@ -1,10 +1,8 @@
 package com.example.lkimberly.userstories;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,11 +17,8 @@ import android.widget.Toast;
 
 import com.example.lkimberly.userstories.models.Job;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
-import static com.example.lkimberly.userstories.HomeActivity.photoFile;
 
 public class CreatePostFragment extends Fragment {
 
@@ -46,7 +41,7 @@ public class CreatePostFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_create_post_fragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_create_post, container, false);
         ivPhoto = v.findViewById(R.id.ivPhoto);
         return v;
     }
