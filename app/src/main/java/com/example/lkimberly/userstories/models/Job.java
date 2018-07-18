@@ -13,7 +13,7 @@ public class Job  extends ParseObject {
     private static final String KEY_DESCRIPTION = "description";
     private static final String KEY_TIME = "time";
     private static final String KEY_DATE = "date";
-    private static final String KEY_LOCATION = "location";
+    private static final String KEY_LOCATION = "Location";
 
     private static final String KEY_IMAGE = "image";
     private static final String KEY_USER = "user";

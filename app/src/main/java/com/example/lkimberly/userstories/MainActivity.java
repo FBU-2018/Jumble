@@ -9,18 +9,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button homeButton;
+    Button signInButton;
+    EditText username_et;
+    EditText password_et;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         Uri number = Uri.parse("tel:");
 
@@ -39,15 +45,34 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Intent is safe", "NOT SAFE MY GUY");
         }
 
-        homeButton = findViewById(R.id.home_btn);
+        signInButton = findViewById(R.id.sign_in_btn);
+        username_et = findViewById(R.id.username_et);
+        password_et = findViewById(R.id.password_et);
 
-        homeButton.setOnClickListener(new View.OnClickListener() {
+        signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                startActivity(intent);
+                final String username = username_et.getText().toString();
+                final String password = password_et.getText().toString();
+                login(username, password);
             }
         });
+    }
 
+    private void login(String username, String password) {
+        ParseUser.logInInBackground(username, password, new LogInCallback() {
+            @Override
+            public void done(ParseUser user, ParseException e) {
+                if (e == null) {
+                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                    Log.d("MainActivity", "Login was successful!");
+                } else {
+                    Log.d("MainActivity", "Login failed!");
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

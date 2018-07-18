@@ -60,7 +60,6 @@ public class CreatePostFragment extends Fragment {
         etDate = view.findViewById(R.id.etDate);
         etLocation = view.findViewById(R.id.etLocation);
 
-
         ibPhoto = view.findViewById(R.id.ibPhoto);
         bCreateJob = view.findViewById(R.id.bCreateJob);
 
@@ -83,24 +82,19 @@ public class CreatePostFragment extends Fragment {
 
                 newJob.setUser(ParseUser.getCurrentUser());
 
-                final ParseFile parseFile = new ParseFile(photoFile);
+                //final ParseFile parseFile = new ParseFile(photoFile);
 
-                parseFile.saveInBackground(new SaveCallback() {
+                //Log.d("newJobSave", "1. Success!");
+
+                newJob.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
                         if (e == null) {
-                            newJob.setImage(parseFile);
-
-                            newJob.saveInBackground(new SaveCallback() {
-                                @Override
-                                public void done(ParseException e) {
-                                    if (e == null) {
-                                        Log.d("CreatePostFragment", "Create post success!");
-                                    } else {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            });
+                            Log.d("CreatePostProject", "save job success!");
+                            Toast.makeText(getContext(), "Job saved", Toast.LENGTH_LONG).show();
+                        } else {
+                            Log.d("CreatePostProject", "save job failed!");
+                            e.printStackTrace();
                         }
                     }
                 });
