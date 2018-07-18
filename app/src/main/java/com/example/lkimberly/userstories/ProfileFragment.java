@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.parse.ParseUser;
+
+import java.io.File;
 
 public class ProfileFragment extends Fragment {
 
@@ -30,6 +34,12 @@ public class ProfileFragment extends Fragment {
     TextView tvInstution;
     TextView tvPhoneNumber;
     TextView tvSocialMedia;
+
+    private String imagePath = "";
+    public final String APP_TAG = "MyCustomApp";
+    public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
+    public String photoFileName = "photo.jpg";
+    File photoFile;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,11 +60,18 @@ public class ProfileFragment extends Fragment {
         tvInstution = view.findViewById(R.id.profile_institution);
         tvPhoneNumber = view.findViewById(R.id.profile_phone_number);
         tvSocialMedia = view.findViewById(R.id.profile_social_media);
+        ivProfile = view.findViewById(R.id.profile_iv);
 
         tvUsername.setText(currentUser.getUsername());
         tvInstution.setText(currentUser.get("institution").toString());
         tvPhoneNumber.setText(currentUser.get("phoneNumber").toString());
         tvSocialMedia.setText(currentUser.get("facebook").toString());
+
+        try {
+            Glide.with(ProfileFragment.this).load(currentUser.getParseFile("profilePicture").getUrl()).into(ivProfile);
+        } catch(NullPointerException e) {
+            Log.d("ProfileFragment", "No Profile Pic");
+        }
 
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
