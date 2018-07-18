@@ -183,9 +183,9 @@ public class FeedFragment extends Fragment {
 //                        jobs.add(job);
 //                        swipeCardAdapter.notifyItemInserted(jobs.size() - 1);
                         try {
-                            al.add(new SwipeCard(job.getTitle().toString(), job.getDescription().toString()));
+                            al.add(new SwipeCard(job.getTitle().toString(), job.getDescription().toString(), job.getImage().getUrl()));
                         } catch (NullPointerException e2) {
-                            al.add(new SwipeCard("EMPTY", "EMPTY"));
+                            al.add(new SwipeCard("EMPTY", "EMPTY", "EMPTY"));
                         }
                         swipeCardAdapter.notifyDataSetChanged();
                     }

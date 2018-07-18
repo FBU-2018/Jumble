@@ -85,6 +85,7 @@ public class SwipeCardAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             viewHolder.textView1 = (TextView) convertView.findViewById(R.id.helloText);
             viewHolder.textView2 = (TextView) convertView.findViewById(R.id.helloText2);
+            viewHolder.ivJob = convertView.findViewById(R.id.imageView2);
 
             convertView.setTag(viewHolder);
         } else {
@@ -96,11 +97,18 @@ public class SwipeCardAdapter extends BaseAdapter {
         viewHolder.textView1.setText(sw.getText1());
         viewHolder.textView2.setText(sw.getText2());
 
+        try {
+            Glide.with(context).load(sw.getImageUrl()).into(viewHolder.ivJob);
+        } catch (NullPointerException e) {
+            Log.d("Card Adapter", "No Pic");
+        }
+
         return convertView;
     }
 
     private static class ViewHolder {
         public TextView textView1, textView2;
+        public ImageView ivJob;
     }
 
 //    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
