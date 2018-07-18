@@ -14,7 +14,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -70,13 +69,21 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+
         photoFile = getPhotoFileUri("photo.jpg");
+
+        // Add fragments
+
+//        fragments.add(new EmptyFragment());
+//        fragments.add(new EmptyFragment());
+//        fragments.add(new MatchPageFragment());
 
         // Add fragments
         fragments.add(new FeedFragment());
         fragments.add(new CreatePostFragment());
-        fragments.add(new ProfileFragment());
-        fragments.add(new EditProfileFragment());
+        fragments.add(new MatchPageFragment());
+//        fragments.add(new ProfileFragment());
+//        fragments.add(new EditProfileFragment());
 
         // Grab a reference to our view pager.
         viewPager = findViewById(R.id.pager);

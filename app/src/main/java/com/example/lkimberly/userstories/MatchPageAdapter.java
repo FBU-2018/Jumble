@@ -3,47 +3,55 @@ package com.example.lkimberly.userstories;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.lkimberly.userstories.models.User;
+import com.parse.ParseUser;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
-
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class MatchPageAdapter extends RecyclerView.Adapter<MatchPageAdapter.ViewHolder> {
 
 
     private final Activity activity;
-    private List<User> mUsers;
+
+
+    private List<List<ParseUser>> mAllMatches;
+
+    RecyclerView.RecycledViewPool viewPool;
+
+    private static RecyclerView horizontalList;
 
     // pass in the Tweets array into the constructor
-    public MatchPageAdapter(Activity activity, List<User> users) {
+    public MatchPageAdapter(Activity activity, List<List<ParseUser>> allMatches) {
         this.activity = activity;
-        mUsers = users;
+        mAllMatches = allMatches;
+        viewPool = new RecyclerView.RecycledViewPool();
+
     }
 
     Context context;
-    // for each row, inflate
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        View matchView = inflater.inflate(R.layout.match_carousel_item, parent, false);
+        View matchView = inflater.inflate(R.layout.match_carousel, parent, false);
+
+        int height = parent.getMeasuredHeight() / 4;
+        matchView.setMinimumHeight(height);
+
+
         ViewHolder viewHolder = new ViewHolder(activity, matchView);
+
+        horizontalList.setRecycledViewPool(viewPool);
+
+
         return viewHolder;
 
     }
@@ -53,85 +61,16 @@ public class MatchPageAdapter extends RecyclerView.Adapter<MatchPageAdapter.View
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 
         // get the data according to the position
-        final User user = mUsers.get(position);
 
-        // populate the view according to this data
-        holder.tvName.setText(user.getName());
-
-        holder.tvInstitution.setText(user.getInstitution());
-//        holder.tvDate.setText(getRelativeTimeAgo(post.createdAt()));
-        holder.user = user;
-
-        // TODO: refactor below for raing when we convert to images from text
-//        final String postLikes = post.getPostLIikes();
-//
-//        if (postLikes != null) {
-//            if (Integer.valueOf(postLikes) != 0) {
-//                holder.tvLikes.setText(postLikes + " Likes");
-//            }
-//        }
-//        holder.ibLikes.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                holder.ibLikes.setColorFilter(Color.RED);
-//                int numLikes;
-//                if (post.getPostLIikes() == null){
-//                    numLikes = 0;
-//                } else {
-//                    numLikes = Integer.valueOf(post.getPostLIikes());
-//                }
-//                post.setLikes(Integer.toString(numLikes + 1));
-//                post.saveInBackground();
-//
-//            }
-//        });
-
-        //
-
-
-        int round_radius = context.getResources().getInteger(R.integer.radius);
-        int round_margin = context.getResources().getInteger(R.integer.margin);
-
-        final RoundedCornersTransformation roundedCornersTransformation = new RoundedCornersTransformation(round_radius, round_margin);
-
-        final RequestOptions requestOptions = RequestOptions.bitmapTransform(
-                roundedCornersTransformation
-        );
-
-
-        // get the correct place holder and image view for the current orientation
-        int placeholderId = R.drawable.ic_instagram_profile;
-        ImageView imageView = holder.ivProfileImage;
-
-
-        if (user.getParseFile("profilePicture")!= null) {
-            Glide.with(holder.itemView.getContext())
-                    .load(user.getParseFile("profilePicture").getUrl())
-                    .apply(
-                            RequestOptions.placeholderOf(placeholderId)
-                                    .error(placeholderId)
-                                    .fitCenter()
-                    )
-                    .apply(requestOptions)
-                    .into(imageView);
-        } else {
-            Glide.with(holder.itemView.getContext())
-                    .load(user.getParseFile("profilePicture"))
-                    .apply(
-                            RequestOptions.placeholderOf(placeholderId)
-                                    .error(placeholderId)
-                                    .fitCenter()
-                    )
-                    .apply(requestOptions)
-                    .into(imageView);
-        }
+        holder.horizontalAdapter.setData(mAllMatches.get(position)); // List of Users
+        holder.horizontalAdapter.setRowIndex(position);
 
 
     }
 
     @Override
     public int getItemCount() {
-        return mUsers.size();
+        return mAllMatches.size();
     }
 
     // create ViewHolder class
@@ -140,16 +79,10 @@ public class MatchPageAdapter extends RecyclerView.Adapter<MatchPageAdapter.View
         //            implements View.OnClickListener{
         //            implements View.OnClickListener, View.OnLongClickListener{
         public final Activity activity;
-        public ImageView ivProfileImage;
-        public TextView tvName;
-        public TextView tvInstitution;
-        public TextView tvPreviousJobs;
-        public TextView tvRating;
-        public TextView tvPhoneNumber;
-        public TextView tvLinksToSocialMedia;
-        public User user;
+
         private final int REQUEST_CODE = 21;
 
+        private MatchCarouselAdapter horizontalAdapter;
 
         public ViewHolder (Activity activity, View itemView) {
             super(itemView);
@@ -157,68 +90,25 @@ public class MatchPageAdapter extends RecyclerView.Adapter<MatchPageAdapter.View
 
             // perform findViewById lookups
 
-            ivProfileImage = (ImageView) itemView.findViewById(R.id.iv_profilePic);
-            tvName = (TextView) itemView.findViewById(R.id.tv_phoneNumberValue);
-            tvInstitution = (TextView) itemView.findViewById(R.id.tv_institutionValue);
-            tvRating = (TextView) itemView.findViewById(R.id.tv_ratingValue);
+            horizontalList = (RecyclerView) itemView.findViewById(R.id.rv_innerRecyclerView);
+            horizontalList.setLayoutManager(new LinearLayoutManager(activity.getBaseContext(), LinearLayoutManager.HORIZONTAL, false));
+            horizontalAdapter = new MatchCarouselAdapter(activity);
+            horizontalList.setAdapter(horizontalAdapter);
 
 
-//            itemView.setOnClickListener(this);
-//            itemView.setOnLongClickListener(this);
         }
 
-
-//        @Override
-//        public void onClick(View v) {
-//            Intent i = new Intent(itemView.getContext(), DetailsActivity.class);
-//            i.putExtra("UserName", tvUsername.getText().toString());
-//            i.putExtra("Body", tvBody.getText().toString());
-//            i.putExtra("Date", tvDate.getText().toString());
-//            i.putExtra("Post", Parcels.wrap(post));
-//            itemView.getContext().startActivity(i);
-//        }
-//
-//        @Override
-//        public boolean onLongClick(View v) {
-//            // handle click here
-//            Intent i = new Intent(itemView.getContext(), ReplyActivity.class);
-//            i.putExtra("UserName", tvUsername.getText().toString());
-//            i.putExtra("Tweet", Parcels.wrap(tweet));
-//            activity.startActivityForResult(i, REQUEST_CODE);
-//            return true;
-//        }
-
-
-    }
-
-
-    // getRelativeTimeAgo("Mon Apr 01 21:16:23 +0000 2014");
-    public String getRelativeTimeAgo(String rawJsonDate) {
-        String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
-        SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
-        sf.setLenient(true);
-
-        String relativeDate = "";
-        try {
-            long dateMillis = sf.parse(rawJsonDate).getTime();
-            relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
-                    System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return relativeDate;
     }
 
     // Clean all elements of the recycler
     public void clear() {
-        mUsers.clear();
+        mAllMatches.clear();
         notifyDataSetChanged();
     }
 
     // Add a list of items -- change to type used
-    public void addAll(List<User> list) {
-        mUsers.addAll(list);
+    public void addAll(List<List<ParseUser>> list) {
+        mAllMatches.addAll(list);
         notifyDataSetChanged();
     }
 

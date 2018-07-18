@@ -66,6 +66,11 @@ public class Matches extends ParseObject {
             include(KEY_JOB_SUBSCRIBER);
             return this;
         }
+
+        public Query withJob() {
+            include(KEY_JOB);
+            return this;
+        }
     }
 
 }
