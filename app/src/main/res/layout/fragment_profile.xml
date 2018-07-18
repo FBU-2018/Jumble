@@ -39,7 +39,7 @@
         android:text="Edit" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/profile_iv"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_alignParentTop="true"
@@ -48,58 +48,58 @@
         app:srcCompat="@color/black" />
 
     <TextView
-        android:id="@+id/editText"
+        android:id="@+id/profile_name"
         android:layout_width="200dp"
         android:layout_height="25dp"
-        android:layout_below="@+id/imageView"
+        android:layout_below="@+id/profile_iv"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:textColor="@color/black"
         android:textSize="20sp"
         tools:text="Name" />
 
     <TextView
-        android:id="@+id/editText2"
+        android:id="@+id/profile_institution"
         android:layout_width="200dp"
         android:layout_height="25dp"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/profile_name"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Institution"
+        android:textColor="@color/black"
         android:textSize="20sp"
         tools:text="Institution" />
 
     <TextView
-        android:id="@+id/editText3"
+        android:id="@+id/profile_phone_number"
         android:layout_width="200dp"
         android:layout_height="25dp"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/profile_institution"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="phone"
-        android:text="Phone number "
+        android:textColor="@color/black"
         android:textSize="20sp"
         tools:text="Phone number  " />
 
     <TextView
-        android:id="@+id/editText4"
+        android:id="@+id/profile_social_media"
         android:layout_width="200dp"
         android:layout_height="25dp"
-        android:layout_below="@+id/editText3"
+        android:layout_below="@+id/profile_phone_number"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Link to social media"
+        android:textColor="@color/black"
         android:textSize="20sp"
         tools:text="Link to social media" />
 </RelativeLayout>
