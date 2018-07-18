@@ -63,9 +63,9 @@ public class ProfileFragment extends Fragment {
         ivProfile = view.findViewById(R.id.profile_iv);
 
         tvUsername.setText(currentUser.getUsername());
-        tvInstution.setText(currentUser.get("institution").toString());
-        tvPhoneNumber.setText(currentUser.get("phoneNumber").toString());
-        tvSocialMedia.setText(currentUser.get("facebook").toString());
+        //tvInstution.setText(currentUser.get("institution").toString());
+        //tvPhoneNumber.setText(currentUser.get("phoneNumber").toString());
+        //tvSocialMedia.setText(currentUser.get("facebook").toString());
 
         try {
             Glide.with(ProfileFragment.this).load(currentUser.getParseFile("profilePicture").getUrl()).into(ivProfile);

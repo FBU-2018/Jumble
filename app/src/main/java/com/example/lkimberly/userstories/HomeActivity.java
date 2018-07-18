@@ -21,6 +21,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.parse.GetCallback;
 import com.parse.LogOutCallback;
@@ -37,6 +39,8 @@ public class HomeActivity extends AppCompatActivity {
 
     ParseUser user;
     static File photoFile;
+
+    ImageButton ib_profile;
 
     /**
      * The list of fragments used in the view pager. They live in the activity and we pass them down
@@ -98,7 +102,7 @@ public class HomeActivity extends AppCompatActivity {
                         bottomNavigation.setSelectedItemId(R.id.action_discover);
                         break;
                     case 2:
-                        bottomNavigation.setSelectedItemId(R.id.action_profile);
+                        bottomNavigation.setSelectedItemId(R.id.action_comment);
                         break;
                 }
             }
@@ -129,7 +133,7 @@ public class HomeActivity extends AppCompatActivity {
                         // This is the discovery placeholder fragment.
                         viewPager.setCurrentItem(1);
                         return true;
-                    case R.id.action_profile:
+                    case R.id.action_comment:
                         // Set the current item to the third item in our list
                         // which is the profile fragment placeholder
                         viewPager.setCurrentItem(2);
@@ -137,6 +141,15 @@ public class HomeActivity extends AppCompatActivity {
                     default:
                         return false;
                 }
+            }
+        });
+
+        ib_profile = findViewById(R.id.ib_profile);
+
+        ib_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewPager.setCurrentItem(2);
             }
         });
 
