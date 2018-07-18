@@ -20,6 +20,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     Button signInButton;
+    Button signupButton;
     EditText username_et;
     EditText password_et;
 
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
         signInButton = findViewById(R.id.sign_in_btn);
+        signupButton = findViewById(R.id.sign_up_button);
         username_et = findViewById(R.id.username_et);
         password_et = findViewById(R.id.password_et);
 
@@ -55,6 +57,14 @@ public class MainActivity extends AppCompatActivity {
                 final String username = username_et.getText().toString();
                 final String password = password_et.getText().toString();
                 login(username, password);
+            }
+        });
+
+        signupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SignupActivity.class);
+                startActivity(intent);
             }
         });
     }

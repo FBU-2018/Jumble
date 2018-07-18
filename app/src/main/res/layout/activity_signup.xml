@@ -7,7 +7,7 @@
     tools:context=".SignupActivity">
 
     <EditText
-        android:id="@+id/editText8"
+        android:id="@+id/signup_password_et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -29,27 +29,26 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/signup_username_et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editText8"
+        android:layout_above="@+id/signup_password_et"
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:hint="Create username"
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/editText6"
+        android:id="@+id/signup_email_et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText8"
+        android:layout_below="@+id/signup_password_et"
         android:layout_centerHorizontal="true"
         android:ems="10"
-        android:hint="Enter email"
-        android:inputType="textPassword" />
+        android:hint="Enter email" />
 
     <Button
-        android:id="@+id/create_account_btn"
+        android:id="@+id/signup_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
