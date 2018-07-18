@@ -84,7 +84,7 @@ public class CreatePostFragment extends Fragment {
 
                 //final ParseFile parseFile = new ParseFile(photoFile);
 
-                //Log.d("newJobSave", "1. Success!");
+                Log.d("newJobSave", "1. Success!");
 
                 newJob.saveInBackground(new SaveCallback() {
                     @Override
