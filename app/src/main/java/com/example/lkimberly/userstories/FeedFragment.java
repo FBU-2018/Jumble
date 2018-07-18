@@ -91,6 +91,7 @@ public class FeedFragment extends Fragment {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 Log.d("LIST", "removed object!");
                 SwipeCard temp = al.remove(0);
+                swipeCardAdapter.notifyDataSetChanged();
                 al.add(temp);
                 swipeCardAdapter.notifyDataSetChanged();
             }
@@ -121,7 +122,8 @@ public class FeedFragment extends Fragment {
 
             @Override
             public void onScroll(float scrollProgressPercent) {
-                View view = flingContainer.getSelectedView();
+//                View view = flingContainer.getSelectedView();
+                View view = flingContainer.getRootView();
                 view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
                 view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
             }
