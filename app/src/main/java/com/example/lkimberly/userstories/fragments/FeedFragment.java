@@ -12,11 +12,13 @@ import android.widget.Toast;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.adapters.SwipeCardAdapter;
 import com.example.lkimberly.userstories.models.Job;
+import com.example.lkimberly.userstories.models.Matches;
 import com.example.lkimberly.userstories.models.SwipeCard;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +86,8 @@ public class FeedFragment extends Fragment {
 
             @Override
             public void onRightCardExit(Object dataObject) {
+                SwipeCard currentCard = (SwipeCard) dataObject;
+                createMatch(currentCard);
                 makeToast(getContext(), "Right!");
             }
 
@@ -112,6 +116,28 @@ public class FeedFragment extends Fragment {
 
     }
 
+    private void createMatch(SwipeCard currentCard) {
+        final Matches newMatch = new Matches();
+        newMatch.setJobPoster(currentCard.getJob().getUser());
+        newMatch.setJobSubscriber(currentUser);
+        newMatch.setJob(currentCard.getJob());
+
+        Log.d("newMatchSave", "1. Success!");
+
+        newMatch.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Log.d("createMatch", "save match success!");
+//                    Toast.makeText(getContext(), "Match saved", Toast.LENGTH_LONG).show();
+                } else {
+                    Log.d("createMatch", "save match failed!");
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
     static void makeToast(Context ctx, String s){
         Toast.makeText(ctx, s, Toast.LENGTH_SHORT).show();
     }
@@ -130,9 +156,9 @@ public class FeedFragment extends Fragment {
                         Job job = objects.get(objects.size() - i - 1);
 
                         try {
-                            al.add(new SwipeCard(job.getTitle().toString(), job.getDescription().toString(), job.getImage().getUrl()));
+                            al.add(new SwipeCard(job.getTitle().toString(), job.getDescription().toString(), job.getImage().getUrl(), job));
                         } catch (NullPointerException e2) {
-                            al.add(new SwipeCard("EMPTY", "EMPTY", "EMPTY"));
+                            al.add(new SwipeCard("EMPTY", "EMPTY", "EMPTY", null));
                         }
                         swipeCardAdapter.notifyDataSetChanged();
                     }
