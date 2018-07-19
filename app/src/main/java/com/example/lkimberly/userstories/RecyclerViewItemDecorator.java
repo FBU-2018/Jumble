@@ -24,4 +24,6 @@ public class RecyclerViewItemDecorator extends RecyclerView.ItemDecoration {
             outRect.top = 0;
         }
     }
+
+
 }

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.lkimberly.userstories.models.MatchDataModel;
 import com.example.lkimberly.userstories.models.Matches;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -30,13 +31,13 @@ import static com.parse.Parse.getApplicationContext;
 public class MatchPageFragment extends Fragment {
 
 
-    // list of matches
-    final List<List<ParseUser>> allMatches = new ArrayList<>();
-
     // match dictionary
     final Map<String, List<ParseUser>> matchDict= new HashMap<>();
     // the recycler view
     RecyclerView rvMatches;
+
+    //match data (job followed by list of users who matched with that job
+    List<MatchDataModel> matchesModelList = new ArrayList<>();
 
     // the adapter wired to the recycler view
     MatchPageAdapter adapter;
@@ -60,7 +61,7 @@ public class MatchPageFragment extends Fragment {
         rvMatches = view.findViewById(R.id.rv_outerRecyclerView);
         rvMatches.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new MatchPageAdapter(getActivity(), allMatches);
+        adapter = new MatchPageAdapter(getActivity(), matchesModelList);
         rvMatches.setAdapter(adapter);
 
         int spaceInPixels = 100;
@@ -111,10 +112,10 @@ public class MatchPageFragment extends Fragment {
                     @Override
                     public void done(List<Matches> objects, ParseException e) {
                         if (e == null) {
-                            allMatches.clear();
-
+                            matchDict.clear();
+                            matchesModelList.clear();
                             for (int i = 0; i < objects.size(); i++) {
-                                Log.d(Integer.toString(i), objects.get(i).getJobPoster().toString());
+
                                 Matches singleMatch = (Matches) objects.get(i);
                                 if (matchDict.containsKey(singleMatch.getJob().getObjectId())){
                                     List<ParseUser> listOfMatchesForGivenJob = matchDict.get(singleMatch.getJob().getObjectId());
@@ -128,10 +129,14 @@ public class MatchPageFragment extends Fragment {
                             }
 
                             for (String jobOfCurrentUser: matchDict.keySet()) {
-                                allMatches.add(matchDict.get(jobOfCurrentUser));
+
+                                matchesModelList.add(new MatchDataModel(1, jobOfCurrentUser));
+                                matchesModelList.add(new MatchDataModel(0, matchDict.get(jobOfCurrentUser)));
+
                             }
+                            Log.d("Size",matchesModelList.toString());
                             adapter.notifyDataSetChanged();
-                            Log.d("Matches", allMatches.toString());
+
                         } else {
                             e.printStackTrace();
                         }

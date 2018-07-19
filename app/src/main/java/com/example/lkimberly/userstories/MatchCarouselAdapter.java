@@ -18,6 +18,7 @@ import com.parse.ParseUser;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -27,7 +28,7 @@ public class MatchCarouselAdapter extends RecyclerView.Adapter<MatchCarouselAdap
 
 
     private final Activity activity;
-    private List<ParseUser> mUsers;
+    private List<ParseUser> mUsers = new ArrayList<>();
 
     private int mRowIndex = -1;
 
@@ -46,6 +47,8 @@ public class MatchCarouselAdapter extends RecyclerView.Adapter<MatchCarouselAdap
 
         View matchView = inflater.inflate(R.layout.match_carousel_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(activity, matchView);
+
+
         return viewHolder;
 
     }
