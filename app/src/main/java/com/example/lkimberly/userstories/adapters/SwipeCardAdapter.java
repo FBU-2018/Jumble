@@ -1,4 +1,4 @@
-package com.example.lkimberly.userstories;
+package com.example.lkimberly.userstories.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.SwipeCard;
 

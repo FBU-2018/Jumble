@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.lkimberly.userstories.models.User;
 import com.parse.ParseUser;
 
 import java.io.File;
@@ -24,7 +23,7 @@ public class ProfileFragment extends Fragment {
     Button editProfileBtn;
     private ViewPager viewPager;
 
-    User currentUser;
+    ParseUser currentUser;
 
     ImageView ivProfile;
     TextView tvUsername;
@@ -50,7 +49,7 @@ public class ProfileFragment extends Fragment {
         viewPager = getActivity().findViewById(R.id.pager);
         editProfileBtn = getActivity().findViewById(R.id.edit_profile_btn);
 
-        currentUser = (User) ParseUser.getCurrentUser();
+        currentUser = ParseUser.getCurrentUser();
 
         ivProfile = view.findViewById(R.id.profile_iv);
         tvUsername = view.findViewById(R.id.tv_profile_name);
@@ -59,7 +58,7 @@ public class ProfileFragment extends Fragment {
         tvSocialMedia = view.findViewById(R.id.tv_profile_link);
         ivProfile = view.findViewById(R.id.profile_iv);
 
-        tvUsername.setText(currentUser.getName());
+        tvUsername.setText(currentUser.getUsername());
         tvInstution.setText(currentUser.get("institution").toString());
         tvPhoneNumber.setText(currentUser.get("phoneNumber").toString());
         tvSocialMedia.setText(currentUser.get("linkedin").toString());

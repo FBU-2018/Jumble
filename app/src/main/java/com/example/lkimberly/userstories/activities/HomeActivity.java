@@ -1,4 +1,4 @@
-package com.example.lkimberly.userstories;
+package com.example.lkimberly.userstories.activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -21,8 +21,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 
+import com.example.lkimberly.userstories.fragments.CreatePostFragment;
+import com.example.lkimberly.userstories.fragments.EditProfileFragment;
+import com.example.lkimberly.userstories.fragments.FeedFragment;
+import com.example.lkimberly.userstories.fragments.MatchPageFragment;
+import com.example.lkimberly.userstories.fragments.ProfileFragment;
+import com.example.lkimberly.userstories.R;
 import com.parse.GetCallback;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
@@ -69,6 +76,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         photoFile = getPhotoFileUri("photo.jpg");
 
