@@ -1,7 +1,14 @@
 package com.example.lkimberly.userstories.fragments;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,22 +17,36 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.lkimberly.userstories.BitmapScaler;
+import com.example.lkimberly.userstories.activities.HomeActivity;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.User;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import org.w3c.dom.Text;
 
+import static android.app.Activity.RESULT_OK;
+import static com.example.lkimberly.userstories.fragments.ProfileFragment.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE;
 import static com.parse.ParseUser.getCurrentUser;
 
 import com.example.lkimberly.userstories.R;
+
+import java.io.File;
 
 public class EditProfileFragment extends Fragment {
 
     Button saveProfileBtn;
     ImageButton ib_profile_photo;
+    String photoFileName = "photo.jpg";
+    File photoFile;
+    ImageView edit_profile_iv;
+
     private ViewPager viewPager;
 
     TextView tv_name;
@@ -57,6 +78,7 @@ public class EditProfileFragment extends Fragment {
         viewPager = getActivity().findViewById(R.id.pager);
         saveProfileBtn = getActivity().findViewById(R.id.save_profile_btn);
         ib_profile_photo = getActivity().findViewById(R.id.ib_profile_photo);
+        edit_profile_iv = getActivity().findViewById(R.id.edit_profile_iv);
 
         tv_name = getActivity().findViewById(R.id.tv_profile_name);
         tv_institution = getActivity().findViewById(R.id.tv_profile_institution);
@@ -111,8 +133,77 @@ public class EditProfileFragment extends Fragment {
         ib_profile_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                onLaunchCamera();
             }
         });
+
+        try {
+            Glide.with(EditProfileFragment.this)
+                    .load(ParseUser.getCurrentUser().getParseFile("profilePicture").getUrl())
+                    .into(edit_profile_iv);
+        } catch (NullPointerException e) {
+            Log.d("EditProfileFragment", "profile picture does not exist!");
+            e.printStackTrace();
+        }
+    }
+
+
+    public void onLaunchCamera() {
+        // create Intent to take a picture and return control to the calling application
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Create a File reference to access to future access
+        photoFile = getPhotoFileUri(photoFileName);
+
+        // wrap File object into a content provider
+        // required for API >= 24
+        // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
+        Uri fileProvider = FileProvider.getUriForFile(getActivity(), "com.codepath.fileprovider", photoFile);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
+
+        // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
+        // So as long as the result is not null, it's safe to use the intent.
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            // Start the image capture intent to take photo
+            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        }
+    }
+
+    // Returns the File for a photo stored on disk given the fileName
+    public File getPhotoFileUri(String fileName) {
+        // Get safe storage directory for photos
+        // Use `getExternalFilesDir` on Context to access package-specific directories.
+        // This way, we don't need to request external read/write runtime permissions.
+        File mediaStorageDir = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), "EditProfileFragment");
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
+            Log.d("EditProfileFragment", "failed to create directory");
+        }
+
+        // Return the file target for the photo based on filename
+        File file = new File(mediaStorageDir.getPath() + File.separator + fileName);
+
+        return file;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                String imagePath = photoFile.getAbsolutePath();
+                Bitmap rawTakenImage = BitmapFactory.decodeFile(imagePath);
+                Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 400);
+                edit_profile_iv.setImageBitmap(resizedBitmap);
+
+                ParseFile parseFile = new ParseFile(new File(imagePath));
+
+                ParseUser.getCurrentUser().put("profilePicture", parseFile);
+
+                ParseUser.getCurrentUser().saveInBackground();
+            } else { // Result was a failure
+                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

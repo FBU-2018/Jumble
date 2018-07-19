@@ -75,7 +75,7 @@ public class HomeActivity extends AppCompatActivity {
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        photoFile = getPhotoFileUri("photo.jpg");
+        //photoFile = getPhotoFileUri("photo.jpg");
 
         // Add fragments
 
