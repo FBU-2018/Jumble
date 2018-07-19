@@ -33,7 +33,7 @@ public class ProfileFragment extends Fragment {
 
     ImageView ivProfile;
     TextView tvUsername;
-    TextView tvInstution;
+    TextView tvInstitution;
     TextView tvPhoneNumber;
     TextView tvSocialMedia;
 
@@ -61,13 +61,13 @@ public class ProfileFragment extends Fragment {
 
         ivProfile = view.findViewById(R.id.profile_iv);
         tvUsername = view.findViewById(R.id.tv_profile_name);
-        tvInstution = view.findViewById(R.id.tv_profile_institution);
+        tvInstitution = view.findViewById(R.id.tv_profile_institution);
         tvPhoneNumber = view.findViewById(R.id.tv_profile_phone_number);
         tvSocialMedia = view.findViewById(R.id.tv_profile_link);
         ivProfile = view.findViewById(R.id.profile_iv);
 
         tvUsername.setText(currentUser.getUsername());
-        tvInstution.setText(currentUser.get("institution").toString());
+        tvInstitution.setText(currentUser.get("institution").toString());
         tvPhoneNumber.setText(currentUser.get("phoneNumber").toString());
         tvSocialMedia.setText(currentUser.get("linkedin").toString());
 
