@@ -1,5 +1,6 @@
 package com.example.lkimberly.userstories.fragments;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -96,5 +99,50 @@ public class CreatePostFragment extends Fragment {
                 });
             }
         });
+
+//        etTitle.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                etTitle.requestFocus();
+//                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                imm.showSoftInput(etTitle, InputMethodManager.SHOW_IMPLICIT);
+//            }
+//        });
+//
+//        etDescription.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                etDescription.requestFocus();
+//                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                imm.showSoftInput(etDescription, InputMethodManager.SHOW_IMPLICIT);
+//            }
+//        });
+//
+//        etTime.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                etTime.requestFocus();
+//                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                imm.showSoftInput(etTime, InputMethodManager.SHOW_IMPLICIT);
+//            }
+//        });
+//
+//        etDate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                etDate.requestFocus();
+//                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                imm.showSoftInput(etDate, InputMethodManager.SHOW_IMPLICIT);
+//            }
+//        });
+//
+//        etLocation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                etLocation.requestFocus();
+//                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                imm.showSoftInput(etLocation, InputMethodManager.SHOW_IMPLICIT);
+//            }
+//        });
     }
 }
