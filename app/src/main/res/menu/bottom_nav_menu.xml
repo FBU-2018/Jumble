@@ -12,7 +12,7 @@
         android:title="Post" />
     <item
         android:id="@+id/action_comment"
-        android:icon="@drawable/ic_instagram_comment"
+        android:icon="@drawable/ic_comment"
         android:title="Message" />
 
 </menu>

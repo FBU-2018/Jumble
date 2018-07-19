@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.lkimberly.userstories.models.Job;
@@ -24,6 +25,7 @@ import com.example.lkimberly.userstories.R;
 public class EditProfileFragment extends Fragment {
 
     Button saveProfileBtn;
+    ImageButton ib_profile_photo;
     private ViewPager viewPager;
 
     TextView tv_name;
@@ -54,6 +56,7 @@ public class EditProfileFragment extends Fragment {
         // Grab a reference to our view pager.
         viewPager = getActivity().findViewById(R.id.pager);
         saveProfileBtn = getActivity().findViewById(R.id.save_profile_btn);
+        ib_profile_photo = getActivity().findViewById(R.id.ib_profile_photo);
 
         tv_name = getActivity().findViewById(R.id.tv_profile_name);
         tv_institution = getActivity().findViewById(R.id.tv_profile_institution);
@@ -100,8 +103,15 @@ public class EditProfileFragment extends Fragment {
                 }
 
                 user.saveInBackground();
-                
+
                 viewPager.setCurrentItem(3);
+            }
+        });
+
+        ib_profile_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }
