@@ -223,44 +223,6 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    public void logOutOption(MenuItem item) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Would you like to log out?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //do things
-                        logOut();
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
-
-
-    public void  logOut() {
-        Log.d("Logout", "Logged out");
-        ParseUser.logOutInBackground(new LogOutCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    final Intent intent = new Intent(HomeActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Log.e("Log Out Error!", "User wasn't logged out!");
-                }
-            }
-        });
-
-    }
-
     public  void setUser() {
         String userId = getIntent().getStringExtra("userId");
         ParseQuery query = ParseUser.getQuery();
