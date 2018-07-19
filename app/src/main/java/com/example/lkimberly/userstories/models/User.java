@@ -49,8 +49,8 @@ public class User extends ParseUser {
         return  getString(KEY_LINKEDIN);
     }
 
-    public void setLinkedIn(String name) {
-        put(KEY_LINKEDIN, name);
+    public void setLinkedIn(String linkedin) {
+        put(KEY_LINKEDIN, linkedin);
     }
 
 
@@ -69,8 +69,8 @@ public class User extends ParseUser {
         return  getString(KEY_INSTITUTION);
     }
 
-    public void setInstitution(String name) {
-        put(KEY_INSTITUTION, name);
+    public void setInstitution(String institution) {
+        put(KEY_INSTITUTION, institution);
     }
 
 

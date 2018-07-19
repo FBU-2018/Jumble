@@ -3,6 +3,7 @@ package com.example.lkimberly.userstories;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,31 +73,31 @@ public class EditProfileFragment extends Fragment {
                 if (!name.equals("")) {
                     tv_name.setText(name);
                     user.setName(name);
+                    et_name.setText("");
                 }
 
                 String institution = et_institution.getText().toString();
                 if (!institution.equals("")) {
                     tv_institution.setText(institution);
                     user.setInstitution(institution);
+                    et_institution.setText("");
                 }
 
                 String phoneNumber = et_phoneNumber.getText().toString();
                 if (!phoneNumber.equals("")) {
                     tv_phoneNumber.setText(phoneNumber);
                     user.setPhoneNumber(phoneNumber);
+                    et_phoneNumber.setText("");
                 }
 
                 String link = et_link.getText().toString();
                 if (!link.equals("")) {
                     tv_link.setText(link);
                     user.setLinkedIn(link);
+                    et_link.setText("");
                 }
 
-                //et_name.setText("");
-                //et_institution.setText("");
-                //et_phoneNumber.setText("");
-                //et_link.setText("");
-
+                user.saveInBackground();
                 viewPager.setCurrentItem(3);
             }
         });
