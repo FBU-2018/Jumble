@@ -73,16 +73,11 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         photoFile = getPhotoFileUri("photo.jpg");
-
-        // Add fragments
-
-//        fragments.add(new EmptyFragment());
-//        fragments.add(new EmptyFragment());
-//        fragments.add(new MatchPageFragment());
-
+        
         // Add fragments
         fragments.add(new FeedFragment());
         fragments.add(new CreatePostFragment());

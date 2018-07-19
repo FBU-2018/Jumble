@@ -7,17 +7,17 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/tv_potentialMatchName"
+        android:id="@+id/tv_potentialMatchNameDetailsPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="TextView"
-        android:layout_below="@+id/iv_profilePic"
+        android:layout_below="@+id/iv_profilePicDetailsPage"
         android:layout_marginTop="15dp"
   />
 
     <ImageView
-        android:id="@+id/iv_profilePic"
+        android:id="@+id/iv_profilePicDetailsPage"
         android:layout_width="150dp"
         android:layout_height="150dp"
 
@@ -32,10 +32,10 @@
         app:srcCompat="@drawable/ic_instagram_profile" />
 
     <TextView
-        android:id="@+id/tv_institutionTitle"
+        android:id="@+id/tv_institutionTitleDetailsPage"
         android:layout_width="147dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_potentialMatchName"
+        android:layout_below="@id/tv_potentialMatchNameDetailsPage"
         android:layout_marginLeft="50dp"
         android:text="Institution (Company, school, etc.):"
         android:layout_marginTop="30dp"
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
 
         android:layout_alignStart="@+id/tv_institutionValue"
-        android:layout_alignTop="@+id/tv_ratingTitle"
+        android:layout_alignTop="@+id/tv_ratingTitleDetailsPage"
         android:text="TextView" />
 
     <TextView
@@ -55,22 +55,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_below="@id/tv_potentialMatchName"
-        android:layout_toEndOf="@+id/tv_potentialMatchName"
+        android:layout_below="@id/tv_potentialMatchNameDetailsPage"
+        android:layout_toEndOf="@+id/tv_potentialMatchNameDetailsPage"
         android:text="TextView"
         android:gravity="bottom"
         android:layout_marginTop="40dp"
         android:layout_marginLeft="15dp"
-        android:layout_alignBottom="@id/tv_institutionTitle"
+        android:layout_alignBottom="@id/tv_institutionTitleDetailsPage"
  />
 
     <TextView
-        android:id="@+id/tv_ratingTitle"
+        android:id="@+id/tv_ratingTitleDetailsPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@id/tv_institutionTitle"
+        android:layout_alignStart="@id/tv_institutionTitleDetailsPage"
 
-        android:layout_below="@id/tv_institutionTitle"
+        android:layout_below="@id/tv_institutionTitleDetailsPage"
         android:layout_marginTop="20dp"
         android:text="Rating:" />
 

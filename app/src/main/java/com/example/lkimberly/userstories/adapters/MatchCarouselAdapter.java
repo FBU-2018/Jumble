@@ -2,6 +2,7 @@ package com.example.lkimberly.userstories.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
@@ -14,8 +15,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.lkimberly.userstories.R;
+import com.example.lkimberly.userstories.activities.ProfileDetailsActivity;
 import com.example.lkimberly.userstories.models.User;
 import com.parse.ParseUser;
+
+import org.parceler.Parcels;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -184,8 +188,8 @@ public class MatchCarouselAdapter extends RecyclerView.Adapter<MatchCarouselAdap
 
     // create ViewHolder class
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-//            implements View.OnClickListener{
+    public static class ViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener{
         //            implements View.OnClickListener, View.OnLongClickListener{
         public final Activity activity;
         public ImageView ivProfileImage;
@@ -205,27 +209,25 @@ public class MatchCarouselAdapter extends RecyclerView.Adapter<MatchCarouselAdap
 
             // perform findViewById lookups
 
-            ivProfileImage = (ImageView) itemView.findViewById(R.id.iv_profilePic);
-            tvName = (TextView) itemView.findViewById(R.id.tv_potentialMatchName);
+            ivProfileImage = (ImageView) itemView.findViewById(R.id.iv_profilePicDetailsPage);
+            tvName = (TextView) itemView.findViewById(R.id.tv_potentialMatchNameDetailsPage);
             tvInstitution = (TextView) itemView.findViewById(R.id.tv_institutionValue);
             tvRating = (TextView) itemView.findViewById(R.id.tv_ratingValue);
 
 
-//            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(this);
 //            itemView.setOnLongClickListener(this);
         }
 
 
-//        @Override
-//        public void onClick(View v) {
-//            Intent i = new Intent(itemView.getContext(), DetailsActivity.class);
-//            i.putExtra("UserName", tvUsername.getText().toString());
-//            i.putExtra("Body", tvBody.getText().toString());
-//            i.putExtra("Date", tvDate.getText().toString());
-//            i.putExtra("Post", Parcels.wrap(post));
-//            itemView.getContext().startActivity(i);
-//        }
-//
+        @Override
+        public void onClick(View v) {
+            Intent i = new Intent(itemView.getContext(), ProfileDetailsActivity.class);
+
+            i.putExtra("User", Parcels.wrap(user));
+            itemView.getContext().startActivity(i);
+        }
+
 //        @Override
 //        public boolean onLongClick(View v) {
 //            // handle click here
