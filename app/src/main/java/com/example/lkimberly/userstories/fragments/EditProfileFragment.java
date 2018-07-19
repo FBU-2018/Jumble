@@ -56,6 +56,7 @@ public class EditProfileFragment extends Fragment {
         // Grab a reference to our view pager.
         viewPager = getActivity().findViewById(R.id.pager);
         saveProfileBtn = getActivity().findViewById(R.id.save_profile_btn);
+        ib_profile_photo = getActivity().findViewById(R.id.ib_profile_photo);
 
         tv_name = getActivity().findViewById(R.id.tv_profile_name);
         tv_institution = getActivity().findViewById(R.id.tv_profile_institution);
