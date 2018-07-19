@@ -73,15 +73,10 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         //photoFile = getPhotoFileUri("photo.jpg");
-
-        // Add fragments
-
-//        fragments.add(new EmptyFragment());
-//        fragments.add(new EmptyFragment());
-//        fragments.add(new MatchPageFragment());
 
         // Add fragments
         fragments.add(new FeedFragment());
@@ -172,15 +167,6 @@ public class HomeActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
             }
         }
-
-        // Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
-        // setSupportActionBar(myToolbar);
-
-//        final Post.Query postQuery = new Post.Query();
-//
-//        postQuery.getTop().withUser();
-//
-//        setUser();
 
     }
 

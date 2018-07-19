@@ -12,15 +12,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.MatchDataModel;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-
 import com.parse.ParseUser;
 
 import java.util.List;
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class MatchPageAdapter extends RecyclerView.Adapter {
     private static final int TYPE_NO_MATCHES = 2;
@@ -141,6 +144,47 @@ public class MatchPageAdapter extends RecyclerView.Adapter {
                             if (e == null) {
                                 final VHHeader VHheader = (VHHeader) viewHolder;
                                 VHheader.txtTitle.setText(objects.get(0).getTitle());
+
+
+                                int round_radius = context.getResources().getInteger(R.integer.radius);
+                                int round_margin = context.getResources().getInteger(R.integer.margin);
+
+                                final RoundedCornersTransformation roundedCornersTransformation = new RoundedCornersTransformation(round_radius, round_margin);
+
+                                final RequestOptions requestOptions = RequestOptions.bitmapTransform(
+                                        roundedCornersTransformation
+                                );
+
+
+                                // get the correct place holder and image view for the current orientation
+                                int placeholderId = R.drawable.ic_instagram_profile;
+                                ImageView imageView = VHheader.jobPic;
+
+
+                                try {
+                                    if (objects.get(0).fetchIfNeeded().getParseFile("image")!= null) {
+                                        Glide.with(VHheader.itemView.getContext())
+                                                .load(objects.get(0).fetchIfNeeded().getParseFile("image").getUrl())
+                                                .apply(
+                                                        RequestOptions.placeholderOf(placeholderId)
+                                                                .error(placeholderId)
+                                                                .fitCenter()
+                                                )
+//                                                .apply(requestOptions)
+                                                .into(imageView);
+                                    } else {
+                                        Glide.with(VHheader.itemView.getContext())
+                                                .load(objects.get(0).fetchIfNeeded().getParseFile("image"))
+                                                .apply(
+                                                        RequestOptions.placeholderOf(placeholderId)
+                                                                .error(placeholderId)
+                                                                .fitCenter()
+                                                )
+                                                .into(imageView);
+                                    }
+                                } catch (com.parse.ParseException e2) {
+                                    e2.printStackTrace();
+                                }
                             }
                         }
                     });

@@ -18,6 +18,7 @@
                 android:id="@+id/iv_headerJobPic"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:scaleType="centerCrop"
                 card_view:srcCompat="@drawable/button_rounded_corners" />
 
             <TextView
@@ -32,7 +33,7 @@
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                card_view:srcCompat="@drawable/menu_dots_vert_24dp" />
+                card_view:srcCompat="@mipmap/ic_arrow_2" />
 
         </android.support.v7.widget.LinearLayoutCompat>
 
