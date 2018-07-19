@@ -4,122 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreatePostFragment">
+    android:orientation="vertical"
+    tools:context=".fragments.CreatePostFragment">
 
     <ImageView
         android:id="@+id/ivPhoto"
-        android:layout_width="119dp"
-        android:layout_height="95dp"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="40dp"
         android:src="@android:color/background_dark" />
-
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/etTitle"
-        android:layout_alignStart="@+id/tvTime"
-        android:text="@string/title"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/tvDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/etDescription"
-        android:layout_alignStart="@+id/tvTitle"
-        android:text="@string/description"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/tvTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="191dp"
-        android:layout_marginStart="43dp"
-        android:text="@string/time"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/tvDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/etDate"
-        android:layout_alignStart="@+id/tvTitle"
-        android:text="@string/date"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/tvLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/etLocation"
-        android:layout_alignStart="@+id/tvTitle"
-        android:text="@string/location"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/etTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/ivPhoto"
-        android:layout_marginTop="192dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPhoto" />
-
-    <EditText
-        android:id="@+id/etDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/ivPhoto"
-        android:layout_below="@+id/etTitle"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPhoto" />
-
-    <EditText
-        android:id="@+id/etDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/ivPhoto"
-        android:layout_below="@+id/etDescription"
-        android:ems="10"
-        android:inputType="date" />
-
-    <EditText
-        android:id="@+id/etTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tvTime"
-        android:layout_alignStart="@+id/ivPhoto"
-        android:ems="10"
-        android:inputType="time" />
-
-    <EditText
-        android:id="@+id/etLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/ivPhoto"
-        android:layout_below="@+id/tvTime"
-        android:layout_marginTop="-191dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPhoto" />
 
     <Button
         android:id="@+id/bCreateJob"
@@ -128,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="40dp"
         android:text="Create job post"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -140,9 +35,126 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="122dp"
-        android:layout_marginTop="97dp"
+        android:layout_marginEnd="120dp"
+        android:layout_marginRight="130dp"
+        android:layout_marginTop="150dp"
         android:background="@drawable/button_rounded_corners"
-        android:src="@drawable/ic_instagram_new_post" />
+        android:src="@drawable/ic_instagram_new_post"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="200dp"
+        android:text="Title"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etTitle"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/bCreateJob"
+        android:layout_alignTop="@+id/tvTitle"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_border_edittext"
+        android:ems="10"
+        android:padding="5dp"
+        android:layout_alignRight="@+id/bCreateJob" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="250dp"
+        android:text="Description"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etDescription"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/bCreateJob"
+        android:layout_alignTop="@+id/textView2"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_border_edittext"
+        android:ems="10"
+        android:padding="5dp"
+        android:layout_alignRight="@+id/bCreateJob" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="300dp"
+        android:text="Date"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etDate"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/bCreateJob"
+        android:layout_alignTop="@+id/textView"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_border_edittext"
+        android:ems="10"
+        android:padding="5dp"
+        android:layout_alignRight="@+id/bCreateJob" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="350dp"
+        android:text="Time"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etTime"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/bCreateJob"
+        android:layout_alignTop="@+id/textView3"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_border_edittext"
+        android:ems="10"
+        android:padding="5dp"
+        android:layout_alignRight="@+id/bCreateJob" />
+
+    <TextView
+        android:id="@+id/tvLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="400dp"
+        android:text="Location"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etLocation"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/bCreateJob"
+        android:layout_alignTop="@+id/tvLocation"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_border_edittext"
+        android:ems="10"
+        android:padding="5dp"
+        android:layout_alignRight="@+id/bCreateJob" />
 
 </RelativeLayout>

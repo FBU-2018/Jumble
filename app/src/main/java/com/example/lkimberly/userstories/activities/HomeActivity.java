@@ -1,9 +1,6 @@
-package com.example.lkimberly.userstories;
+package com.example.lkimberly.userstories.activities;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,10 +18,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 
+import com.example.lkimberly.userstories.R;
+import com.example.lkimberly.userstories.fragments.CreatePostFragment;
+import com.example.lkimberly.userstories.fragments.EditProfileFragment;
+import com.example.lkimberly.userstories.fragments.FeedFragment;
+import com.example.lkimberly.userstories.fragments.MatchPageFragment;
+import com.example.lkimberly.userstories.fragments.ProfileFragment;
 import com.parse.GetCallback;
-import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -69,6 +72,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         photoFile = getPhotoFileUri("photo.jpg");
 
@@ -82,8 +86,8 @@ public class HomeActivity extends AppCompatActivity {
         fragments.add(new FeedFragment());
         fragments.add(new CreatePostFragment());
         fragments.add(new MatchPageFragment());
-//        fragments.add(new ProfileFragment());
-//        fragments.add(new EditProfileFragment());
+        fragments.add(new ProfileFragment());
+        fragments.add(new EditProfileFragment());
 
         // Grab a reference to our view pager.
         viewPager = findViewById(R.id.pager);
@@ -151,12 +155,13 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+
         ib_profile = findViewById(R.id.ib_profile);
 
         ib_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(3);
             }
         });
 
@@ -212,44 +217,6 @@ public class HomeActivity extends AppCompatActivity {
         public int getCount() {
             return fragments.size();
         }
-    }
-
-    public void logOutOption(MenuItem item) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Would you like to log out?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //do things
-                        logOut();
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
-
-
-    public void  logOut() {
-        Log.d("Logout", "Logged out");
-        ParseUser.logOutInBackground(new LogOutCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    final Intent intent = new Intent(HomeActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Log.e("Log Out Error!", "User wasn't logged out!");
-                }
-            }
-        });
-
     }
 
     public  void setUser() {

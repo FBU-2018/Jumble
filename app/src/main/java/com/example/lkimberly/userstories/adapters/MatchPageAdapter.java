@@ -1,4 +1,4 @@
-package com.example.lkimberly.userstories;
+package com.example.lkimberly.userstories.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,6 +16,9 @@ import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.MatchDataModel;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+
+import com.example.lkimberly.userstories.R;
+
 import com.parse.ParseUser;
 
 import java.util.List;

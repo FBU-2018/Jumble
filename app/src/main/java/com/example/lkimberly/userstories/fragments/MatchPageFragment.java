@@ -1,4 +1,4 @@
-package com.example.lkimberly.userstories;
+package com.example.lkimberly.userstories.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,7 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
 import com.example.lkimberly.userstories.models.MatchDataModel;
+
+import com.example.lkimberly.userstories.R;
+import com.example.lkimberly.userstories.RecyclerViewItemDecorator;
+import com.example.lkimberly.userstories.adapters.MatchPageAdapter;
+
 import com.example.lkimberly.userstories.models.Matches;
 import com.parse.FindCallback;
 import com.parse.ParseException;
