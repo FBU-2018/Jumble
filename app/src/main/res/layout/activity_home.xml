@@ -39,11 +39,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginEnd="30dp"
-                    app:srcCompat="@drawable/ic_instagram_profile"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="30dp" />
+                    android:layout_marginRight="30dp"
+                    android:background="@android:color/transparent"
+                    android:tint="@color/ig_brand_pinkish"
+                    app:srcCompat="@drawable/ic_instagram_profile" />
             </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>
