@@ -11,6 +11,8 @@ public class MatchDataModel {
     public static final int ITEM_TYPEE=0;
     public static final int HEADER_TYPE=1;
 
+    public static final int NO_MATCH_TYPE=2;
+
 
     public int type;
     public String jobObjectId;

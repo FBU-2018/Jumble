@@ -24,9 +24,10 @@ import com.parse.ParseUser;
 import java.util.List;
 
 public class MatchPageAdapter extends RecyclerView.Adapter {
-
+    private static final int TYPE_NO_MATCHES = 2;
     private static final int TYPE_HEADER = 1;
     private static final int TYPE_ITEM = 0;
+
 
     private final Activity activity;
 
@@ -78,7 +79,7 @@ public class MatchPageAdapter extends RecyclerView.Adapter {
             horizontalList.setRecycledViewPool(viewPool);
             return viewHolder;
 
-        } else {
+        } else if (viewType == TYPE_HEADER){
             //inflate your layout and pass it to view holder
 
             context = parent.getContext();
@@ -88,6 +89,14 @@ public class MatchPageAdapter extends RecyclerView.Adapter {
 
 
             return new VHHeader(matchView);
+        } else {
+            context = parent.getContext();
+            LayoutInflater inflater = LayoutInflater.from(context);
+
+            View matchView = inflater.inflate(R.layout.no_matches, parent, false);
+
+
+            return new VHNoMatches(matchView);
         }
 
 //        context = parent.getContext();
@@ -122,7 +131,7 @@ public class MatchPageAdapter extends RecyclerView.Adapter {
 
             holder.horizontalAdapter.setData(mMatchesModelList.get(position).getAllMatches()); // List of Users
             holder.horizontalAdapter.setRowIndex(position);
-        } else { // Dealing with a header
+        } else if (mMatchesModelList.get(position).getItemTypee() == 1){ // Dealing with a header
 
             Job.Query jobQuery = new Job.Query();
             jobQuery.getTop()
@@ -136,6 +145,8 @@ public class MatchPageAdapter extends RecyclerView.Adapter {
                             }
                         }
                     });
+
+        } else {
 
         }
     }
@@ -197,14 +208,25 @@ public class MatchPageAdapter extends RecyclerView.Adapter {
         }
     }
 
+    class VHNoMatches extends RecyclerView.ViewHolder {
+        TextView txtNoMatches;
+        public VHNoMatches(View itemView) {
+            super(itemView);
+            this.txtNoMatches = (TextView)itemView.findViewById(R.id.tv_noMatches);
+
+        }
+    }
+
     @Override
     public int getItemViewType(int position) {
         if (mMatchesModelList.get(position).getItemTypee() == 1)
         {
             return TYPE_HEADER;
+        } else if (mMatchesModelList.get(position).getItemTypee() == 2) {
+            return TYPE_NO_MATCHES;
+        } else {
+            return TYPE_ITEM;
         }
-
-        return TYPE_ITEM;
     }
 
     private boolean isPositionHeader(int position) {
