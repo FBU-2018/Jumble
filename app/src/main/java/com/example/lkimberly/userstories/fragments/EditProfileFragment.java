@@ -166,7 +166,6 @@ public class EditProfileFragment extends Fragment {
             // Start the image capture intent to take photo
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
-
     }
 
     // Returns the File for a photo stored on disk given the fileName
