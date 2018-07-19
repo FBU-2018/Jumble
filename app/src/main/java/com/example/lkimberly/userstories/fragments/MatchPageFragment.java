@@ -14,11 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-import com.example.lkimberly.userstories.models.MatchDataModel;
-
+import com.example.lkimberly.userstories.adapters.MatchPageAdapter;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.RecyclerViewItemDecorator;
-import com.example.lkimberly.userstories.adapters.MatchPageAdapter;
+import com.example.lkimberly.userstories.models.MatchDataModel;
 
 import com.example.lkimberly.userstories.models.Matches;
 import com.parse.FindCallback;
@@ -113,13 +112,14 @@ public class MatchPageFragment extends Fragment {
                 .withJob()
                 .withJobPoster()
                 .withJobSubscriber()
-                .whereEqualTo("jobPoster", currentUserPointer)
+//                .whereEqualTo("jobPoster", currentUserPointer)
                 .findInBackground(new FindCallback<Matches>() {
                     @Override
                     public void done(List<Matches> objects, ParseException e) {
                         if (e == null) {
                             matchDict.clear();
                             matchesModelList.clear();
+                            Log.d("Objects", objects.toString());
                             for (int i = 0; i < objects.size(); i++) {
 
                                 Matches singleMatch = (Matches) objects.get(i);

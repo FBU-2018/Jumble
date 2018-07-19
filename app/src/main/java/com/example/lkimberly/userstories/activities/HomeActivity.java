@@ -22,15 +22,12 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 
 
-import com.example.lkimberly.userstories.R;
-
 import com.example.lkimberly.userstories.fragments.ProfileFragment;
+import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.fragments.CreatePostFragment;
 import com.example.lkimberly.userstories.fragments.EditProfileFragment;
 import com.example.lkimberly.userstories.fragments.FeedFragment;
 import com.example.lkimberly.userstories.fragments.MatchPageFragment;
-import com.example.lkimberly.userstories.fragments.ProfileFragment;
-import com.example.lkimberly.userstories.R;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;

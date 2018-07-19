@@ -12,12 +12,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.MatchDataModel;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-
-import com.example.lkimberly.userstories.R;
 
 import com.parse.ParseUser;
 
