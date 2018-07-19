@@ -1,5 +1,6 @@
 package com.example.lkimberly.userstories.fragments;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.lkimberly.userstories.R;
+import com.example.lkimberly.userstories.activities.MainActivity;
+import com.parse.LogOutCallback;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import java.io.File;
@@ -22,6 +26,7 @@ import java.io.File;
 public class ProfileFragment extends Fragment {
 
     Button editProfileBtn;
+    Button logOutBtn;
     private ViewPager viewPager;
 
     ParseUser currentUser;
@@ -49,6 +54,8 @@ public class ProfileFragment extends Fragment {
         // Grab a reference to our view pager.
         viewPager = getActivity().findViewById(R.id.pager);
         editProfileBtn = getActivity().findViewById(R.id.edit_profile_btn);
+        logOutBtn = getActivity().findViewById(R.id.log_out_btn);
+
 
         currentUser = ParseUser.getCurrentUser();
 
@@ -74,6 +81,29 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 viewPager.setCurrentItem(4);
+            }
+        });
+
+        logOutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logOut();
+            }
+        });
+    }
+
+    public void  logOut() {
+        Log.d("Logout", "Logged out");
+        ParseUser.logOutInBackground(new LogOutCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    final Intent intent = new Intent(getContext(), MainActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                } else {
+                    Log.e("Log Out Error!", "User wasn't logged out!");
+                }
             }
         });
     }

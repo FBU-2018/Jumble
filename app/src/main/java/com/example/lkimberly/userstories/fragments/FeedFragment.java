@@ -25,16 +25,12 @@ public class FeedFragment extends Fragment {
 
     ArrayList<SwipeCard> al;
     SwipeCardAdapter swipeCardAdapter;
-//    private ArrayAdapter<String> arrayAdapter;
     int i;
 
     SwipeFlingAdapterView flingContainer;
 
     ParseUser currentUser;
-//    SwipeCardAdapter swipeCardAdapter;
     ArrayList<Job> jobs;
-//    RecyclerView rvPosts;
-//    private SwipeRefreshLayout swipeContainer;
 
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
@@ -52,37 +48,17 @@ public class FeedFragment extends Fragment {
         // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
 
         jobs = new ArrayList<>();
-//        swipeCardAdapter = new SwipeCardAdapter(jobs);
 
         currentUser = ParseUser.getCurrentUser();
 
         final Job.Query postsQuery = new Job.Query();
         postsQuery.getTop().withUser();
 
-//        al = new ArrayList<>();
-//        al.add("Job One");
-//        al.add("Job Two");
-//        al.add("Job Three");
-//        al.add("Job Four");
-//        al.add("Job Five");
-//        al.add("Job Six");
-//        al.add("Job Seven");
-//        al.add("Job Eight");
-
-//        arrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.item, R.id.helloText, al );
-
         al = new ArrayList<SwipeCard>();
-//        al.add(new SwipeCard("card1text1", "card1text2"));
-//        al.add(new SwipeCard("card2text1", "card2text2"));
-//        al.add(new SwipeCard("card3text1", "card3text2"));
-//        al.add(new SwipeCard("card4text1", "card4text2"));
-//        al.add(new SwipeCard("card5text1", "card5text2"));
 
         loadTopPosts();
 
         swipeCardAdapter = new SwipeCardAdapter(getContext(), getLayoutInflater(), al);
-
-//        flingContainer.setAdapter(swipeCardAdapter);
 
         flingContainer = getActivity().findViewById(R.id.frame);
 
@@ -113,18 +89,12 @@ public class FeedFragment extends Fragment {
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-////                 Ask for more data here
-//                al.add("XML ".concat(String.valueOf(i)));
-//                swipeCardAdapter.notifyDataSetChanged();
-//                Log.d("LIST", "notified");
-//                i++;
-//                makeToast(getContext(), "No more!");
-                Log.d("LIST", "notified");
+//                 Ask for more data here
+                Log.d("onAdapterAboutToEmpty", "No more!");
             }
 
             @Override
             public void onScroll(float scrollProgressPercent) {
-//                View view = flingContainer.getSelectedView();
                 View view = flingContainer.getRootView();
                 view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
                 view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
@@ -140,22 +110,6 @@ public class FeedFragment extends Fragment {
             }
         });
 
-//        @OnClick(R.id.right)
-//        public void right() {
-//            /**
-//             * Trigger the right event manually.
-//             */
-//            flingContainer.getTopCardListener().selectRight();
-//        }
-//
-//        @OnClick(R.id.left)
-//        public void left() {
-//            flingContainer.getTopCardListener().selectLeft();
-//        }
-
-//        rvPosts = getActivity().findViewById(R.id.rvPost);
-//        rvPosts.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        rvPosts.setAdapter(postAdapter);
     }
 
     static void makeToast(Context ctx, String s){
@@ -170,20 +124,11 @@ public class FeedFragment extends Fragment {
             @Override
             public void done(List<Job> objects, ParseException e) {
                 if (e == null) {
-                    // posts.addAll(objects);
-                    // postAdapter.notifyDataSetChanged();
 
                     for (int i = 0; i < objects.size(); ++i) {
-                        /*
-                        Log.d("HomeActivity", "Post[" + i + "] = "
-                                + objects.get(i).getDescription()
-                                + "\nusername = " + objects.get(i).getUser().getUsername()
-                        );
-                        */
 
                         Job job = objects.get(objects.size() - i - 1);
-//                        jobs.add(job);
-//                        swipeCardAdapter.notifyItemInserted(jobs.size() - 1);
+
                         try {
                             al.add(new SwipeCard(job.getTitle().toString(), job.getDescription().toString(), job.getImage().getUrl()));
                         } catch (NullPointerException e2) {

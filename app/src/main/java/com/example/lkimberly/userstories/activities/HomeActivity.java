@@ -78,12 +78,6 @@ public class HomeActivity extends AppCompatActivity {
         photoFile = getPhotoFileUri("photo.jpg");
 
         // Add fragments
-
-//        fragments.add(new EmptyFragment());
-//        fragments.add(new EmptyFragment());
-//        fragments.add(new MatchPageFragment());
-
-        // Add fragments
         fragments.add(new FeedFragment());
         fragments.add(new CreatePostFragment());
         fragments.add(new MatchPageFragment());
@@ -172,15 +166,6 @@ public class HomeActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
             }
         }
-
-        // Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
-        // setSupportActionBar(myToolbar);
-
-//        final Post.Query postQuery = new Post.Query();
-//
-//        postQuery.getTop().withUser();
-//
-//        setUser();
 
     }
 
