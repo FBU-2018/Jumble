@@ -100,6 +100,7 @@ public class EditProfileFragment extends Fragment {
                 }
 
                 user.saveInBackground();
+                
                 viewPager.setCurrentItem(3);
             }
         });
