@@ -41,6 +41,7 @@ public class ProfileFragment extends Fragment {
     private String imagePath = "";
     public final String APP_TAG = "MyCustomApp";
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
+    public static final int GET_FROM_GALLERY = 3;
     File photoFile;
 
     @Override
@@ -55,7 +56,6 @@ public class ProfileFragment extends Fragment {
         viewPager = getActivity().findViewById(R.id.pager);
         editProfileBtn = getActivity().findViewById(R.id.edit_profile_btn);
         logOutBtn = getActivity().findViewById(R.id.log_out_btn);
-
 
         user = (User) ParseUser.getCurrentUser();
 
@@ -72,8 +72,10 @@ public class ProfileFragment extends Fragment {
         tvSocialMedia.setText(user.getLinkedIn());
 
         try {
-            Glide.with(ProfileFragment.this).load(user.getParseFile("profilePicture").getUrl()).into(ivProfile);
-        } catch(NullPointerException e) {
+            Glide.with(ProfileFragment.this)
+                    .load(user.getParseFile("profilePicture").getUrl())
+                    .into(ivProfile);
+        } catch (NullPointerException e) {
             Log.d("ProfileFragment", "No Profile Pic");
         }
 
@@ -92,7 +94,7 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    public void  logOut() {
+    public void logOut() {
         Log.d("Logout", "Logged out");
         ParseUser.logOutInBackground(new LogOutCallback() {
             @Override

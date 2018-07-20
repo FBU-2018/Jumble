@@ -97,17 +97,30 @@ public class CreatePostFragment extends Fragment {
                 etLocation.setText("");
 
                 newJob.setUser(ParseUser.getCurrentUser());
+                final ParseFile parseFile = new ParseFile(photoFile);
 
                 Log.d("newJobSave", "1. Success!");
 
-                newJob.saveInBackground(new SaveCallback() {
+                parseFile.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
                         if (e == null) {
-                            Log.d("CreatePostProject", "save job success!");
-                            Toast.makeText(getContext(), "Job saved", Toast.LENGTH_LONG).show();
+                            newJob.setImage(parseFile);
+
+                            newJob.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e == null) {
+                                        Log.d("CreatePostProject", "save job success!");
+                                        Toast.makeText(getContext(), "Job saved", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Log.d("CreatePostProject", "save job failed!");
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
                         } else {
-                            Log.d("CreatePostProject", "save job failed!");
+                            Log.d("CreatePostProject 2", "save job failed!");
                             e.printStackTrace();
                         }
                     }
