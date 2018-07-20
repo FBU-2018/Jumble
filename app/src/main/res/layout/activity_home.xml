@@ -43,7 +43,7 @@
                     android:layout_marginEnd="30dp"
                     android:layout_marginRight="30dp"
                     android:background="@android:color/transparent"
-                    android:tint="@color/ig_brand_pinkish"
+                    android:tint="#e41fd8"
                     app:srcCompat="@drawable/ic_instagram_profile" />
             </RelativeLayout>
 
@@ -67,15 +67,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:itemIconTint="@color/colorAccent"
-        app:itemTextColor="@color/colorAccent"
+        android:background="@drawable/border_top"
+        app:itemIconTint="#e41fd8"
+        app:itemTextColor="#e41fd8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         app:layout_constraintVertical_bias="1.0"
-        app:menu="@menu/bottom_nav_menu"
-        android:background="@drawable/border_top"/>
+        app:menu="@menu/bottom_nav_menu" />
 
 
 </android.support.constraint.ConstraintLayout>
