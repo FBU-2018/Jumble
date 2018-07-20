@@ -25,7 +25,7 @@
         android:layout_marginBottom="40dp"
         android:background="@drawable/button_border"
         android:text="Create job post"
-        android:textColor="#e41fd8"
+        android:textColor="#ffede2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />

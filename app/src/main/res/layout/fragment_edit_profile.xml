@@ -16,7 +16,7 @@
         android:layout_marginBottom="40dp"
         android:background="@drawable/button_border"
         android:text="Save"
-        android:textColor="#e41fd8" />
+        android:textColor="#ffede2" />
 
     <ImageView
         android:id="@+id/edit_profile_iv"

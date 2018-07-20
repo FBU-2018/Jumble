@@ -59,6 +59,6 @@
         android:layout_marginBottom="83dp"
         android:background="@drawable/button_border"
         android:text="Sign Up"
-        android:textColor="#e41fd8" />
+        android:textColor="#ffede2" />
 
 </RelativeLayout>
