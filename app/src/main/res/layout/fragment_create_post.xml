@@ -113,7 +113,8 @@
         android:background="@drawable/edittext_rounded_corners"
         android:ems="10"
         android:padding="5dp"
-        android:layout_alignRight="@+id/bCreateJob" />
+        android:layout_alignRight="@+id/bCreateJob"
+        android:focusable="false"/>
 
     <TextView
         android:id="@+id/textView3"
