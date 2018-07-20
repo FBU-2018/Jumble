@@ -12,9 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="60dp"
+        android:layout_marginLeft="50dp"
         android:layout_marginTop="225dp"
         android:text="Name"
+        android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold" />
 
@@ -23,9 +24,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="60dp"
+        android:layout_marginLeft="50dp"
         android:layout_marginTop="275dp"
         android:text="Institution"
+        android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold" />
 
@@ -34,9 +36,10 @@
         android:layout_width="81dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="60dp"
+        android:layout_marginLeft="50dp"
         android:layout_marginTop="325dp"
         android:text="Phone Number"
+        android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold" />
 
@@ -45,21 +48,23 @@
         android:layout_width="88dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="60dp"
+        android:layout_marginLeft="50dp"
         android:layout_marginTop="375dp"
         android:text="Link to Social Media"
+        android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold" />
 
     <Button
         android:id="@+id/edit_profile_btn"
-        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="288dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
-        android:text="Edit" />
+        android:background="@drawable/button_border"
+        android:text="Edit"
+        android:textColor="#e41fd8" />
 
     <ImageView
         android:id="@+id/profile_iv"
@@ -124,13 +129,14 @@
 
     <Button
         android:id="@+id/log_out_btn"
-        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_margin="10dp"
+        android:background="@drawable/button_border"
         android:text="Log Out"
-        android:layout_alignParentRight="true" />
+        android:textColor="#e41fd8" />
 
 </RelativeLayout>

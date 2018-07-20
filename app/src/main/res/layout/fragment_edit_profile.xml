@@ -14,7 +14,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
-        android:text="Save" />
+        android:background="@drawable/button_border"
+        android:text="Save"
+        android:textColor="#e41fd8" />
 
     <ImageView
         android:id="@+id/edit_profile_iv"
@@ -30,9 +32,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="60dp"
+        android:layout_marginLeft="50dp"
         android:layout_marginTop="225dp"
         android:text="Name"
+        android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold" />
 
@@ -44,7 +47,7 @@
         android:layout_alignTop="@+id/tvTitle"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="225dp"
-        android:background="@drawable/rounded_border_edittext"
+        android:background="@drawable/edittext_rounded_corners"
         android:ems="10"
         android:padding="5dp"
         android:layout_alignRight="@+id/save_profile_btn" />
@@ -54,9 +57,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="60dp"
+        android:layout_marginLeft="50dp"
         android:layout_marginTop="275dp"
         android:text="Institution"
+        android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold" />
 
@@ -67,7 +71,7 @@
         android:layout_alignEnd="@+id/save_profile_btn"
         android:layout_alignTop="@+id/textView2"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/rounded_border_edittext"
+        android:background="@drawable/edittext_rounded_corners"
         android:ems="10"
         android:padding="5dp"
         android:layout_alignRight="@+id/save_profile_btn" />
@@ -77,9 +81,10 @@
         android:layout_width="81dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="60dp"
+        android:layout_marginLeft="50dp"
         android:layout_marginTop="325dp"
         android:text="Phone Number"
+        android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold" />
 
@@ -90,7 +95,7 @@
         android:layout_alignEnd="@+id/save_profile_btn"
         android:layout_alignTop="@+id/textView"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/rounded_border_edittext"
+        android:background="@drawable/edittext_rounded_corners"
         android:ems="10"
         android:padding="5dp"
         android:layout_alignRight="@+id/save_profile_btn" />
@@ -100,9 +105,10 @@
         android:layout_width="88dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="60dp"
+        android:layout_marginLeft="50dp"
         android:layout_marginTop="375dp"
         android:text="Link to Social Media"
+        android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold" />
 
@@ -113,7 +119,7 @@
         android:layout_alignEnd="@+id/save_profile_btn"
         android:layout_alignTop="@+id/textView3"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/rounded_border_edittext"
+        android:background="@drawable/edittext_rounded_corners"
         android:ems="10"
         android:padding="5dp"
         android:layout_alignRight="@+id/save_profile_btn" />
@@ -127,6 +133,8 @@
         android:layout_marginEnd="108dp"
         android:layout_marginTop="174dp"
         android:background="@drawable/button_rounded_corners"
-        android:src="@drawable/ic_instagram_new_post" />
+        android:src="@drawable/ic_instagram_new_post"
+        android:layout_marginRight="108dp"
+        android:layout_alignParentRight="true" />
 
 </RelativeLayout>

@@ -14,7 +14,7 @@
         android:ems="10"
         android:hint="Create password"
         android:inputType="textPassword"
-        android:background="@drawable/rounded_border_edittext"/>
+        android:background="@drawable/edittext_rounded_corners"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
         android:ems="10"
         android:hint="Create username"
         android:inputType="textPersonName"
-        android:background="@drawable/rounded_border_edittext"/>
+        android:background="@drawable/edittext_rounded_corners"/>
 
     <EditText
         android:id="@+id/signup_email_et"
@@ -48,7 +48,7 @@
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:hint="Enter email"
-        android:background="@drawable/rounded_border_edittext"/>
+        android:background="@drawable/edittext_rounded_corners"/>
 
     <Button
         android:id="@+id/signup_btn"
@@ -57,6 +57,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="83dp"
-        android:text="Sign Up" />
+        android:background="@drawable/button_border"
+        android:text="Sign Up"
+        android:textColor="#e41fd8" />
 
 </RelativeLayout>
