@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.activities.MainActivity;
+import com.example.lkimberly.userstories.models.User;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -29,7 +30,7 @@ public class ProfileFragment extends Fragment {
     Button logOutBtn;
     private ViewPager viewPager;
 
-    ParseUser currentUser;
+    User user;
 
     ImageView ivProfile;
     TextView tvUsername;
@@ -56,7 +57,7 @@ public class ProfileFragment extends Fragment {
         logOutBtn = getActivity().findViewById(R.id.log_out_btn);
 
 
-        currentUser = ParseUser.getCurrentUser();
+        user = (User) ParseUser.getCurrentUser();
 
         ivProfile = view.findViewById(R.id.profile_iv);
         tvUsername = view.findViewById(R.id.tv_profile_name);
@@ -65,13 +66,13 @@ public class ProfileFragment extends Fragment {
         tvSocialMedia = view.findViewById(R.id.tv_profile_link);
         ivProfile = view.findViewById(R.id.profile_iv);
 
-        tvUsername.setText(currentUser.getUsername());
-        tvInstitution.setText(currentUser.get("institution").toString());
-        tvPhoneNumber.setText(currentUser.get("phoneNumber").toString());
-        tvSocialMedia.setText(currentUser.get("linkedin").toString());
+        tvUsername.setText(user.getName());
+        tvInstitution.setText(user.getInstitution());
+        tvPhoneNumber.setText(user.getPhoneNumber());
+        tvSocialMedia.setText(user.getLinkedIn());
 
         try {
-            Glide.with(ProfileFragment.this).load(currentUser.getParseFile("profilePicture").getUrl()).into(ivProfile);
+            Glide.with(ProfileFragment.this).load(user.getParseFile("profilePicture").getUrl()).into(ivProfile);
         } catch(NullPointerException e) {
             Log.d("ProfileFragment", "No Profile Pic");
         }

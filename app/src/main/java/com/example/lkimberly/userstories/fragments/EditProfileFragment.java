@@ -74,6 +74,8 @@ public class EditProfileFragment extends Fragment {
         // Setup any handles to view objects here
         // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
 
+        final User user = (User) ParseUser.getCurrentUser();
+
         // Grab a reference to our view pager.
         viewPager = getActivity().findViewById(R.id.pager);
         saveProfileBtn = getActivity().findViewById(R.id.save_profile_btn);
@@ -90,38 +92,36 @@ public class EditProfileFragment extends Fragment {
         et_phoneNumber = getActivity().findViewById(R.id.profile_phone_number);
         et_link = getActivity().findViewById(R.id.profile_link);
 
+        et_name.setText(user.getName());
+        et_institution.setText(user.getInstitution());
+        et_phoneNumber.setText(user.getPhoneNumber());
+        et_link.setText(user.getLinkedIn());
+
         saveProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                User user = (User) ParseUser.getCurrentUser();
-
                 String name = et_name.getText().toString();
                 if (!name.equals("")) {
                     tv_name.setText(name);
                     user.setName(name);
-                    et_name.setText("");
                 }
 
                 String institution = et_institution.getText().toString();
                 if (!institution.equals("")) {
                     tv_institution.setText(institution);
                     user.setInstitution(institution);
-                    et_institution.setText("");
                 }
 
                 String phoneNumber = et_phoneNumber.getText().toString();
                 if (!phoneNumber.equals("")) {
                     tv_phoneNumber.setText(phoneNumber);
                     user.setPhoneNumber(phoneNumber);
-                    et_phoneNumber.setText("");
                 }
 
                 String link = et_link.getText().toString();
                 if (!link.equals("")) {
                     tv_link.setText(link);
                     user.setLinkedIn(link);
-                    et_link.setText("");
                 }
 
                 user.saveInBackground();
