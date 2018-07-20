@@ -25,6 +25,7 @@
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.SignupActivity"></activity>
         <activity android:name=".activities.ProfileDetailsActivity"></activity>
+        <activity android:name=".activities.MapViewActivity" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.codepath.fileprovider"
@@ -34,6 +35,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/fileprovider" />
         </provider>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBKecYXGlY2giger7tDLp6Bg9lO0DJCUiE"/>
     </application>
 
 </manifest>
