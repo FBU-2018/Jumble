@@ -1,6 +1,7 @@
 package com.example.lkimberly.userstories.fragments;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.lkimberly.userstories.BitmapScaler;
@@ -95,7 +97,6 @@ public class CreatePostFragment extends Fragment {
         bCreateJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 newJob = new Job();
 
                 newJob.setTitle(etTitle.getText().toString());
@@ -171,7 +172,6 @@ public class CreatePostFragment extends Fragment {
 
         // onclick - popup datepicker
         etDate.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 new DatePickerDialog(getContext(), date, myCalendar
@@ -180,6 +180,40 @@ public class CreatePostFragment extends Fragment {
             }
         });
 
+        etTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+
+                        if (selectedMinute < 10) {
+                            if (selectedHour > 12) {
+                                selectedHour -= 12;
+                                etTime.setText(selectedHour + ":0" + selectedMinute + " PM");
+                            } else {
+                                etTime.setText(selectedHour + ":0" + selectedMinute + " AM");
+                            }
+                        } else {
+                            if (selectedHour > 12) {
+                                selectedHour -= 12;
+                                etTime.setText(selectedHour + ":" + selectedMinute + " AM");
+                            } else {
+                                etTime.setText(selectedHour + ":" + selectedMinute + " PM");
+                            }
+                        }
+                    }
+                }, hour, minute, false);
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+
+            }
+        });
     }
 
     private void updateDate() {
