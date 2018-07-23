@@ -30,8 +30,6 @@ public class ProfileFragment extends Fragment {
     Button logOutBtn;
     private ViewPager viewPager;
 
-    User user;
-
     ImageView ivProfile;
     TextView tvUsername;
     TextView tvInstitution;
@@ -52,19 +50,18 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
+        User user = (User) ParseUser.getCurrentUser();
+
         // Grab a reference to our view pager.
         viewPager = getActivity().findViewById(R.id.pager);
         editProfileBtn = getActivity().findViewById(R.id.edit_profile_btn);
         logOutBtn = getActivity().findViewById(R.id.log_out_btn);
-
-        user = (User) ParseUser.getCurrentUser();
 
         ivProfile = view.findViewById(R.id.profile_iv);
         tvUsername = view.findViewById(R.id.tv_profile_name);
         tvInstitution = view.findViewById(R.id.tv_profile_institution);
         tvPhoneNumber = view.findViewById(R.id.tv_profile_phone_number);
         tvSocialMedia = view.findViewById(R.id.tv_profile_link);
-        ivProfile = view.findViewById(R.id.profile_iv);
 
         tvUsername.setText(user.getName());
         tvInstitution.setText(user.getInstitution());
@@ -73,7 +70,7 @@ public class ProfileFragment extends Fragment {
 
         try {
             Glide.with(ProfileFragment.this)
-                    .load(user.getParseFile("profilePicture").getUrl())
+                    .load(ParseUser.getCurrentUser().getParseFile("profilePicture").getUrl())
                     .into(ivProfile);
         } catch (NullPointerException e) {
             Log.d("ProfileFragment", "No Profile Pic");

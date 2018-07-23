@@ -43,6 +43,7 @@ import static com.parse.ParseUser.getCurrentUser;
 import com.example.lkimberly.userstories.R;
 
 import java.io.File;
+import java.io.IOException;
 
 public class EditProfileFragment extends Fragment {
 
@@ -128,8 +129,6 @@ public class EditProfileFragment extends Fragment {
                     tv_link.setText(link);
                     user.setLinkedIn(link);
                 }
-
-                user.saveInBackground();
 
                 viewPager.setCurrentItem(3);
             }
@@ -232,6 +231,27 @@ public class EditProfileFragment extends Fragment {
                 ParseUser.getCurrentUser().saveInBackground();
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (requestCode == GET_FROM_GALLERY) {
+            if (resultCode == RESULT_OK) {
+                Uri selectedImage = data.getData();
+                Bitmap bitmap = null;
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //Bitmap rawTakenImage = BitmapFactory.decodeFile(bitmap.toString());
+                //Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 400);
+                edit_profile_iv.setImageBitmap(bitmap);
+
+                ParseFile parseFile = new ParseFile(new File(String.valueOf(selectedImage)));
+
+                ParseUser.getCurrentUser().put("profilePicture", parseFile);
+
+                ParseUser.getCurrentUser().saveInBackground();
             }
         }
     }
