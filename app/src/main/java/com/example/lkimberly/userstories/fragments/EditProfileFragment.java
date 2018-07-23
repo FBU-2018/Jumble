@@ -1,8 +1,8 @@
 package com.example.lkimberly.userstories.fragments;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -66,6 +66,8 @@ public class EditProfileFragment extends Fragment {
     EditText et_institution;
     EditText et_phoneNumber;
     EditText et_link;
+
+    String imgDecodableString;
 
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
@@ -227,6 +229,9 @@ public class EditProfileFragment extends Fragment {
                 User user = (User) getCurrentUser();
 
                 String imagePath = photoFile.getAbsolutePath();
+
+                Log.d("camera photo", "imagePath = " + imagePath);
+
                 Bitmap rawTakenImage = BitmapFactory.decodeFile(imagePath);
                 Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 400);
                 edit_profile_iv.setImageBitmap(resizedBitmap);
@@ -244,23 +249,29 @@ public class EditProfileFragment extends Fragment {
 
         if (requestCode == GET_FROM_GALLERY) {
             if (resultCode == RESULT_OK) {
+                User user = (User) getCurrentUser();
+
                 Uri selectedImage = data.getData();
-                String imagePath = selectedImage.getPath();
-                Bitmap bitmap = null;
-                try {
-                    bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImage);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                //Bitmap rawTakenImage = BitmapFactory.decodeFile(bitmap.toString());
-                //Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 400);
-                edit_profile_iv.setImageBitmap(bitmap);
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
-                ParseFile parseFile = new ParseFile(new File(imagePath));
+                Cursor cursor = getContext().getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String picturePath = cursor.getString(columnIndex);
 
-                ParseUser.getCurrentUser().put("profilePicture", parseFile);
+                Bitmap rawTakenImage = BitmapFactory.decodeFile(picturePath);
+                Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 400);
 
-                ParseUser.getCurrentUser().saveInBackground();
+                edit_profile_iv.setImageBitmap(resizedBitmap);
+
+                ParseFile parseFile = new ParseFile(new File(picturePath));
+
+                user.put("profilePicture", parseFile);
+                profile_iv.setImageBitmap(resizedBitmap);
+
+                user.saveInBackground();
+                cursor.close();
             }
         }
     }
