@@ -1,5 +1,6 @@
 package com.example.lkimberly.userstories.fragments;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -52,6 +53,7 @@ public class EditProfileFragment extends Fragment {
     String photoFileName = "photo.jpg";
     File photoFile;
     ImageView edit_profile_iv;
+    ImageView profile_iv;
 
     private ViewPager viewPager;
 
@@ -87,6 +89,7 @@ public class EditProfileFragment extends Fragment {
         saveProfileBtn = getActivity().findViewById(R.id.save_profile_btn);
         ib_profile_photo = getActivity().findViewById(R.id.ib_profile_photo);
         edit_profile_iv = getActivity().findViewById(R.id.edit_profile_iv);
+        profile_iv = getActivity().findViewById(R.id.profile_iv);
 
         tv_name = getActivity().findViewById(R.id.tv_profile_name);
         tv_institution = getActivity().findViewById(R.id.tv_profile_institution);
@@ -131,6 +134,7 @@ public class EditProfileFragment extends Fragment {
                 }
 
                 viewPager.setCurrentItem(3);
+                user.saveInBackground();
             }
         });
 
@@ -145,6 +149,7 @@ public class EditProfileFragment extends Fragment {
             Glide.with(EditProfileFragment.this)
                     .load(ParseUser.getCurrentUser().getParseFile("profilePicture").getUrl())
                     .into(edit_profile_iv);
+
         } catch (NullPointerException e) {
             Log.d("EditProfileFragment", "profile picture does not exist!");
             e.printStackTrace();
@@ -219,6 +224,8 @@ public class EditProfileFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
+                User user = (User) getCurrentUser();
+
                 String imagePath = photoFile.getAbsolutePath();
                 Bitmap rawTakenImage = BitmapFactory.decodeFile(imagePath);
                 Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 400);
@@ -226,9 +233,10 @@ public class EditProfileFragment extends Fragment {
 
                 ParseFile parseFile = new ParseFile(new File(imagePath));
 
-                ParseUser.getCurrentUser().put("profilePicture", parseFile);
+                user.put("profilePicture", parseFile);
+                profile_iv.setImageBitmap(resizedBitmap);
 
-                ParseUser.getCurrentUser().saveInBackground();
+                user.saveInBackground();
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
@@ -237,6 +245,7 @@ public class EditProfileFragment extends Fragment {
         if (requestCode == GET_FROM_GALLERY) {
             if (resultCode == RESULT_OK) {
                 Uri selectedImage = data.getData();
+                String imagePath = selectedImage.getPath();
                 Bitmap bitmap = null;
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImage);
@@ -247,7 +256,7 @@ public class EditProfileFragment extends Fragment {
                 //Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 400);
                 edit_profile_iv.setImageBitmap(bitmap);
 
-                ParseFile parseFile = new ParseFile(new File(String.valueOf(selectedImage)));
+                ParseFile parseFile = new ParseFile(new File(imagePath));
 
                 ParseUser.getCurrentUser().put("profilePicture", parseFile);
 

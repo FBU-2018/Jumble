@@ -50,6 +50,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
+        Log.d("fragment", "on Create is called!");
         User user = (User) ParseUser.getCurrentUser();
 
         // Grab a reference to our view pager.
@@ -69,8 +70,9 @@ public class ProfileFragment extends Fragment {
         tvSocialMedia.setText(user.getLinkedIn());
 
         try {
+            Log.d("testing", "visited!");
             Glide.with(ProfileFragment.this)
-                    .load(ParseUser.getCurrentUser().getParseFile("profilePicture").getUrl())
+                    .load(user.getImage().getUrl())
                     .into(ivProfile);
         } catch (NullPointerException e) {
             Log.d("ProfileFragment", "No Profile Pic");

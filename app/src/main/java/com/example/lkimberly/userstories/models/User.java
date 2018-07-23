@@ -14,7 +14,7 @@ public class User extends ParseUser {
     private static final String KEY_LINKEDIN = "linkedin";
     private static final String KEY_FACEBOOK = "facebook";
     private static final String KEY_TWITTER = "twitter";
-    private static final String KEY_IMAGE = "image";
+    private static final String KEY_IMAGE = "profilePicture";
     private static final String KEY_USER = "user";
     private static final String KEY_DATE = "createdAt";
     private static final String KEY_INSTITUTION = "institution";
