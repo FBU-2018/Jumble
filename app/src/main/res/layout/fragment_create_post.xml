@@ -169,5 +169,4 @@
         android:text="Current Location"
         android:textAlignment="textStart"
         android:textSize="15sp"/>
-
 </RelativeLayout>
