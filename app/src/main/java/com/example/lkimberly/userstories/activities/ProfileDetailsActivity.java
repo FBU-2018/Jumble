@@ -118,15 +118,21 @@ public class ProfileDetailsActivity extends AppCompatActivity {
             }
         });
 
-//        if (job.get("match") != null) {
-//            matchButton.setText("You have a match for this job");
-//        }
+        if (job.get("match") != null) {
+            ParseUser userWhoMatched = (ParseUser) job.get("userWhoMatched");
+            if (userWhoMatched != null) {
+                if (userWhoMatched.getObjectId().equals(user.getObjectId())) {
+                    matchButton.setText("You have a match for this job");
+                }
+            }
+
+        }
 
 
         matchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                if (matchButton.getText().toString().equals("Match!")) {
+                if (matchButton.getText().toString().equals("Hire!")) {
                     final Matches newMatch = new Matches();
 
                     // default ACLs for User object

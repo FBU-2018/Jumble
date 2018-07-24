@@ -134,7 +134,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
-        android:text="Match!" />
+        android:text="Hire!" />
 
     <ImageView
         android:id="@+id/iv_twitterIconDetailsPage"
