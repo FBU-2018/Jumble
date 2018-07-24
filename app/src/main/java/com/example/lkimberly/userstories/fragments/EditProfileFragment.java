@@ -2,9 +2,13 @@ package com.example.lkimberly.userstories.fragments;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.hardware.Camera;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,6 +19,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -26,15 +31,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.lkimberly.userstories.BitmapScaler;
-import com.example.lkimberly.userstories.BuildConfig;
-import com.example.lkimberly.userstories.activities.HomeActivity;
-import com.example.lkimberly.userstories.activities.MainActivity;
-import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.User;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
-
-import org.w3c.dom.Text;
 
 import static android.app.Activity.RESULT_OK;
 import static com.example.lkimberly.userstories.fragments.ProfileFragment.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE;
@@ -67,7 +66,7 @@ public class EditProfileFragment extends Fragment {
     EditText et_phoneNumber;
     EditText et_link;
 
-    String imgDecodableString;
+    private Camera camera;
 
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
@@ -156,12 +155,21 @@ public class EditProfileFragment extends Fragment {
             Log.d("EditProfileFragment", "profile picture does not exist!");
             e.printStackTrace();
         }
+
+        /*
+        camera = Camera.open();
+        Camera.Parameters params = camera.getParameters();
+        params.set("rotation", 90);
+        camera.setParameters(params);
+        */
     }
 
 
     public void onLaunchCamera() {
         // create Intent to take a picture and return control to the calling application
         final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+
         // Create a File reference to access to future access
         photoFile = getPhotoFileUri(photoFileName);
 
@@ -211,7 +219,7 @@ public class EditProfileFragment extends Fragment {
         File mediaStorageDir = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), "EditProfileFragment");
 
         // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
+        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
             Log.d("EditProfileFragment", "failed to create directory");
         }
 
@@ -224,22 +232,21 @@ public class EditProfileFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 User user = (User) getCurrentUser();
 
                 String imagePath = photoFile.getAbsolutePath();
-
-                Log.d("camera photo", "imagePath = " + imagePath);
-
                 Bitmap rawTakenImage = BitmapFactory.decodeFile(imagePath);
                 Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 400);
-                edit_profile_iv.setImageBitmap(resizedBitmap);
+                Bitmap rotatedBitmap = rotate(resizedBitmap, imagePath);
+                edit_profile_iv.setImageBitmap(rotatedBitmap);
 
                 ParseFile parseFile = new ParseFile(new File(imagePath));
 
                 user.put("profilePicture", parseFile);
-                profile_iv.setImageBitmap(resizedBitmap);
+                profile_iv.setImageBitmap(rotatedBitmap);
 
                 user.saveInBackground();
             } else { // Result was a failure
@@ -252,27 +259,68 @@ public class EditProfileFragment extends Fragment {
                 User user = (User) getCurrentUser();
 
                 Uri selectedImage = data.getData();
-                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
                 Cursor cursor = getContext().getContentResolver().query(selectedImage,
                         filePathColumn, null, null, null);
                 cursor.moveToFirst();
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                String picturePath = cursor.getString(columnIndex);
+                String imagePath = cursor.getString(columnIndex);
 
-                Bitmap rawTakenImage = BitmapFactory.decodeFile(picturePath);
+                Bitmap rawTakenImage = BitmapFactory.decodeFile(imagePath);
                 Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 400);
 
-                edit_profile_iv.setImageBitmap(resizedBitmap);
+                Bitmap rotatedBitmap = rotate(resizedBitmap, imagePath);
+                edit_profile_iv.setImageBitmap(rotatedBitmap);
 
-                ParseFile parseFile = new ParseFile(new File(picturePath));
+                ParseFile parseFile = new ParseFile(new File(imagePath));
 
                 user.put("profilePicture", parseFile);
-                profile_iv.setImageBitmap(resizedBitmap);
+                profile_iv.setImageBitmap(rotatedBitmap);
 
                 user.saveInBackground();
                 cursor.close();
             }
         }
+    }
+
+    public Bitmap rotate(Bitmap bitmap, String imagePath) {
+        ExifInterface exifInterface = null;
+        try {
+            exifInterface = new ExifInterface(imagePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                ExifInterface.ORIENTATION_UNDEFINED);
+
+        Bitmap rotatedBitmap = null;
+        switch (orientation) {
+
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                rotatedBitmap = rotateImage(bitmap, 90);
+                break;
+
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                rotatedBitmap = rotateImage(bitmap, 180);
+                break;
+
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                rotatedBitmap = rotateImage(bitmap, 270);
+                break;
+
+            case ExifInterface.ORIENTATION_NORMAL:
+            default:
+                rotatedBitmap = bitmap;
+        }
+
+        return rotatedBitmap;
+    }
+
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
+                matrix, true);
     }
 }
