@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.adapters.PlaceAutocompleteAdapter;
+import com.example.lkimberly.userstories.models.PlaceInfo;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -65,6 +66,7 @@ public class MapActivity extends AppCompatActivity
     private FusedLocationProviderClient mFusedLocationProvidentClient;
     private PlaceAutocompleteAdapter mPlaceAutocompleteAdapter;
     private GoogleApiClient mGoogleApiClient;
+    private PlaceInfo mPlace;
 
     private AutoCompleteTextView mSearchText;
     private ImageView mGps;
@@ -205,6 +207,7 @@ public class MapActivity extends AppCompatActivity
 
         mPlaceAutocompleteAdapter = new PlaceAutocompleteAdapter(this, mGoogleApiClient, LAT_LNG_BOUNDS, null);
 
+        mSearchText.setOnItemClickListener(mAutocompleteClickListener);
         mSearchText.setAdapter(mPlaceAutocompleteAdapter);
         mSearchText.setSingleLine();
         mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -253,7 +256,7 @@ public class MapActivity extends AppCompatActivity
     }
 
     private void hideSoftKeyboard() {
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     @Override
@@ -286,7 +289,27 @@ public class MapActivity extends AppCompatActivity
             }
             final Place place = places.get(0);
 
-            Log.d(TAG, "onResult: places details: " + place.getLatLng());
+            try {
+                mPlace = new PlaceInfo();
+                mPlace.setName(place.getName().toString());
+                mPlace.setAddress(place.getAddress().toString());
+//                mPlace.setAttributions(place.getAttributions().toString());
+                mPlace.setId(place.getId().toString());
+                mPlace.setLatlng(place.getLatLng());
+                mPlace.setRating(place.getRating());
+                mPlace.setPhoneNumber(place.getPhoneNumber().toString());
+                mPlace.setWebsiteUri(place.getWebsiteUri());
+
+                Log.d(TAG, "onResult: place: " + mPlace.toString());
+            } catch (NullPointerException e) {
+                Log.e(TAG, "onResult: NullPointerException: " + e.getMessage());
+            }
+
+            moveCamera(new LatLng(place.getViewport().getCenter().latitude,
+                    place.getViewport().getCenter().longitude), DEFAULT_ZOOM, mPlace.getName());
+
+            places.release();
+
         }
     };
 }
