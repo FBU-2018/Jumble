@@ -11,4 +11,6 @@
     <integer name="radius">15</integer>
     <integer name="margin">15</integer>
 
+    <string name="google_maps_API_key">AIzaSyBKecYXGlY2giger7tDLp6Bg9lO0DJCUiE</string>
+
 </resources>

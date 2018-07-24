@@ -152,16 +152,16 @@
         android:textSize="15sp"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/etLocation"
+    <Button
+        android:id="@+id/btnMap"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/bCreateJob"
         android:layout_alignTop="@+id/tvLocation"
-        android:layout_marginBottom="10dp"
         android:background="@drawable/edittext_rounded_corners"
-        android:ems="10"
         android:padding="5dp"
-        android:layout_alignRight="@+id/bCreateJob" />
+        android:text="Current Location"
+        android:textAlignment="textStart"
+        android:textSize="15sp"/>
 
 </RelativeLayout>
