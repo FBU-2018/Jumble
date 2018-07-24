@@ -1,6 +1,7 @@
 package com.example.lkimberly.userstories.fragments;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,8 +34,12 @@ import android.widget.Toast;
 
 import com.example.lkimberly.userstories.BitmapScaler;
 import com.example.lkimberly.userstories.R;
+import com.example.lkimberly.userstories.activities.MapActivity;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.User;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -76,6 +81,10 @@ public class CreatePostFragment extends Fragment {
     DatePickerDialog.OnDateSetListener date;
     SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
 
+    private static final String TAG = "CreatePostFragment";
+
+    private static final int ERROR_DIALOG_REQUEST = 9001;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_create_post, container, false);
@@ -88,6 +97,7 @@ public class CreatePostFragment extends Fragment {
         etDescription = view.findViewById(R.id.etDescription);
         etDate = view.findViewById(R.id.etDate);
         etTime = view.findViewById(R.id.etTime);
+
         //etLocation = view.findViewById(R.id.etLocation);
         etEstimation = view.findViewById(R.id.etEstimation);
 
@@ -105,6 +115,7 @@ public class CreatePostFragment extends Fragment {
                 newJob.setDescription(etDescription.getText().toString());
                 newJob.setTime(etTime.getText().toString());
                 newJob.setDate(etDate.getText().toString());
+
                 //newJob.setLocation(etLocation.getText().toString());
                 newJob.setEstimation(etEstimation.getText().toString());
 
@@ -116,10 +127,12 @@ public class CreatePostFragment extends Fragment {
                 etDescription.setText("");
                 etTime.setText("");
                 etDate.setText("");
+
                 //etLocation.setText("");
                 etEstimation.setText("");
 
                 newJob.setUser(ParseUser.getCurrentUser());
+
                 final ParseFile parseFile = new ParseFile(photoFile);
 
                 Log.d("newJobSave", "1. Success!");
@@ -221,10 +234,45 @@ public class CreatePostFragment extends Fragment {
 
             }
         });
+
+        if (isServicesOK()) {
+            init();
+        }
     }
 
     private void updateDate() {
         etDate.setText(sdf.format(myCalendar.getTime()));
+    }
+
+    private void init() {
+        Button btnMap = getActivity().findViewById(R.id.btnMap);
+        btnMap.setAllCaps(false);
+        btnMap.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MapActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public boolean isServicesOK() {
+        Log.d(TAG, "isServicesOK: checking google services version");
+
+        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getContext());
+
+        if (available == ConnectionResult.SUCCESS) {
+            Log.d(TAG, "isServicesOK: Google Play Services is working");
+            return true;
+        } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
+            Log.d(TAG, "isServicesOK: an error occurred but we can fix it");
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(getActivity(), available, ERROR_DIALOG_REQUEST);
+            dialog.show();
+        } else {
+            Toast.makeText(getActivity(), "You can't make map requests", Toast.LENGTH_SHORT).show();
+        }
+        return false;
     }
 
     public void onLaunchCamera() {
