@@ -24,7 +24,7 @@
         android:id="@+id/helloText"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView2"
+        android:layout_below="@+id/ivJobPhoto"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="50dp"
         android:layout_marginLeft="50dp"
@@ -36,7 +36,7 @@
         tools:text="Job Title" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/ivJobPhoto"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_alignParentTop="true"

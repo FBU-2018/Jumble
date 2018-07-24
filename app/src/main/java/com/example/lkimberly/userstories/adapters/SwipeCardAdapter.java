@@ -1,21 +1,16 @@
 package com.example.lkimberly.userstories.adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.lkimberly.userstories.R;
-import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.SwipeCard;
 
 import java.util.List;
@@ -58,7 +53,7 @@ public class SwipeCardAdapter extends BaseAdapter {
       viewHolder = new ViewHolder();
       viewHolder.textView1 = (TextView) convertView.findViewById(R.id.helloText);
       viewHolder.textView2 = (TextView) convertView.findViewById(R.id.helloText2);
-      viewHolder.ivJob = convertView.findViewById(R.id.imageView2);
+      viewHolder.ivJob = convertView.findViewById(R.id.ivJobPhoto);
 
       convertView.setTag(viewHolder);
     } else {
