@@ -66,8 +66,6 @@ public class EditProfileFragment extends Fragment {
     EditText et_phoneNumber;
     EditText et_link;
 
-    private Camera camera;
-
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
     @Override
@@ -155,20 +153,12 @@ public class EditProfileFragment extends Fragment {
             Log.d("EditProfileFragment", "profile picture does not exist!");
             e.printStackTrace();
         }
-
-        /*
-        camera = Camera.open();
-        Camera.Parameters params = camera.getParameters();
-        params.set("rotation", 90);
-        camera.setParameters(params);
-        */
     }
 
 
     public void onLaunchCamera() {
         // create Intent to take a picture and return control to the calling application
         final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
 
         // Create a File reference to access to future access
         photoFile = getPhotoFileUri(photoFileName);

@@ -59,6 +59,8 @@
         android:id="@+id/etTitle"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
+        android:inputType="textCapSentences|textMultiLine"
+        android:maxLines="1"
         android:layout_alignEnd="@+id/bCreateJob"
         android:layout_alignTop="@+id/tvTitle"
         android:layout_marginBottom="10dp"
@@ -83,6 +85,8 @@
         android:id="@+id/etDescription"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
+        android:inputType="textCapSentences|textMultiLine"
+        android:maxLines="1"
         android:layout_alignEnd="@+id/bCreateJob"
         android:layout_alignTop="@+id/textView2"
         android:layout_marginBottom="10dp"
@@ -156,6 +160,8 @@
         android:id="@+id/btnMap"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
+        android:inputType="textCapSentences|textMultiLine"
+        android:maxLines="1"
         android:layout_alignEnd="@+id/bCreateJob"
         android:layout_alignTop="@+id/tvLocation"
         android:background="@drawable/edittext_rounded_corners"
@@ -163,5 +169,4 @@
         android:text="Current Location"
         android:textAlignment="textStart"
         android:textSize="15sp"/>
-
 </RelativeLayout>
