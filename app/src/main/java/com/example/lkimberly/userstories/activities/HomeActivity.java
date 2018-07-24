@@ -1,11 +1,13 @@
 package com.example.lkimberly.userstories.activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -67,6 +69,8 @@ public class HomeActivity extends AppCompatActivity {
 
     JumbleFragmentAdapter adapter;
 
+    MatchPageFragment myMatchPageFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +87,8 @@ public class HomeActivity extends AppCompatActivity {
         fragments.add(new EditProfileFragment());
         fragments.add(new FeedFragment());
         fragments.add(new CreatePostFragment());
-        fragments.add(new MatchPageFragment());
+        myMatchPageFragment = new MatchPageFragment();
+        fragments.add(myMatchPageFragment);
 
         // Grab a reference to our view pager.
         viewPager = findViewById(R.id.pager);
@@ -110,6 +115,7 @@ public class HomeActivity extends AppCompatActivity {
                         break;
                     case 4:
                         bottomNavigation.setSelectedItemId(R.id.action_comment);
+//                        myMatchPageFragment.refresh();
                         break;
                 }
             }
@@ -143,6 +149,10 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.action_comment:
                         // Set the current item to the third item in our list
                         // which is the profile fragment placeholder
+
+
+//                        adapter.notifyDataSetChanged();
+//                        myMatchPageFragment.refresh();
                         viewPager.setCurrentItem(4);
                         return true;
                     default:
@@ -158,6 +168,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 viewPager.setCurrentItem(0);
+                bottomNavigation.setSelectedItemId(-1);
             }
         });
 
@@ -206,6 +217,12 @@ public class HomeActivity extends AppCompatActivity {
         public int getCount() {
             return fragments.size();
         }
+
+        @Override
+        public int getItemPosition(Object object) {
+            // POSITION_NONE makes it possible to reload the PagerAdapter
+            return POSITION_NONE;
+        }
     }
 
     public  void setUser() {
@@ -241,4 +258,18 @@ public class HomeActivity extends AppCompatActivity {
 
         return file;
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Intent potentialIntent = getIntent();
+        // REQUEST_CODE is defined above
+        if (resultCode == RESULT_OK) {
+            if (data.getBooleanExtra("refresh", false)) {
+                myMatchPageFragment.refresh();
+            }
+        }
+    }
+
 }

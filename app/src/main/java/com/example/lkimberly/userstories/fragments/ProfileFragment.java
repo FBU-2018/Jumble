@@ -65,10 +65,14 @@ public class ProfileFragment extends Fragment {
         tvSocialMedia = view.findViewById(R.id.tv_profile_link);
         ivProfile = view.findViewById(R.id.profile_iv);
 
-        tvUsername.setText(currentUser.getUsername());
-        tvInstitution.setText(currentUser.get("institution").toString());
-        tvPhoneNumber.setText(currentUser.get("phoneNumber").toString());
-        tvSocialMedia.setText(currentUser.get("linkedin").toString());
+        try {
+            tvUsername.setText(currentUser.getUsername());
+            tvInstitution.setText(currentUser.get("institution").toString());
+            tvPhoneNumber.setText(currentUser.get("phoneNumber").toString());
+            tvSocialMedia.setText(currentUser.get("linkedin").toString());
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
         try {
             Glide.with(ProfileFragment.this).load(currentUser.getParseFile("profilePicture").getUrl()).into(ivProfile);
@@ -79,7 +83,7 @@ public class ProfileFragment extends Fragment {
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewPager.setCurrentItem(4);
+                viewPager.setCurrentItem(1);
             }
         });
 

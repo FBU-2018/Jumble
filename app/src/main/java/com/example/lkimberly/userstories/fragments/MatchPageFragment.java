@@ -13,12 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
-import com.example.lkimberly.userstories.adapters.MatchPageAdapter;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.RecyclerViewItemDecorator;
+import com.example.lkimberly.userstories.adapters.MatchPageAdapter;
+import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.MatchDataModel;
-
 import com.example.lkimberly.userstories.models.Matches;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -75,7 +74,7 @@ public class MatchPageFragment extends Fragment {
         rvMatches.addItemDecoration(divider);
         rvMatches.addItemDecoration(new RecyclerViewItemDecorator(spaceInPixels));
 
-        loadMatches();
+        loadMatches(false);
 
         // Lookup the swipe container view
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
@@ -86,7 +85,7 @@ public class MatchPageFragment extends Fragment {
                 // Your code to refresh the list here.
                 // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
-                loadMatches();
+                loadMatches(false);
             }
         });
         // Configure the refreshing colors
@@ -98,21 +97,37 @@ public class MatchPageFragment extends Fragment {
 
     }
 
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//
+//        if (isVisibleToUser) {
+//            if (adapter != null) && (){
+//                refresh();
+//            }
+//        }
+//    }
+
 
     public void refresh() {
-        loadMatches();
+        loadMatches(true);
+        adapter.notifyDataSetChanged();
+        rvMatches.scrollToPosition(0);
+
     }
 
-    public void loadMatches() {
+
+    public void loadMatches(final boolean scrollToTop) {
         ParseObject currentUserPointer = ParseObject.createWithoutData("User",ParseUser.getCurrentUser().getObjectId());
 
+        // Query matches current user has
         final Matches.Query matchQuery = new Matches.Query();
         Log.d("Id", ParseUser.getCurrentUser().toString());
         matchQuery.getTop()
                 .withJob()
                 .withJobPoster()
                 .withJobSubscriber()
-//                .whereEqualTo("jobPoster", currentUserPointer)
+                .whereEqualTo("jobPoster", ParseUser.getCurrentUser())
                 .findInBackground(new FindCallback<Matches>() {
                     @Override
                     public void done(List<Matches> objects, ParseException e) {
@@ -123,6 +138,7 @@ public class MatchPageFragment extends Fragment {
                             for (int i = 0; i < objects.size(); i++) {
 
                                 Matches singleMatch = (Matches) objects.get(i);
+
                                 if (matchDict.containsKey(singleMatch.getJob().getObjectId())){
                                     List<ParseUser> listOfMatchesForGivenJob = matchDict.get(singleMatch.getJob().getObjectId());
                                     ParseUser jobSubscriber = singleMatch.getJobSubscriber();
@@ -137,11 +153,39 @@ public class MatchPageFragment extends Fragment {
                             for (String jobOfCurrentUser: matchDict.keySet()) {
 
                                 matchesModelList.add(new MatchDataModel(1, jobOfCurrentUser));
-                                matchesModelList.add(new MatchDataModel(0, matchDict.get(jobOfCurrentUser)));
-
+                                matchesModelList.add(new MatchDataModel(0, matchDict.get(jobOfCurrentUser),jobOfCurrentUser));
                             }
-                            Log.d("Size",matchesModelList.toString());
-                            adapter.notifyDataSetChanged();
+
+
+
+                            // Query other jobs user may have
+                            final Job.Query jobQuery = new Job.Query();
+                            jobQuery.getTop()
+                                    .whereEqualTo("user", ParseUser.getCurrentUser())
+                                    .findInBackground(new FindCallback<Job>() {
+                                        @Override
+                                        public void done(List<Job> objects, ParseException e) {
+                                            if (e == null) {
+                                                if (objects.size() > 0) {
+                                                    matchesModelList.add(new MatchDataModel(3));
+                                                }
+
+                                                for (int i = 0; i < objects.size(); i++) {
+                                                    if (!matchDict.keySet().contains(objects.get(i).getObjectId())) {
+                                                        matchesModelList.add(new MatchDataModel(2, objects.get(i)));
+                                                    }
+                                                }
+
+                                                Log.d("Size",matchesModelList.toString());
+                                                adapter.notifyDataSetChanged();
+                                                if (scrollToTop) {
+                                                    rvMatches.scrollToPosition(0);
+                                                }
+                                            }
+                                        }
+                                    });
+
+
 
                         } else {
                             e.printStackTrace();

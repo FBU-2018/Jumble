@@ -10,5 +10,7 @@
 
     <integer name="radius">15</integer>
     <integer name="margin">15</integer>
+    <string name="title_activity_job_details">JobDetailsActivity</string>
+    <string name="title_activity_sdfg">sdfg</string>
 
 </resources>
