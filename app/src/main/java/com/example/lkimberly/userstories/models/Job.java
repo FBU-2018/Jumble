@@ -17,6 +17,8 @@ public class Job  extends ParseObject {
     private static final String KEY_TIME = "time";
     private static final String KEY_DATE = "date";
     private static final String KEY_LOCATION = "location";
+    private static final String KEY_ESTIMATION = "estimation";
+
 
     private static final String KEY_IMAGE = "image";
     private static final String KEY_USER = "user";
@@ -59,6 +61,14 @@ public class Job  extends ParseObject {
 
     public void setLocation(String location) {
         put(KEY_LOCATION, location);
+    }
+
+    public String getEstimation() {
+        return getString(KEY_ESTIMATION);
+    }
+
+    public void setEstimation(String estimation) {
+        put(KEY_ESTIMATION, estimation);
     }
 
     public ParseFile getImage() {
