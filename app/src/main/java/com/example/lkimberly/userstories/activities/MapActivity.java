@@ -54,14 +54,10 @@ public class MapActivity extends AppCompatActivity
 
     private static final String TAG = "MapActivity";
 
-    private static final String FINE_LOCATION = android.Manifest.permission.ACCESS_FINE_LOCATION;
-    private static final String COARSE_LOCATION = android.Manifest.permission.ACCESS_FINE_LOCATION;
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final float DEFAULT_ZOOM = 15f;
     private static final LatLngBounds LAT_LNG_BOUNDS =
             new LatLngBounds(new LatLng(-40, -168), new LatLng(71, 136));
 
-    private Boolean mLocationPermissionsGranted = false;
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProvidentClient;
     private PlaceAutocompleteAdapter mPlaceAutocompleteAdapter;
@@ -78,7 +74,7 @@ public class MapActivity extends AppCompatActivity
         mSearchText = findViewById(R.id.input_search);
         mGps = findViewById(R.id.ic_gps);
 
-        getLocationPermisison();
+        initMap();
 
         mGoogleApiClient = new GoogleApiClient
                 .Builder(this)
@@ -88,44 +84,6 @@ public class MapActivity extends AppCompatActivity
                 .build();
 
         init();
-    }
-
-    private void getLocationPermisison() {
-        String[] permissions = {FINE_LOCATION, COARSE_LOCATION};
-
-        if (ContextCompat.checkSelfPermission(this.getApplicationContext(), FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            if (ContextCompat.checkSelfPermission(this.getApplicationContext(), COARSE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
-                initMap();
-                mLocationPermissionsGranted = true;
-            } else {
-                ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
-            }
-        } else {
-            ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        mLocationPermissionsGranted = false;
-
-        switch (requestCode) {
-            case LOCATION_PERMISSION_REQUEST_CODE: {
-                if (grantResults.length > 0) {
-                    for (int i = 0; i < grantResults.length; i++) {
-                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                            mLocationPermissionsGranted = false;
-                            return;
-                        }
-                    }
-                    mLocationPermissionsGranted = true;
-                    // initialize our map
-                    initMap();
-                }
-            }
-        }
     }
 
     private void initMap() {
@@ -141,7 +99,7 @@ public class MapActivity extends AppCompatActivity
         Toast.makeText(this, "Map is ready", Toast.LENGTH_SHORT).show();
         mMap = googleMap;
 
-        if (mLocationPermissionsGranted) {
+//        if (mLocationPermissionsGranted) {
             getDeviceLocation();
 
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -158,14 +116,14 @@ public class MapActivity extends AppCompatActivity
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
             init();
-        }
+//        }
     }
 
     private void getDeviceLocation() {
         mFusedLocationProvidentClient = LocationServices.getFusedLocationProviderClient(this);
 
         try {
-            if (mLocationPermissionsGranted) {
+//            if (mLocationPermissionsGranted) {
                 Task location = mFusedLocationProvidentClient.getLastLocation();
                 location.addOnCompleteListener(new OnCompleteListener() {
                     @Override
@@ -184,7 +142,7 @@ public class MapActivity extends AppCompatActivity
                         }
                     }
                 });
-            }
+//            }
         } catch (SecurityException e) {
             Log.e(TAG, "getDeviceLocation: Security Exception: " + e.getMessage());
         }

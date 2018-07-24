@@ -6,21 +6,28 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.GeolocationPermissions;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -36,14 +43,21 @@ import com.example.lkimberly.userstories.activities.MapActivity;
 import com.example.lkimberly.userstories.models.Job;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
@@ -51,6 +65,16 @@ import static com.example.lkimberly.userstories.fragments.ProfileFragment.CAPTUR
 import static com.example.lkimberly.userstories.fragments.ProfileFragment.GET_FROM_GALLERY;
 
 public class CreatePostFragment extends Fragment {
+
+    private static final String TAG = "CreatePostFragment";
+
+    private static final String FINE_LOCATION = android.Manifest.permission.ACCESS_FINE_LOCATION;
+    private static final String COARSE_LOCATION = android.Manifest.permission.ACCESS_FINE_LOCATION;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
+
+    private FusedLocationProviderClient mFusedLocationProvidentClient;
+    private Boolean mLocationPermissionsGranted = false;
+    Button btnMap;
 
     ImageView ivPhoto;
 
@@ -80,8 +104,6 @@ public class CreatePostFragment extends Fragment {
     DatePickerDialog.OnDateSetListener date;
     SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
 
-    private static final String TAG = "CreatePostFragment";
-
     private static final int ERROR_DIALOG_REQUEST = 9001;
 
     @Override
@@ -91,6 +113,8 @@ public class CreatePostFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+
+        getLocationPermisison();
 
         etTitle = view.findViewById(R.id.etTitle);
         etDescription = view.findViewById(R.id.etDescription);
@@ -233,7 +257,11 @@ public class CreatePostFragment extends Fragment {
     }
 
     private void init() {
-        Button btnMap = getActivity().findViewById(R.id.btnMap);
+        if (mLocationPermissionsGranted) {
+            getDeviceLocation();
+        }
+
+        btnMap = getActivity().findViewById(R.id.btnMap);
         btnMap.setAllCaps(false);
         btnMap.setOnClickListener(new View.OnClickListener() {
 
@@ -338,6 +366,90 @@ public class CreatePostFragment extends Fragment {
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private void getLocationPermisison() {
+        String[] permissions = {FINE_LOCATION, COARSE_LOCATION};
+
+        if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), COARSE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+//                initMap();
+                mLocationPermissionsGranted = true;
+            } else {
+                ActivityCompat.requestPermissions(getActivity(), permissions, LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        } else {
+            ActivityCompat.requestPermissions(getActivity(), permissions, LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        mLocationPermissionsGranted = false;
+
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0) {
+                    for (int i = 0; i < grantResults.length; i++) {
+                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                            mLocationPermissionsGranted = false;
+                            return;
+                        }
+                    }
+                    mLocationPermissionsGranted = true;
+                    // initialize our map
+//                    initMap();
+                }
+            }
+        }
+    }
+
+    private void getDeviceLocation() {
+        mFusedLocationProvidentClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
+        try {
+//            if (mLocationPermissionsGranted) {
+            Task location = mFusedLocationProvidentClient.getLastLocation();
+            location.addOnCompleteListener(new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task) {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "onComplete: found location!");
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            Location currentLocation = (Location) task.getResult();
+
+                            double latitude = currentLocation.getLatitude();
+                            double longitude = currentLocation.getLongitude();
+
+                            StringBuilder result = new StringBuilder();
+                            try {
+                                Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+                                List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                                if (addresses.size() > 0) {
+                                    Address address = addresses.get(0);
+                                    btnMap.setText(address.getAddressLine(0));
+//                                    result.append(address.getLocality());
+//                                    result.append(address.getCountryName());
+                                }
+                            } catch (IOException e) {
+                                Log.e("tag", e.getMessage());
+                            }
+
+//                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM, "My Location");
+                        }
+
+                    } else {
+                        Log.d(TAG, "onComplete: current location is null");
+                        Toast.makeText(getContext(), "unable to get current location", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+//            }
+        } catch (SecurityException e) {
+            Log.e(TAG, "getDeviceLocation: Security Exception: " + e.getMessage());
         }
     }
 }
