@@ -5,11 +5,8 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -35,14 +32,12 @@ import android.widget.Toast;
 import com.example.lkimberly.userstories.BitmapScaler;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.models.Job;
-import com.example.lkimberly.userstories.models.User;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -50,7 +45,6 @@ import java.util.Locale;
 import static android.app.Activity.RESULT_OK;
 import static com.example.lkimberly.userstories.fragments.ProfileFragment.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE;
 import static com.example.lkimberly.userstories.fragments.ProfileFragment.GET_FROM_GALLERY;
-import static com.parse.ParseUser.getCurrentUser;
 
 public class CreatePostFragment extends Fragment {
 
@@ -158,8 +152,8 @@ public class CreatePostFragment extends Fragment {
         });
 
         // init - set date to current date
-        long currentDate = System.currentTimeMillis();
-        String dateString = sdf.format(currentDate);
+        long currentdate = System.currentTimeMillis();
+        String dateString = sdf.format(currentdate);
         etDate.setText(dateString);
 
         // set calendar date and update editDate
@@ -291,93 +285,16 @@ public class CreatePostFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                User user = (User) getCurrentUser();
-
                 String imagePath = photoFile.getAbsolutePath();
                 Bitmap rawTakenImage = BitmapFactory.decodeFile(imagePath);
                 Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 400);
-                Bitmap rotatedBitmap = rotate(resizedBitmap, imagePath);
-                ivPhoto.setImageBitmap(rotatedBitmap);
-
-                ParseFile parseFile = new ParseFile(new File(imagePath));
-
-                user.put("image", parseFile);
-
-                user.saveInBackground();
+                ivPhoto.setImageBitmap(resizedBitmap);
+                parseFile = new ParseFile(new File(imagePath));
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
-
-        if (requestCode == GET_FROM_GALLERY) {
-            if (resultCode == RESULT_OK) {
-                User user = (User) getCurrentUser();
-
-                Uri selectedImage = data.getData();
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-                Cursor cursor = getContext().getContentResolver().query(selectedImage,
-                        filePathColumn, null, null, null);
-                cursor.moveToFirst();
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                String imagePath = cursor.getString(columnIndex);
-
-                Bitmap rawTakenImage = BitmapFactory.decodeFile(imagePath);
-                Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 400);
-
-                Bitmap rotatedBitmap = rotate(resizedBitmap, imagePath);
-                ivPhoto.setImageBitmap(rotatedBitmap);
-
-                ParseFile parseFile = new ParseFile(new File(imagePath));
-
-                user.put("image", parseFile);
-
-                user.saveInBackground();
-                cursor.close();
-            }
-        }
-    }
-
-    public Bitmap rotate(Bitmap bitmap, String imagePath) {
-        ExifInterface exifInterface = null;
-        try {
-            exifInterface = new ExifInterface(imagePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION,
-                ExifInterface.ORIENTATION_UNDEFINED);
-
-        Bitmap rotatedBitmap = null;
-        switch (orientation) {
-
-            case ExifInterface.ORIENTATION_ROTATE_90:
-                rotatedBitmap = rotateImage(bitmap, 90);
-                break;
-
-            case ExifInterface.ORIENTATION_ROTATE_180:
-                rotatedBitmap = rotateImage(bitmap, 180);
-                break;
-
-            case ExifInterface.ORIENTATION_ROTATE_270:
-                rotatedBitmap = rotateImage(bitmap, 270);
-                break;
-
-            case ExifInterface.ORIENTATION_NORMAL:
-            default:
-                rotatedBitmap = bitmap;
-        }
-
-        return rotatedBitmap;
-    }
-
-    public static Bitmap rotateImage(Bitmap source, float angle) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
-        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
-                matrix, true);
     }
 }
