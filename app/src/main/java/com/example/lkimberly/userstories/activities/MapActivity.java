@@ -1,4 +1,4 @@
-package com.example.lkimberly.userstories;
+package com.example.lkimberly.userstories.activities;
 
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.lkimberly.userstories.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;

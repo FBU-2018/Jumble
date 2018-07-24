@@ -34,8 +34,7 @@
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.SignupActivity"></activity>
         <activity android:name=".activities.ProfileDetailsActivity"></activity>
-        <activity android:name=".activities.MapViewActivity" />
-        <activity android:name=".MapActivity"/>
+        <activity android:name=".activities.MapActivity"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.codepath.fileprovider"

@@ -3,7 +3,6 @@ package com.example.lkimberly.userstories.fragments;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -31,7 +30,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.lkimberly.userstories.BitmapScaler;
-import com.example.lkimberly.userstories.MapActivity;
+import com.example.lkimberly.userstories.activities.MapActivity;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.models.Job;
 import com.google.android.gms.common.ConnectionResult;
