@@ -63,6 +63,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -222,6 +223,20 @@ public class CreatePostFragment extends Fragment {
             }
         });
 
+        // set the time of the job
+
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat mdFormat = new SimpleDateFormat("HH:mm");
+        String currentTime = mdFormat.format(calendar.getTime());
+
+        if (Integer.parseInt(currentTime.substring(0, 2)) >= 12) {
+            currentTime += " PM";
+        } else {
+            currentTime += " AM";
+        }
+
+        etTime.setText(currentTime);
+
         etTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -235,8 +250,8 @@ public class CreatePostFragment extends Fragment {
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
 
                         Log.d("time picker", "selectedHour = " + selectedHour + ", selectedMinute = " + selectedMinute);
-                        String minStr = ":"; //common
-                        if (selectedMinute < 10) { //conditional
+                        String minStr = ":";
+                        if (selectedMinute < 10) {
                             minStr = minStr + "0";
                         }
 
@@ -252,7 +267,6 @@ public class CreatePostFragment extends Fragment {
                 }, hour, minute, false);
                 mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
-
             }
         });
 
