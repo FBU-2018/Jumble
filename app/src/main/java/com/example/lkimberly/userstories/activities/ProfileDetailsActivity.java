@@ -163,13 +163,25 @@ public class ProfileDetailsActivity extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(), "saved", Toast.LENGTH_LONG).show();
                                         matchButton.setText("You have matched for this job");
                                         // TODO: Transition to message the person to hire
-                                        Intent i = new Intent(view.getContext(), JobDetailsActivity.class);
-                                        i.putExtra("User", Parcels.wrap(user));
-                                        i.putExtra("job", Parcels.wrap(job));
-                                        i.putExtra("match", Parcels.wrap(newMatch));
-                                        i.putExtra("refresh", true);
-                                        setResult(RESULT_OK, i); // set result code and bundle data for response
-                                        finish();
+
+                                        Intent intent = new Intent(Intent.ACTION_SEND);
+                                        intent.setData(Uri.parse("smsto:" + user.get("phoneNumber")));  // This ensures only SMS apps respond
+                                        intent.putExtra("sms_body", "Hi! You matched with my job on Jumble and I'd like to hire you.");
+                                        if (intent.resolveActivity(getPackageManager()) != null) {
+
+                                            // End this current intent first
+                                            Intent i = new Intent(view.getContext(), JobDetailsActivity.class);
+                                            i.putExtra("User", Parcels.wrap(user));
+                                            i.putExtra("job", Parcels.wrap(job));
+                                            i.putExtra("match", Parcels.wrap(newMatch));
+                                            i.putExtra("refresh", true);
+                                            setResult(RESULT_OK, i); // set result code and bundle data for response
+                                            finish();
+
+                                            startActivity(intent);
+                                        }
+
+
                                     } else {
                                         Toast.makeText(getApplicationContext(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
                                         e.printStackTrace();
