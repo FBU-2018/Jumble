@@ -34,7 +34,7 @@ public class ProfileFragment extends Fragment {
     TextView tvUsername;
     TextView tvInstitution;
     TextView tvPhoneNumber;
-    TextView tvSocialMedia;
+//    TextView tvSocialMedia;
 
     private String imagePath = "";
     public final String APP_TAG = "MyCustomApp";
@@ -61,13 +61,13 @@ public class ProfileFragment extends Fragment {
         tvUsername = view.findViewById(R.id.tv_profile_name);
         tvInstitution = view.findViewById(R.id.tv_profile_institution);
         tvPhoneNumber = view.findViewById(R.id.tv_profile_phone_number);
-        tvSocialMedia = view.findViewById(R.id.tv_profile_link);
+//        tvSocialMedia = view.findViewById(R.id.tv_profile_link);
 
         try {
             tvUsername.setText(user.getName());
             tvInstitution.setText(user.getInstitution());
             tvPhoneNumber.setText(user.getPhoneNumber());
-            tvSocialMedia.setText(user.getLinkedIn());
+//            tvSocialMedia.setText(user.getLinkedIn());
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
