@@ -128,7 +128,7 @@ public class EditProfileFragment extends Fragment {
 //                    user.setLinkedIn(link);
 //                }
 
-                viewPager.setCurrentItem(3);
+                viewPager.setCurrentItem(0);
                 user.saveInBackground();
             }
         });
