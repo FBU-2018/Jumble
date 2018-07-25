@@ -56,15 +56,10 @@ public class EditProfileFragment extends Fragment {
 
     private ViewPager viewPager;
 
-    //TextView tv_name;
-    //TextView tv_institution;
-    //TextView tv_phoneNumber;
-    //TextView tv_link;
-
     EditText et_name;
     EditText et_institution;
     EditText et_phoneNumber;
-    EditText et_link;
+//    EditText et_link;
 
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
@@ -93,12 +88,12 @@ public class EditProfileFragment extends Fragment {
         et_name = getActivity().findViewById(R.id.profile_name);
         et_institution = getActivity().findViewById(R.id.profile_institution);
         et_phoneNumber = getActivity().findViewById(R.id.profile_phone_number);
-        et_link = getActivity().findViewById(R.id.profile_link);
+//        et_link = getActivity().findViewById(R.id.profile_link);
 
         et_name.setText(user.getName());
         et_institution.setText(user.getInstitution());
         et_phoneNumber.setText(user.getPhoneNumber());
-        et_link.setText(user.getLinkedIn());
+//        et_link.setText(user.getLinkedIn());
 
         saveProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +102,7 @@ public class EditProfileFragment extends Fragment {
                 TextView tv_name = getActivity().findViewById(R.id.tv_profile_name);
                 TextView tv_institution = getActivity().findViewById(R.id.tv_profile_institution);
                 TextView tv_phoneNumber = getActivity().findViewById(R.id.tv_profile_phone_number);
-                TextView tv_link = getActivity().findViewById(R.id.tv_profile_link);
+//                TextView tv_link = getActivity().findViewById(R.id.tv_profile_link);
 
                 String name = et_name.getText().toString();
                 if (!name.equals("")) {
@@ -127,11 +122,11 @@ public class EditProfileFragment extends Fragment {
                     user.setPhoneNumber(phoneNumber);
                 }
 
-                String link = et_link.getText().toString();
-                if (!link.equals("")) {
-                    tv_link.setText(link);
-                    user.setLinkedIn(link);
-                }
+//                String link = et_link.getText().toString();
+//                if (!link.equals("")) {
+//                    tv_link.setText(link);
+//                    user.setLinkedIn(link);
+//                }
 
                 viewPager.setCurrentItem(3);
                 user.saveInBackground();
