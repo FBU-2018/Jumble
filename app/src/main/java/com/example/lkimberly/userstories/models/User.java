@@ -43,8 +43,13 @@ public class User extends ParseUser {
         put(KEY_IMAGE, image);
     }
 
+    // Get facebook url
 
-    // Get name linkedin url
+    public String getFacebook() { return getString(KEY_FACEBOOK); }
+
+    public void setFacebook(String facebook) { put(KEY_FACEBOOK, facebook); }
+
+    // Get linkedin url
     public String getLinkedIn() {
         return  getString(KEY_LINKEDIN);
     }

@@ -1,13 +1,12 @@
 package com.example.lkimberly.userstories.fragments;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.hardware.Camera;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,7 +18,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -61,6 +59,10 @@ public class EditProfileFragment extends Fragment {
     EditText et_phoneNumber;
 //    EditText et_link;
 
+    ImageButton ib_facebook;
+    ImageButton ib_linkedIn;
+    ImageButton ib_twitter;
+
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
     @Override
@@ -94,6 +96,10 @@ public class EditProfileFragment extends Fragment {
         et_institution.setText(user.getInstitution());
         et_phoneNumber.setText(user.getPhoneNumber());
 //        et_link.setText(user.getLinkedIn());
+
+        ib_facebook = getActivity().findViewById(R.id.ib_facebook);
+        ib_linkedIn = getActivity().findViewById(R.id.ib_linkedIn);
+        ib_twitter = getActivity().findViewById(R.id.ib_twitter);
 
         saveProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,6 +155,33 @@ public class EditProfileFragment extends Fragment {
             Log.d("EditProfileFragment", "profile picture does not exist!");
             e.printStackTrace();
         }
+
+        final Dialog dialog = new Dialog(getActivity());
+
+        dialog.setContentView(R.layout.dialog_links);
+
+        ib_facebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FacebookDialogFragment facebookDialog = new FacebookDialogFragment();
+
+                facebookDialog.show(getFragmentManager(), "FacebookDialog");
+            }
+        });
+
+        ib_linkedIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewPager.setCurrentItem(1);
+            }
+        });
+
+        ib_twitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewPager.setCurrentItem(1);
+            }
+        });
     }
 
 
