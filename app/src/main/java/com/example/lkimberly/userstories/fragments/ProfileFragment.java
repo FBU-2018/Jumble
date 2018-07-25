@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.activities.MainActivity;
+import com.example.lkimberly.userstories.models.User;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -29,8 +30,6 @@ public class ProfileFragment extends Fragment {
     Button logOutBtn;
     private ViewPager viewPager;
 
-    ParseUser currentUser;
-
     ImageView ivProfile;
     TextView tvUsername;
     TextView tvInstitution;
@@ -40,6 +39,7 @@ public class ProfileFragment extends Fragment {
     private String imagePath = "";
     public final String APP_TAG = "MyCustomApp";
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
+    public static final int GET_FROM_GALLERY = 3;
     File photoFile;
 
     @Override
@@ -50,33 +50,35 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
+        Log.d("fragment", "on Create is called!");
+        User user = (User) ParseUser.getCurrentUser();
+
         // Grab a reference to our view pager.
         viewPager = getActivity().findViewById(R.id.pager);
         editProfileBtn = getActivity().findViewById(R.id.edit_profile_btn);
         logOutBtn = getActivity().findViewById(R.id.log_out_btn);
-
-
-        currentUser = ParseUser.getCurrentUser();
 
         ivProfile = view.findViewById(R.id.profile_iv);
         tvUsername = view.findViewById(R.id.tv_profile_name);
         tvInstitution = view.findViewById(R.id.tv_profile_institution);
         tvPhoneNumber = view.findViewById(R.id.tv_profile_phone_number);
         tvSocialMedia = view.findViewById(R.id.tv_profile_link);
-        ivProfile = view.findViewById(R.id.profile_iv);
 
         try {
-            tvUsername.setText(currentUser.getUsername());
-            tvInstitution.setText(currentUser.get("institution").toString());
-            tvPhoneNumber.setText(currentUser.get("phoneNumber").toString());
-            tvSocialMedia.setText(currentUser.get("linkedin").toString());
+            tvUsername.setText(user.getName());
+            tvInstitution.setText(user.getInstitution());
+            tvPhoneNumber.setText(user.getPhoneNumber());
+            tvSocialMedia.setText(user.getLinkedIn());
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
 
         try {
-            Glide.with(ProfileFragment.this).load(currentUser.getParseFile("profilePicture").getUrl()).into(ivProfile);
-        } catch(NullPointerException e) {
+            Log.d("testing", "visited!");
+            Glide.with(ProfileFragment.this)
+                    .load(user.getImage().getUrl())
+                    .into(ivProfile);
+        } catch (NullPointerException e) {
             Log.d("ProfileFragment", "No Profile Pic");
         }
 
@@ -95,7 +97,7 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    public void  logOut() {
+    public void logOut() {
         Log.d("Logout", "Logged out");
         ParseUser.logOutInBackground(new LogOutCallback() {
             @Override
