@@ -63,7 +63,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -226,14 +225,8 @@ public class CreatePostFragment extends Fragment {
         // set the time of the job
 
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat mdFormat = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat mdFormat = new SimpleDateFormat("hh:mm a");
         String currentTime = mdFormat.format(calendar.getTime());
-
-        if (Integer.parseInt(currentTime.substring(0, 2)) >= 12) {
-            currentTime += " PM";
-        } else {
-            currentTime += " AM";
-        }
 
         etTime.setText(currentTime);
 
