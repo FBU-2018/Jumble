@@ -234,20 +234,19 @@ public class CreatePostFragment extends Fragment {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
 
-                        if (selectedMinute < 10) {
+                        Log.d("time picker", "selectedHour = " + selectedHour + ", selectedMinute = " + selectedMinute);
+                        String minStr = ":"; //common
+                        if (selectedMinute < 10) { //conditional
+                            minStr = minStr + "0";
+                        }
+
+                        if (selectedHour >= 12) {
                             if (selectedHour > 12) {
                                 selectedHour -= 12;
-                                etTime.setText(selectedHour + ":0" + selectedMinute + " PM");
-                            } else {
-                                etTime.setText(selectedHour + ":0" + selectedMinute + " AM");
                             }
+                            etTime.setText(selectedHour + minStr + selectedMinute + " PM");
                         } else {
-                            if (selectedHour > 12) {
-                                selectedHour -= 12;
-                                etTime.setText(selectedHour + ":" + selectedMinute + " AM");
-                            } else {
-                                etTime.setText(selectedHour + ":" + selectedMinute + " PM");
-                            }
+                            etTime.setText(selectedHour + minStr + selectedMinute + " AM");
                         }
                     }
                 }, hour, minute, false);
