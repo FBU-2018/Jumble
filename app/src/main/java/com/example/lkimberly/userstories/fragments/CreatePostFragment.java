@@ -99,6 +99,7 @@ public class CreatePostFragment extends Fragment {
 
     Job newJob;
     ParseFile parseFile;
+    String imagePath;
 
     // Calendar init
     Calendar myCalendar = Calendar.getInstance();
@@ -144,10 +145,6 @@ public class CreatePostFragment extends Fragment {
                 //newJob.setLocation(etLocation.getText().toString());
                 newJob.setEstimation(etEstimation.getText().toString());
 
-                if (parseFile != null) {
-                    newJob.put("image", parseFile);
-                }
-
                 etTitle.setText("");
                 etDescription.setText("");
                 etTime.setText("");
@@ -158,7 +155,7 @@ public class CreatePostFragment extends Fragment {
 
                 newJob.setUser(ParseUser.getCurrentUser());
 
-                final ParseFile parseFile = new ParseFile(photoFile);
+                final ParseFile parseFile = new ParseFile(new File(imagePath));
 
                 Log.d("newJobSave", "1. Success!");
 
@@ -374,16 +371,11 @@ public class CreatePostFragment extends Fragment {
             if (resultCode == RESULT_OK) {
                 User user = (User) getCurrentUser();
 
-                String imagePath = photoFile.getAbsolutePath();
+                imagePath = photoFile.getAbsolutePath();
                 Bitmap rawTakenImage = BitmapFactory.decodeFile(imagePath);
                 Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 400);
                 Bitmap rotatedBitmap = rotate(resizedBitmap, imagePath);
                 ivPhoto.setImageBitmap(rotatedBitmap);
-
-                ParseFile parseFile = new ParseFile(new File(imagePath));
-
-                user.put("image", parseFile);
-                user.saveInBackground();
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
@@ -400,18 +392,13 @@ public class CreatePostFragment extends Fragment {
                         filePathColumn, null, null, null);
                 cursor.moveToFirst();
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                String imagePath = cursor.getString(columnIndex);
+                imagePath = cursor.getString(columnIndex);
 
                 Bitmap rawTakenImage = BitmapFactory.decodeFile(imagePath);
                 Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 400);
 
                 Bitmap rotatedBitmap = rotate(resizedBitmap, imagePath);
                 ivPhoto.setImageBitmap(rotatedBitmap);
-
-                ParseFile parseFile = new ParseFile(new File(imagePath));
-
-                user.put("image", parseFile);
-                user.saveInBackground();
                 cursor.close();
             }
         }
