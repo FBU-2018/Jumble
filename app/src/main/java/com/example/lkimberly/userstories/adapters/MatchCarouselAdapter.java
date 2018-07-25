@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.activities.ProfileDetailsActivity;
+import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.User;
+import com.parse.FindCallback;
 import com.parse.ParseUser;
 
 import org.parceler.Parcels;
@@ -34,15 +37,25 @@ public class MatchCarouselAdapter extends RecyclerView.Adapter<MatchCarouselAdap
 
     private final Activity activity;
     private List<ParseUser> mUsers = new ArrayList<>();
+    private static String jobObjectId;
+    private static Job mJob;
 
     private int mRowIndex = -1;
+
+
+
 
     // pass in the Tweets array into the constructor
     public MatchCarouselAdapter(Activity activity) {
         this.activity = activity;
+
     }
 
     Context context;
+
+
+
+
     // for each row, inflate
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -113,6 +126,8 @@ public class MatchCarouselAdapter extends RecyclerView.Adapter<MatchCarouselAdap
             e.printStackTrace();
         }
 
+//        holder.tvRating
+
 
         // TODO: refactor below for raing when we convert to images from text
 //        final String postLikes = post.getPostLIikes();
@@ -139,44 +154,6 @@ public class MatchCarouselAdapter extends RecyclerView.Adapter<MatchCarouselAdap
 //        });
 
         //
-
-
-//        int round_radius = context.getResources().getInteger(R.integer.radius);
-//        int round_margin = context.getResources().getInteger(R.integer.margin);
-//
-//        final RoundedCornersTransformation roundedCornersTransformation = new RoundedCornersTransformation(round_radius, round_margin);
-//
-//        final RequestOptions requestOptions = RequestOptions.bitmapTransform(
-//                roundedCornersTransformation
-//        );
-//
-//
-//        // get the correct place holder and image view for the current orientation
-//        int placeholderId = R.drawable.ic_instagram_profile;
-//        ImageView imageView = holder.ivProfileImage;
-//
-//
-//        if (user.getParseFile("profilePicture")!= null) {
-//            Glide.with(holder.itemView.getContext())
-//                    .load(user.getParseFile("profilePicture").getUrl())
-//                    .apply(
-//                            RequestOptions.placeholderOf(placeholderId)
-//                                    .error(placeholderId)
-//                                    .fitCenter()
-//                    )
-//                    .apply(requestOptions)
-//                    .into(imageView);
-//        } else {
-//            Glide.with(holder.itemView.getContext())
-//                    .load(user.getParseFile("profilePicture"))
-//                    .apply(
-//                            RequestOptions.placeholderOf(placeholderId)
-//                                    .error(placeholderId)
-//                                    .fitCenter()
-//                    )
-//                    .apply(requestOptions)
-//                    .into(imageView);
-//        }
 
 
     }
@@ -225,7 +202,10 @@ public class MatchCarouselAdapter extends RecyclerView.Adapter<MatchCarouselAdap
             Intent i = new Intent(itemView.getContext(), ProfileDetailsActivity.class);
 
             i.putExtra("User", Parcels.wrap(user));
-            itemView.getContext().startActivity(i);
+            i.putExtra("job", Parcels.wrap(mJob));
+            Log.d("Whats going on", mJob.getObjectId());
+            activity.startActivityForResult(i, REQUEST_CODE);
+
         }
 
 //        @Override
@@ -240,6 +220,8 @@ public class MatchCarouselAdapter extends RecyclerView.Adapter<MatchCarouselAdap
 
 
     }
+
+
 
 
     // getRelativeTimeAgo("Mon Apr 01 21:16:23 +0000 2014");
@@ -284,7 +266,20 @@ public class MatchCarouselAdapter extends RecyclerView.Adapter<MatchCarouselAdap
         mRowIndex = index;
     }
 
+    public void setJob(final String job) {
+        jobObjectId = job;
 
+        Job.Query getJob = new Job.Query();
+        getJob.
+                getTop().
+                whereEqualTo("objectId", job).
+                findInBackground(new FindCallback<Job>() {
+                    @Override
+                    public void done(List<Job> objects, com.parse.ParseException e) {
+                        mJob = objects.get(0);
+                    }
+                });
+    }
 
 
 }

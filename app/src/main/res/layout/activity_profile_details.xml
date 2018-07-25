@@ -111,14 +111,6 @@
         android:layout_marginTop="20dp"
         android:text="Links to my social media:" />
 
-    <TextView
-        android:id="@+id/tv_socialMediaLinksValueDetailsPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tv_socialMediaLinksTitleDetailsPage"
-        android:layout_toEndOf="@+id/tv_potentialMatchNameDetailsPage"
-        android:text="TextView" />
-
     <ImageView
         android:id="@+id/iv_backBtn"
         android:layout_width="54dp"
@@ -134,4 +126,41 @@
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/tv_potentialMatchNameDetailsPage"
         app:srcCompat="@mipmap/ic_linear_separator_1" />
+
+    <Button
+        android:id="@+id/bv_matchButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+        android:text="Hire!" />
+
+    <ImageView
+        android:id="@+id/iv_twitterIconDetailsPage"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_toRightOf="@id/iv_linkedinIconDetailsPage"
+        android:layout_marginStart="10dp"
+        android:layout_alignTop="@+id/tv_socialMediaLinksTitleDetailsPage"
+
+        app:srcCompat="@drawable/twitter_icon" />
+
+    <ImageView
+        android:id="@+id/iv_linkedinIconDetailsPage"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignTop="@+id/tv_socialMediaLinksTitleDetailsPage"
+        android:layout_toRightOf="@id/iv_facebookIconDetailsPage"
+        android:layout_marginStart="10dp"
+        app:srcCompat="@drawable/linkedin_icon" />
+
+    <ImageView
+        android:id="@+id/iv_facebookIconDetailsPage"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignTop="@+id/tv_socialMediaLinksTitleDetailsPage"
+        android:layout_toEndOf="@+id/tv_potentialMatchNameDetailsPage"
+        app:srcCompat="@drawable/facebook_icon"
+        android:layout_marginTop="-3dp"/>
 </RelativeLayout>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.JobDetailsActivityOld">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tb_jobDetailsToolBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/camera_gradient_end"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:context=".activities.HomeActivity"
+                tools:showIn="@layout/activity_home">
+
+                <ImageButton
+                    android:id="@+id/ib_jobDetailsBackButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@android:color/transparent"
+                    android:src="?attr/actionModeCloseDrawable"
+                    android:tint="@color/ig_brand_pinkish" />
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ImageView
+        android:id="@+id/iv_jobDetailsJobPicture"
+        android:layout_width="match_parent"
+        android:layout_height="83dp"
+        android:layout_below="@id/appBarLayout"
+        android:layout_marginTop="15dp"
+        app:srcCompat="@drawable/ufi_save_active"
+        tools:layout_editor_absoluteX="168dp"
+        tools:layout_editor_absoluteY="51dp" />
+
+    <CalendarView
+        android:id="@+id/cv_jobDetailsCalendar"
+        android:layout_width="160dp"
+        android:layout_height="88dp"
+        android:layout_below="@id/tv_jobDetailsJobDescription"
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="48dp" />
+
+    <RatingBar
+        android:id="@+id/rb_jobDetailsRatingsBar"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/tv_jobDetailsMatchTitle"
+        android:layout_marginEnd="13dp" />
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mv_jobDetailsMap"
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:layout_below="@id/cv_jobDetailsCalendar"
+        android:layout_marginTop="25dp"/>
+
+    <TextView
+        android:id="@+id/tv_jobDetailsJobDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_jobDetailsJobTitle"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="TextView"
+        tools:text="There should probably be some details here...?" />
+
+    <TextView
+        android:id="@+id/tv_jobDetailsJobTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_jobDetailsJobPicture"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="163dp"
+        tools:layout_editor_absoluteY="132dp" />
+
+    <TextView
+        android:id="@+id/tv_jobDetailsTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tv_jobDetailsTimeTitle"
+        android:layout_below="@id/tv_jobDetailsTimeTitle"
+        android:layout_marginTop="5dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tv_jobDetailsMatchTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mv_jobDetailsMap"
+        android:layout_marginTop="15dp"
+        android:layout_alignStart="@+id/cv_jobDetailsCalendar"
+
+        android:text="Match:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_jobDetailsMatchName"
+        android:layout_width="75dp"
+        android:layout_height="35dp"
+        android:layout_alignStart="@+id/cv_jobDetailsCalendar"
+        android:layout_below="@id/tv_jobDetailsMatchTitle"
+        android:layout_marginTop="10dp"
+
+        android:text="TextView more words more words" />
+
+    <Button
+        android:id="@+id/btn_jobDetailsEndJob"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/border_bottom"
+        android:text="End Job Or Match" />
+
+    <TextView
+        android:id="@+id/tv_jobDetailsRatingTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rb_jobDetailsRatingsBar"
+        android:layout_alignStart="@+id/rb_jobDetailsRatingsBar"
+        android:layout_alignTop="@id/tv_jobDetailsMatchTitle"
+        android:text="Rating:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_jobDetailsTimeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="101dp"
+        android:text="Time:"
+        android:textStyle="bold" />
+    <!--<ScrollView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_marginTop="57dp">-->
+
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
+
+
+    <!--</RelativeLayout>-->
+
+    <!--</ScrollView>-->
+
+
+</RelativeLayout>

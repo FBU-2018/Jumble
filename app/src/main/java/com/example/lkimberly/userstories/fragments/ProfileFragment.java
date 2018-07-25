@@ -63,10 +63,14 @@ public class ProfileFragment extends Fragment {
         tvPhoneNumber = view.findViewById(R.id.tv_profile_phone_number);
         tvSocialMedia = view.findViewById(R.id.tv_profile_link);
 
-        tvUsername.setText(user.getName());
-        tvInstitution.setText(user.getInstitution());
-        tvPhoneNumber.setText(user.getPhoneNumber());
-        tvSocialMedia.setText(user.getLinkedIn());
+        try {
+            tvUsername.setText(user.getName());
+            tvInstitution.setText(user.getInstitution());
+            tvPhoneNumber.setText(user.getPhoneNumber());
+            tvSocialMedia.setText(user.getLinkedIn());
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
         try {
             Log.d("testing", "visited!");
@@ -80,7 +84,7 @@ public class ProfileFragment extends Fragment {
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewPager.setCurrentItem(4);
+                viewPager.setCurrentItem(1);
             }
         });
 

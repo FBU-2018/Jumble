@@ -21,9 +21,9 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_gradient_divider"
                 android:gravity="center"
-                android:text="You have no matches"
+                android:text="The following jobs have no matches yet..."
                 android:textColor="@android:color/primary_text_dark"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 card_view:fontFamily="serif" />
 
         </android.support.v7.widget.LinearLayoutCompat>
