@@ -1,5 +1,6 @@
 package com.example.lkimberly.userstories.activities;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -24,6 +25,8 @@ import android.widget.Toast;
 
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.adapters.PlaceAutocompleteAdapter;
+import com.example.lkimberly.userstories.fragments.CreatePostFragment;
+import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.PlaceInfo;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -45,9 +48,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import org.parceler.Parcels;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MapActivity extends AppCompatActivity
         implements OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener {
@@ -66,6 +72,13 @@ public class MapActivity extends AppCompatActivity
 
     private AutoCompleteTextView mSearchText;
     private ImageView mGps;
+    private ImageView mNavigation;
+
+    List<Address> list;
+
+    Job newJob;
+
+    private final int REQUEST_CODE = 123;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,6 +86,9 @@ public class MapActivity extends AppCompatActivity
         setContentView(R.layout.activity_map);
         mSearchText = findViewById(R.id.input_search);
         mGps = findViewById(R.id.ic_gps);
+        mNavigation = findViewById(R.id.ic_navigation);
+
+        newJob = Parcels.unwrap(getIntent().getParcelableExtra("newJob"));
 
         initMap();
 
@@ -189,6 +205,18 @@ public class MapActivity extends AppCompatActivity
             }
         });
 
+        mNavigation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MapActivity.this, HomeActivity.class);
+                Log.d("check address", newJob.getLocation());
+                intent.putExtra("newJob", Parcels.wrap(newJob));
+                intent.putExtra("returnFromMap", true);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
+
         hideSoftKeyboard();
     }
 
@@ -196,7 +224,7 @@ public class MapActivity extends AppCompatActivity
         String searchString = mSearchText.getText().toString();
 
         Geocoder geocoder = new Geocoder(MapActivity.this);
-        List<Address> list = new ArrayList<>();
+        list = new ArrayList<>();
         try {
             list = geocoder.getFromLocationName(searchString, 1);
         } catch (IOException e) {
@@ -259,6 +287,8 @@ public class MapActivity extends AppCompatActivity
                 mPlace.setWebsiteUri(place.getWebsiteUri());
 
                 Log.d(TAG, "onResult: place: " + mPlace.toString());
+
+                setLocation(newJob, mPlace);
             } catch (NullPointerException e) {
                 Log.e(TAG, "onResult: NullPointerException: " + e.getMessage());
             }
@@ -270,4 +300,20 @@ public class MapActivity extends AppCompatActivity
 
         }
     };
+
+    private void setLocation(Job newJob, PlaceInfo place) {
+        double latitude = place.getLatlng().latitude;
+        double longitude = place.getLatlng().longitude;
+
+        newJob.setLatitude(Double.toString(latitude));
+        newJob.setLongitude(Double.toString(longitude));
+
+        String addressString = place.getAddress();
+//        addressString += address.getAddressLine(0) + ", ";
+//        addressString += address.getAddressLine(1) + ", ";
+//        addressString += address.getAddressLine(2);
+        newJob.setLocation(addressString);
+
+        Log.d("Got address!", newJob.getLocation());
+    }
 }
