@@ -56,11 +56,6 @@ public class EditProfileFragment extends Fragment {
 
     private ViewPager viewPager;
 
-    TextView tv_name;
-    TextView tv_institution;
-    TextView tv_phoneNumber;
-//    TextView tv_link;
-
     EditText et_name;
     EditText et_institution;
     EditText et_phoneNumber;
@@ -90,11 +85,6 @@ public class EditProfileFragment extends Fragment {
         edit_profile_iv = getActivity().findViewById(R.id.edit_profile_iv);
         profile_iv = getActivity().findViewById(R.id.profile_iv);
 
-        tv_name = getActivity().findViewById(R.id.tv_profile_name);
-        tv_institution = getActivity().findViewById(R.id.tv_profile_institution);
-        tv_phoneNumber = getActivity().findViewById(R.id.tv_profile_phone_number);
-//        tv_link = getActivity().findViewById(R.id.tv_profile_link);
-
         et_name = getActivity().findViewById(R.id.profile_name);
         et_institution = getActivity().findViewById(R.id.profile_institution);
         et_phoneNumber = getActivity().findViewById(R.id.profile_phone_number);
@@ -108,6 +98,12 @@ public class EditProfileFragment extends Fragment {
         saveProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                TextView tv_name = getActivity().findViewById(R.id.tv_profile_name);
+                TextView tv_institution = getActivity().findViewById(R.id.tv_profile_institution);
+                TextView tv_phoneNumber = getActivity().findViewById(R.id.tv_profile_phone_number);
+//                TextView tv_link = getActivity().findViewById(R.id.tv_profile_link);
+
                 String name = et_name.getText().toString();
                 if (!name.equals("")) {
                     tv_name.setText(name);
