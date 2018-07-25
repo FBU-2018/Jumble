@@ -102,7 +102,7 @@ public class Job  extends ParseObject {
     }
 
     public void setLongitude(String longitude) {
-        put(KEY_LATITUDE, longitude);
+        put(KEY_LONGITUDE, longitude);
     }
 
     public static class Query extends ParseQuery<Job> {
