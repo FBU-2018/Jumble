@@ -7,6 +7,15 @@
     tools:context=".fragments.ProfileFragment"
     android:id="@+id/action_view_profile">
 
+    <RatingBar
+        android:id="@+id/rb_profile_ratings_bar"
+        style="@style/Widget.AppCompat.RatingBar.Indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_above="@+id/tv_profile_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-250dp" />
+
     <Button
         android:id="@+id/edit_profile_btn"
         android:layout_width="wrap_content"
@@ -35,7 +44,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="210dp"
+        android:layout_marginTop="250dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:textColor="@color/black"
@@ -123,7 +132,8 @@
         android:layout_height="30dp"
         android:layout_below="@+id/tv_profile_phone_number"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_margin="10dp"
+        android:layout_marginTop="-10dp"
         android:background="@color/transparent"
         android:scaleType="fitXY"
         android:src="@drawable/linkedin_icon" />

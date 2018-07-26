@@ -9,7 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,9 +48,11 @@ public class ProfileDetailsActivity extends AppCompatActivity {
     public ParseUser user;
     public Job job;
 
-    public ImageView facebookIcon;
-    public ImageView twitterIcon;
-    public ImageView linkedinIcon;
+    public ImageButton facebookIcon;
+    public ImageButton twitterIcon;
+    public ImageButton linkedinIcon;
+
+    RatingBar ratingBar;
 
 
     @Override
@@ -61,13 +65,14 @@ public class ProfileDetailsActivity extends AppCompatActivity {
         ivProfileImage = (ImageView) findViewById(R.id.iv_profilePicDetailsPage);
         tvName = (TextView) findViewById(R.id.tv_potentialMatchNameDetailsPage);
         tvInstitution = (TextView) findViewById(R.id.tv_institutionValue2DetailsPage);
-        tvPreviousJobs = (TextView) findViewById(R.id.tv_PreviousJobsValueDetailsPage);
-        tvRating = (TextView) findViewById(R.id.tv_ratingValueDetailsPage);
+//        tvPreviousJobs = (TextView) findViewById(R.id.tv_PreviousJobsValueDetailsPage);
+//        tvRating = (TextView) findViewById(R.id.tv_ratingValueDetailsPage);
         tvPhoneNumber = (TextView) findViewById(R.id.tv_phoneNumberValueDetailsPage);
         matchButton = (Button) findViewById(R.id.bv_matchButton);
-        facebookIcon = (ImageView) findViewById(R.id.iv_facebookIconDetailsPage);
-        twitterIcon = (ImageView) findViewById(R.id.iv_twitterIconDetailsPage);
-        linkedinIcon = (ImageView) findViewById(R.id.iv_linkedinIconDetailsPage);
+        facebookIcon = findViewById(R.id.facebook_ib3);
+        twitterIcon = findViewById(R.id.twitter_ib3);
+        linkedinIcon = findViewById(R.id.linkedIn_ib3);
+        ratingBar = findViewById(R.id.rb_profile_ratings_bar3);
 
 
 
@@ -101,12 +106,11 @@ public class ProfileDetailsActivity extends AppCompatActivity {
 
         tvName.setText(user.get("name").toString());
         tvInstitution.setText(user.get("institution") != null ? user.get("institution").toString() : "None");
-        tvPreviousJobs.setText(user.get("previousJobs") != null ? user.get("previousJobs").toString() : "None");
-        tvRating.setText(user.get("rating") != null ? user.get("rating").toString() : "I'm a beginer!");
+//        tvPreviousJobs.setText(user.get("previousJobs") != null ? user.get("previousJobs").toString() : "None");
+//        tvRating.setText(user.get("rating") != null ? user.get("rating").toString() : "I'm a beginer!");
         tvPhoneNumber.setText(user.get("phoneNumber") != null ? user.get("phoneNumber").toString() : "None");
 
-
-
+        ratingBar.setRating((float) (parseDouble(user.get("rating").toString()) * 5));
 
         backButton = (ImageView) findViewById(R.id.iv_backBtn);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -253,5 +257,13 @@ public class ProfileDetailsActivity extends AppCompatActivity {
         }
     }
 
+    double parseDouble(String ratio) {
+        if (ratio.contains("/")) {
+            String[] rat = ratio.split("/");
+            return Double.parseDouble(rat[0]) / Double.parseDouble(rat[1]);
+        } else {
+            return Double.parseDouble(ratio);
+        }
+    }
 
 }
