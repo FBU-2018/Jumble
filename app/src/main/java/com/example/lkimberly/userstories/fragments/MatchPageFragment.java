@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.lkimberly.userstories.R;
-import com.example.lkimberly.userstories.RecyclerViewItemDecorator;
 import com.example.lkimberly.userstories.adapters.MatchPageAdapter;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.MatchDataModel;
@@ -25,12 +23,11 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static android.support.constraint.ConstraintSet.VERTICAL;
-import static com.parse.Parse.getApplicationContext;
 
 public class MatchPageFragment extends Fragment {
 
@@ -97,16 +94,15 @@ public class MatchPageFragment extends Fragment {
 
     }
 
-//    @Override
-//    public void setUserVisibleHint(boolean isVisibleToUser) {
-//        super.setUserVisibleHint(isVisibleToUser);
-//
-//        if (isVisibleToUser) {
-//            if (adapter != null) && (){
-//                refresh();
-//            }
-//        }
-//    }
+
+    double parseDouble(String ratio) {
+        if (ratio.contains("/")) {
+            String[] rat = ratio.split("/");
+            return Double.parseDouble(rat[0]) / Double.parseDouble(rat[1]);
+        } else {
+            return Double.parseDouble(ratio);
+        }
+    }
 
 
     public void refresh() {
@@ -156,9 +152,20 @@ public class MatchPageFragment extends Fragment {
                             }
 
                             for (String jobOfCurrentUser: matchDict.keySet()) {
-
                                 matchesModelList.add(new MatchDataModel(1, jobOfCurrentUser));
-                                matchesModelList.add(new MatchDataModel(0, matchDict.get(jobOfCurrentUser),jobOfCurrentUser));
+
+                                List<ParseUser> usersList = matchDict.get(jobOfCurrentUser);
+
+                                Collections.sort(usersList, new Comparator<ParseUser>(){
+                                    public int compare(ParseUser p1, ParseUser p2){
+                                        return (int) ((parseDouble((String) p1.get("rating")) - (parseDouble((String) p2.get("rating")))));
+                                    }
+                                });
+
+                                Collections.reverse(usersList);
+                                Log.d("User list", usersList.toString());
+
+                                matchesModelList.add(new MatchDataModel(0, usersList,jobOfCurrentUser));
                             }
 
 

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -85,6 +86,9 @@ public class MatchCarouselAdapter extends RecyclerView.Adapter<MatchCarouselAdap
 //        holder.tvDate.setText(getRelativeTimeAgo(post.createdAt()));
         holder.user = user;
 
+        int rating = (int) ((parseDouble((String)user.get("rating")))*5);
+        holder.rbRatings.setRating(rating);
+
         int round_radius = context.getResources().getInteger(R.integer.radius);
         int round_margin = context.getResources().getInteger(R.integer.margin);
 
@@ -143,9 +147,9 @@ public class MatchCarouselAdapter extends RecyclerView.Adapter<MatchCarouselAdap
         public TextView tvName;
         public TextView tvInstitution;
         public TextView tvPreviousJobs;
-        public TextView tvRating;
         public TextView tvPhoneNumber;
         public TextView tvLinksToSocialMedia;
+        public RatingBar rbRatings;
         public ParseUser user;
         private final int REQUEST_CODE = 21;
 
@@ -159,7 +163,7 @@ public class MatchCarouselAdapter extends RecyclerView.Adapter<MatchCarouselAdap
             ivProfileImage = (ImageView) itemView.findViewById(R.id.iv_profilePicDetailsPage);
             tvName = (TextView) itemView.findViewById(R.id.tv_potentialMatchNameDetailsPage);
             tvInstitution = (TextView) itemView.findViewById(R.id.tv_institutionValue);
-            tvRating = (TextView) itemView.findViewById(R.id.tv_ratingValue);
+            rbRatings = (RatingBar) itemView.findViewById(R.id.rb_ratingsValue);
 
 
             itemView.setOnClickListener(this);
@@ -173,7 +177,6 @@ public class MatchCarouselAdapter extends RecyclerView.Adapter<MatchCarouselAdap
 
             i.putExtra("User", Parcels.wrap(user));
             i.putExtra("job", Parcels.wrap(mJob));
-            Log.d("Whats going on", mJob.getObjectId());
             activity.startActivityForResult(i, REQUEST_CODE);
 
         }
@@ -192,7 +195,14 @@ public class MatchCarouselAdapter extends RecyclerView.Adapter<MatchCarouselAdap
     }
 
 
-
+    double parseDouble(String ratio) {
+        if (ratio.contains("/")) {
+            String[] rat = ratio.split("/");
+            return Double.parseDouble(rat[0]) / Double.parseDouble(rat[1]);
+        } else {
+            return Double.parseDouble(ratio);
+        }
+    }
 
     // getRelativeTimeAgo("Mon Apr 01 21:16:23 +0000 2014");
     public String getRelativeTimeAgo(String rawJsonDate) {

@@ -115,7 +115,12 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
         tvDate.setText(job.get("date").toString());
         String compensationFromJobString = (String) job.get("compensation");
         if (compensationFromJobString != null) {
+            compensation.setTextColor(getResources().getColor(R.color.black));
             compensation.setText(compensationFromJobString);
+        } else {
+            compensation.setTextColor(getResources().getColor(R.color.grey_5));
+            compensation.setText("$$$$$");
+
         }
 
         // Handle if view is for a user swiping jobs or for a job poster
