@@ -19,7 +19,8 @@ public class User extends ParseUser {
     private static final String KEY_DATE = "createdAt";
     private static final String KEY_INSTITUTION = "institution";
 
-
+    public User() {
+    }
 
     // Get name
     public String getName() {

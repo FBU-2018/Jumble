@@ -1,16 +1,16 @@
 package com.example.lkimberly.userstories.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.lkimberly.userstories.R;
+import com.example.lkimberly.userstories.models.User;
 import com.parse.ParseException;
-import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 public class SignupActivity extends AppCompatActivity {
@@ -45,7 +45,7 @@ public class SignupActivity extends AppCompatActivity {
 
     private void signUp(String username, String password, String email) {
         // Create the ParseUser
-        ParseUser user = new ParseUser();
+        User user = new User();
         // Set core properties
         user.setUsername(username);
         user.setPassword(password);
