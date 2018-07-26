@@ -240,7 +240,7 @@ public class CreatePostFragment extends Fragment {
         //SimpleDateFormat mdFormat = new SimpleDateFormat("hh:mm a");
         //String currentTime = mdFormat.format(calendar.getTime());
 
-        etTime.setText("00:00 AM");
+        etTime.setText("12:00 AM");
 
         etTime.setOnClickListener(new View.OnClickListener() {
             @Override
