@@ -138,15 +138,20 @@ public class MatchPageFragment extends Fragment {
                             for (int i = 0; i < objects.size(); i++) {
 
                                 Matches singleMatch = (Matches) objects.get(i);
-
-                                if (matchDict.containsKey(singleMatch.getJob().getObjectId())){
-                                    List<ParseUser> listOfMatchesForGivenJob = matchDict.get(singleMatch.getJob().getObjectId());
-                                    ParseUser jobSubscriber = singleMatch.getJobSubscriber();
-                                    listOfMatchesForGivenJob.add(jobSubscriber);
-                                } else {
-                                    List<ParseUser> startMatchList = new ArrayList<>();
-                                    startMatchList.add(singleMatch.getJobSubscriber());
-                                    matchDict.put( singleMatch.getJob().getObjectId(), startMatchList);
+                                try {
+                                    if (matchDict.containsKey(singleMatch.getJob().getObjectId())){
+                                        List<ParseUser> listOfMatchesForGivenJob = matchDict.get(singleMatch.getJob().getObjectId());
+                                        ParseUser jobSubscriber = singleMatch.getJobSubscriber();
+                                        listOfMatchesForGivenJob.add(jobSubscriber);
+                                    } else {
+                                        List<ParseUser> startMatchList = new ArrayList<>();
+                                        startMatchList.add(singleMatch.getJobSubscriber());
+                                        matchDict.put( singleMatch.getJob().getObjectId(), startMatchList);
+                                    }
+                                } catch (NullPointerException renderMatchError) {
+                                    Log.d("Match/Job Error", "Data causing error: Match - " + singleMatch.getObjectId() + ", Job - " + singleMatch.getJob());
+                                    renderMatchError.printStackTrace();
+                                    throw new NullPointerException("Match points to non-existant job");
                                 }
                             }
 

@@ -47,8 +47,7 @@
         android:layout_height="wrap_content"
 
         android:layout_alignStart="@+id/tv_institutionValue"
-        android:layout_alignTop="@+id/tv_ratingTitleDetailsPage"
-        android:text="TextView" />
+        android:layout_alignTop="@+id/tv_ratingTitleDetailsPage" />
 
     <TextView
         android:id="@+id/tv_institutionValue"
