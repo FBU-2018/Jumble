@@ -6,110 +6,125 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RatingBar
+        android:id="@+id/rb_profile_ratings_bar3"
+        style="@style/Widget.AppCompat.RatingBar.Indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="280dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tv_potentialMatchNameDetailsPage"
+        android:layout_marginRight="10dp"
+        android:layout_toStartOf="@+id/iv_profilePicDetailsPage"
+        android:src="@drawable/ic_person" />
+
+    <ImageView
+        android:id="@+id/imageView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tv_institutionValue2DetailsPage"
+        android:layout_marginRight="10dp"
+        android:layout_toStartOf="@+id/iv_profilePicDetailsPage"
+        android:src="@drawable/ic_work" />
+
+    <ImageView
+        android:id="@+id/imageView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tv_phoneNumberValueDetailsPage"
+        android:layout_marginRight="10dp"
+        android:layout_toStartOf="@+id/iv_profilePicDetailsPage"
+        android:src="@drawable/ic_phone" />
+
+    <ImageButton
+        android:id="@+id/facebook_ib3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignTop="@+id/linkedIn_ib3"
+        android:layout_toStartOf="@+id/linkedIn_ib3"
+        android:background="@color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/facebook_icon" />
+
+    <ImageButton
+        android:id="@+id/linkedIn_ib3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/tv_phoneNumberValueDetailsPage"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="40dp"
+        android:background="@color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/linkedin_icon" />
+
+    <ImageButton
+        android:id="@+id/twitter_ib3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignTop="@+id/linkedIn_ib3"
+        android:layout_toEndOf="@+id/linkedIn_ib3"
+        android:background="@color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/twitter_icon" />
+
+    <TextView
+        android:id="@+id/tv_phoneNumberValueDetailsPage"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_institutionValue2DetailsPage"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:ems="10"
+        android:inputType="phone"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        tools:text="Phone number  " />
+
+    <TextView
+        android:id="@+id/tv_institutionValue2DetailsPage"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_potentialMatchNameDetailsPage"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        tools:text="Institution" />
+
+    <TextView
+        android:id="@+id/tv_potentialMatchNameDetailsPage"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="350dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        tools:text="Name" />
+
     <ImageView
         android:id="@+id/iv_profilePicDetailsPage"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_below="@+id/iv_backBtn"
-        android:layout_centerHorizontal="true"
-        android:scaleType="centerCrop"
-        app:srcCompat="@drawable/ic_instagram_profile"
-        tools:layout_editor_absoluteX="142dp"
-        tools:layout_editor_absoluteY="71dp" />
-
-    <TextView
-        android:id="@+id/tv_potentialMatchNameDetailsPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="218dp"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="163dp"
-        tools:layout_editor_absoluteY="182dp" />
-
-    <TextView
-        android:id="@+id/tv_institutionTitleDetailsPage"
-        android:layout_width="147dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="41dp"
-        android:layout_below="@id/tv_potentialMatchNameDetailsPage"
-        android:layout_marginTop="75dp"
-        android:text="Institution (Company, school, etc.):"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="245dp" />
-
-    <TextView
-        android:id="@+id/tv_ratingValueDetailsPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tv_ratingTitleDetailsPage"
-        android:layout_toEndOf="@+id/tv_potentialMatchNameDetailsPage"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/tv_institutionValue2DetailsPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tv_institutionTitleDetailsPage"
-        android:layout_toEndOf="@+id/tv_potentialMatchNameDetailsPage"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="290dp" />
-
-    <TextView
-        android:id="@+id/tv_ratingTitleDetailsPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_previousJobsTitleDetailsPage"
-        android:layout_alignStart="@+id/tv_institutionTitleDetailsPage"
-        android:layout_marginTop="20dp"
-        android:text="Rating:" />
-
-    <TextView
-        android:id="@+id/tv_previousJobsTitleDetailsPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/tv_institutionTitleDetailsPage"
-        android:layout_below="@id/tv_institutionTitleDetailsPage"
-        android:layout_marginTop="20dp"
-        android:text="Previous Jobs:" />
-
-    <TextView
-        android:id="@+id/tv_PreviousJobsValueDetailsPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tv_previousJobsTitleDetailsPage"
-        android:layout_toEndOf="@+id/tv_potentialMatchNameDetailsPage"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/tv_phoneNumberTitleDetailsPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/tv_institutionTitleDetailsPage"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/tv_ratingValueDetailsPage"
-        android:text="Phone Number:" />
-
-    <TextView
-        android:id="@+id/tv_phoneNumberValueDetailsPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tv_phoneNumberTitleDetailsPage"
-        android:layout_toEndOf="@+id/tv_potentialMatchNameDetailsPage"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/tv_socialMediaLinksTitleDetailsPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/tv_institutionTitleDetailsPage"
-        android:layout_below="@+id/tv_phoneNumberTitleDetailsPage"
-        android:layout_marginTop="20dp"
-        android:text="Links to my social media:" />
+        android:layout_marginTop="110dp"
+        app:srcCompat="@color/black" />
 
     <ImageView
         android:id="@+id/iv_backBtn"
@@ -117,15 +132,8 @@
         android:layout_height="55dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        app:srcCompat="@mipmap/ic_back_1" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/tv_potentialMatchNameDetailsPage"
-        app:srcCompat="@mipmap/ic_linear_separator_1" />
+        app:srcCompat="@mipmap/ic_back_1"
+        android:tint="@color/colorMainDark"/>
 
     <Button
         android:id="@+id/bv_matchButton"
@@ -133,34 +141,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+        android:background="@drawable/button_border"
         android:text="Hire!" />
-
-    <ImageView
-        android:id="@+id/iv_twitterIconDetailsPage"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_toRightOf="@id/iv_linkedinIconDetailsPage"
-        android:layout_marginStart="10dp"
-        android:layout_alignTop="@+id/tv_socialMediaLinksTitleDetailsPage"
-
-        app:srcCompat="@drawable/twitter_icon" />
-
-    <ImageView
-        android:id="@+id/iv_linkedinIconDetailsPage"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_alignTop="@+id/tv_socialMediaLinksTitleDetailsPage"
-        android:layout_toRightOf="@id/iv_facebookIconDetailsPage"
-        android:layout_marginStart="10dp"
-        app:srcCompat="@drawable/linkedin_icon" />
-
-    <ImageView
-        android:id="@+id/iv_facebookIconDetailsPage"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignTop="@+id/tv_socialMediaLinksTitleDetailsPage"
-        android:layout_toEndOf="@+id/tv_potentialMatchNameDetailsPage"
-        app:srcCompat="@drawable/facebook_icon"
-        android:layout_marginTop="-3dp"/>
 </RelativeLayout>
