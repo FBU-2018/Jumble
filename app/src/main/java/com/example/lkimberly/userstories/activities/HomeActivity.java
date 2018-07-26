@@ -29,11 +29,14 @@ import com.example.lkimberly.userstories.fragments.EditProfileFragment;
 import com.example.lkimberly.userstories.fragments.FeedFragment;
 import com.example.lkimberly.userstories.fragments.MatchPageFragment;
 import com.example.lkimberly.userstories.fragments.ProfileFragment;
+import com.example.lkimberly.userstories.models.Job;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import org.parceler.Parcels;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -69,6 +72,7 @@ public class HomeActivity extends AppCompatActivity {
 
     JumbleFragmentAdapter adapter;
 
+    CreatePostFragment myCreatePostFragment;
     MatchPageFragment myMatchPageFragment;
 
     @Override
@@ -86,7 +90,8 @@ public class HomeActivity extends AppCompatActivity {
         fragments.add(new ProfileFragment());
         fragments.add(new EditProfileFragment());
         fragments.add(new FeedFragment());
-        fragments.add(new CreatePostFragment());
+        myCreatePostFragment = new CreatePostFragment();
+        fragments.add(myCreatePostFragment);
         myMatchPageFragment = new MatchPageFragment();
         fragments.add(myMatchPageFragment);
 
@@ -195,7 +200,7 @@ public class HomeActivity extends AppCompatActivity {
      * The example view pager which we use in combination with the bottom navigation view to make
      * a smooth horizontal sliding transition.
      */
-    static class JumbleFragmentAdapter extends FragmentPagerAdapter {
+    public class JumbleFragmentAdapter extends FragmentPagerAdapter {
 
         /**
          * The list of fragments which we are going to be displaying in the view pager.
@@ -265,9 +270,17 @@ public class HomeActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         Intent potentialIntent = getIntent();
         // REQUEST_CODE is defined above
+        Log.d("HomeActivity", "checking HomeActivity onActivityResult");
         if (resultCode == RESULT_OK) {
             if (data.getBooleanExtra("refresh", false)) {
                 myMatchPageFragment.refresh();
+            }
+
+            if (data.getBooleanExtra("returnFromMap", false)) {
+                Log.d("HomeActivity", "back from Map");
+                Job job = Parcels.unwrap(data.getParcelableExtra("newJob"));
+                // call create post fragment
+                myCreatePostFragment.updateLocation(job);
             }
         }
     }

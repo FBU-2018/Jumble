@@ -59,6 +59,8 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.parceler.Parcels;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -108,6 +110,7 @@ public class CreatePostFragment extends Fragment {
     SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
 
     private static final int ERROR_DIALOG_REQUEST = 9001;
+    private final int REQUEST_CODE = 123;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -132,11 +135,11 @@ public class CreatePostFragment extends Fragment {
         ivPhoto = getActivity().findViewById(R.id.ivPhoto);
         ivJobPhoto = getActivity().findViewById(R.id.ivJobPhoto);
 
+        newJob = new Job();
+
         bCreateJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newJob = new Job();
-
                 newJob.setTitle(etTitle.getText().toString());
                 newJob.setDescription(etDescription.getText().toString());
                 newJob.setTime(etTime.getText().toString());
@@ -274,7 +277,7 @@ public class CreatePostFragment extends Fragment {
 
     private void init() {
         if (mLocationPermissionsGranted) {
-            getDeviceLocation();
+                getDeviceLocation();
         }
 
         btnMap = getActivity().findViewById(R.id.btnMap);
@@ -284,7 +287,8 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MapActivity.class);
-                startActivity(intent);
+                intent.putExtra("newJob", Parcels.wrap(newJob));
+                startActivityForResult(intent, REQUEST_CODE);
             }
         });
     }
@@ -408,7 +412,27 @@ public class CreatePostFragment extends Fragment {
                 cursor.close();
             }
         }
+
+//        Log.d("Back from MapActivity", "1");
+//        if (requestCode == REQUEST_CODE) {
+//            Log.d("Back from MapActivity", "2");
+//            if (resultCode == RESULT_OK) {
+//                Log.d("Back from MapActivity", "HELLO");
+//                newJob = Parcels.unwrap(data.getParcelableExtra("newJob"));
+//                btnMap.setText(newJob.getLocation());
+//            } else {
+//                Log.d("Something went wrong", "sad");
+//            }
+//        }
     }
+
+    public void updateLocation(Job job) {
+        Log.d("CreatePostFragment", "trying to update location");
+        newJob = job;
+        btnMap.setText(job.getLocation());
+    }
+
+    // make a function get map info --> does what code above does
 
     public Bitmap rotate(Bitmap bitmap, String imagePath) {
         ExifInterface exifInterface = null;
