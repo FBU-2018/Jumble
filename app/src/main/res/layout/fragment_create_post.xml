@@ -7,13 +7,28 @@
     android:orientation="vertical"
     tools:context=".fragments.CreatePostFragment">
 
+    <EditText
+        android:id="@+id/etMoney"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etDescription"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/edittext_rounded_corners"
+        android:ems="10"
+        android:hint="Fee?"
+        android:inputType="textCapSentences|textMultiLine"
+        android:maxLines="1"
+        android:padding="5dp"
+        android:textSize="15sp" />
+
     <ImageView
         android:id="@+id/ivPhoto"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:src="@android:color/black" />
 
     <Button
@@ -22,7 +37,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnMap"
         android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
         android:background="@drawable/button_border"
         android:gravity="center"
         android:padding="5dp"
@@ -41,7 +55,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="130dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/button_rounded_corners"
         android:src="@drawable/ic_instagram_new_post" />
 
@@ -71,7 +85,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="130dp"
         android:background="@drawable/edittext_rounded_corners"
         android:ems="10"
         android:hint="What's the job?"
@@ -89,7 +103,7 @@
         android:layout_margin="10dp"
         android:background="@drawable/edittext_rounded_corners"
         android:ems="10"
-        android:hint="Give me some details!"
+        android:hint="Give me details!"
         android:inputType="textCapSentences|textMultiLine"
         android:maxLines="1"
         android:padding="5dp"
@@ -99,13 +113,13 @@
         android:id="@+id/etDate"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etDescription"
+        android:layout_below="@+id/etMoney"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:background="@drawable/edittext_rounded_corners"
         android:ems="10"
         android:focusable="false"
-        android:hint="Pick a date!"
+        android:hint="Date?"
         android:padding="5dp"
         android:textSize="15sp" />
 
@@ -113,31 +127,31 @@
         android:id="@+id/etTime"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etDate"
+        android:layout_below="@+id/imageView5"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:background="@drawable/edittext_rounded_corners"
-        android:focusable="false"
         android:ems="10"
-        android:hint="Pick a time!"
+        android:focusable="false"
+        android:hint="Time?"
         android:padding="5dp"
         android:textSize="15sp" />
 
     <Button
         android:id="@+id/btnMap"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etEstimation"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:background="@drawable/edittext_rounded_corners"
-        android:hint="Pick a location!"
+        android:hint="Location?"
         android:inputType="textCapSentences|textMultiLine"
         android:maxLines="1"
         android:padding="5dp"
         android:textAlignment="textStart"
-        android:textSize="15sp"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"/>
+        android:textSize="15sp" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -145,7 +159,8 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/etTitle"
         android:layout_toStartOf="@+id/etEstimation"
-        android:paddingEnd="0dp"
+        android:padding="3dp"
+        android:scaleType="fitXY"
         android:src="@drawable/ic_title" />
 
     <ImageView
@@ -154,6 +169,8 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/etDescription"
         android:layout_toStartOf="@+id/etEstimation"
+        android:padding="3dp"
+        android:scaleType="fitXY"
         android:src="@drawable/ic_description" />
 
     <ImageView
@@ -162,6 +179,8 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/etEstimation"
         android:layout_toStartOf="@+id/etEstimation"
+        android:padding="3dp"
+        android:scaleType="fitXY"
         android:src="@drawable/ic_timer" />
 
     <ImageView
@@ -170,6 +189,8 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/etDate"
         android:layout_toStartOf="@+id/etEstimation"
+        android:padding="3dp"
+        android:scaleType="fitXY"
         android:src="@drawable/ic_date" />
 
     <ImageView
@@ -178,6 +199,8 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/btnMap"
         android:layout_toStartOf="@+id/etEstimation"
+        android:padding="3dp"
+        android:scaleType="fitXY"
         android:src="@drawable/ic_edit_location" />
 
     <ImageView
@@ -186,5 +209,17 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/etTime"
         android:layout_toStartOf="@+id/etEstimation"
+        android:padding="3dp"
+        android:scaleType="fitXY"
         android:src="@drawable/ic_time" />
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/etMoney"
+        android:layout_toStartOf="@+id/etEstimation"
+        android:padding="3dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_money" />
 </RelativeLayout>
