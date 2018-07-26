@@ -25,6 +25,8 @@ public class Job  extends ParseObject {
     private static final String KEY_LATITUDE = "latitude";
     private static final String KEY_LONGITUDE = "longitude";
 
+    private static final String KEY_MONEY = "money";
+
     public String getTitle() {
         return getString(KEY_TITLE);
     }
@@ -103,6 +105,14 @@ public class Job  extends ParseObject {
 
     public void setLongitude(String longitude) {
         put(KEY_LONGITUDE, longitude);
+    }
+
+    public static String getMoney() {
+        return KEY_MONEY;
+    }
+
+    public void setMoney(String money) {
+        put(KEY_MONEY, money);
     }
 
     public static class Query extends ParseQuery<Job> {

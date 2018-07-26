@@ -93,6 +93,7 @@ public class CreatePostFragment extends Fragment {
     EditText etTime;
     //EditText etLocation;
     EditText etEstimation;
+    EditText etMoney;
 
     ImageButton ibPhoto;
     Button bCreateJob;
@@ -129,6 +130,7 @@ public class CreatePostFragment extends Fragment {
 
         //etLocation = view.findViewById(R.id.etLocation);
         etEstimation = view.findViewById(R.id.etEstimation);
+        etMoney = view.findViewById(R.id.etMoney);
 
         ibPhoto = view.findViewById(R.id.ibPhoto);
         bCreateJob = view.findViewById(R.id.bCreateJob);
@@ -147,6 +149,7 @@ public class CreatePostFragment extends Fragment {
 
                 //newJob.setLocation(etLocation.getText().toString());
                 newJob.setEstimation(etEstimation.getText().toString());
+                newJob.setMoney(etMoney.getText().toString());
 
                 etTitle.setText("");
                 etDescription.setText("");
@@ -155,6 +158,9 @@ public class CreatePostFragment extends Fragment {
 
                 //etLocation.setText("");
                 etEstimation.setText("");
+                etMoney.setText("");
+
+                btnMap.setText("");
 
                 newJob.setUser(ParseUser.getCurrentUser());
 
