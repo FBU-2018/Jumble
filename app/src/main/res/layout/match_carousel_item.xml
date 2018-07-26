@@ -1,77 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="16dp"
+    android:paddingTop="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:layout_gravity="center"
+    android:background="@color/white"
+    android:clipToPadding="false">
 
-    <TextView
-        android:id="@+id/tv_potentialMatchNameDetailsPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="TextView"
-        android:layout_below="@+id/iv_profilePicDetailsPage"
-        android:layout_marginTop="15dp"
-  />
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="425dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
-    <ImageView
-        android:id="@+id/iv_profilePicDetailsPage"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        <TextView
+            android:id="@+id/tv_potentialMatchNameDetailsPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_profilePicDetailsPage"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="50dp"
+            android:text="TextView" />
 
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.16000003"
-        app:srcCompat="@drawable/ic_instagram_profile" />
+        <ImageView
+            android:id="@+id/iv_profilePicDetailsPage"
 
-    <TextView
-        android:id="@+id/tv_institutionTitleDetailsPage"
-        android:layout_width="147dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_potentialMatchNameDetailsPage"
-        android:layout_marginLeft="50dp"
-        android:text="Institution (Company, school, etc.):"
-        android:layout_marginTop="30dp"
-    />
+            android:layout_width="150dp"
+            android:layout_height="150dp"
 
-    <TextView
-        android:id="@+id/tv_ratingValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-125dp"
+            app:srcCompat="@drawable/ic_instagram_profile" />
 
-        android:layout_alignStart="@+id/tv_institutionValue"
-        android:layout_alignTop="@+id/tv_ratingTitleDetailsPage"
-        android:text="TextView" />
+        <TextView
+            android:id="@+id/tv_institutionTitleDetailsPage"
+            android:layout_width="147dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_potentialMatchNameDetailsPage"
+            android:layout_gravity="center"
+            android:layout_marginLeft="-60dp"
+            android:layout_marginTop="-5dp"
+            android:text="Institution (Company, school, etc.):" />
 
-    <TextView
-        android:id="@+id/tv_institutionValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/tv_ratingValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        android:layout_below="@id/tv_potentialMatchNameDetailsPage"
-        android:layout_toEndOf="@+id/tv_potentialMatchNameDetailsPage"
-        android:text="TextView"
-        android:gravity="bottom"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="15dp"
-        android:layout_alignBottom="@id/tv_institutionTitleDetailsPage"
- />
+            android:layout_alignStart="@+id/tv_institutionValue"
+            android:layout_alignTop="@+id/tv_ratingTitleDetailsPage" />
 
-    <TextView
-        android:id="@+id/tv_ratingTitleDetailsPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@id/tv_institutionTitleDetailsPage"
+        <TextView
+            android:id="@+id/tv_institutionValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        android:layout_below="@id/tv_institutionTitleDetailsPage"
-        android:layout_marginTop="20dp"
-        android:text="Rating:" />
+            android:layout_alignBottom="@id/tv_institutionTitleDetailsPage"
+            android:layout_below="@id/tv_potentialMatchNameDetailsPage"
+            android:layout_gravity="center"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="3dp"
+            android:layout_toEndOf="@+id/tv_potentialMatchNameDetailsPage"
+            android:gravity="bottom"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tv_ratingTitleDetailsPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/tv_institutionTitleDetailsPage"
+
+            android:layout_below="@id/tv_institutionTitleDetailsPage"
+            android:layout_gravity="center"
+            android:layout_marginLeft="-110dp"
+            android:layout_marginTop="50dp"
+            android:text="Rating:" />
+
+    </android.support.v7.widget.CardView>
 
 </RelativeLayout>
+
