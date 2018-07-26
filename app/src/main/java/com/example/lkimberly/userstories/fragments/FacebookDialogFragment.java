@@ -24,7 +24,7 @@ public class FacebookDialogFragment extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.dialog_links, null);
+        final View view = inflater.inflate(R.layout.dialog_facebook, null);
 
         final EditText etLinks = view.findViewById(R.id.etLinks);
 
@@ -48,6 +48,6 @@ public class FacebookDialogFragment extends DialogFragment {
                         dialog.cancel();
                     }
                 });
-        return builder.create();
+        return builder.setCancelable(false).show();
     }
 }

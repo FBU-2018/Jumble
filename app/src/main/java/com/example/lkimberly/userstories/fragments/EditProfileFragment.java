@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
@@ -158,7 +159,7 @@ public class EditProfileFragment extends Fragment {
 
         final Dialog dialog = new Dialog(getActivity());
 
-        dialog.setContentView(R.layout.dialog_links);
+        dialog.setContentView(R.layout.dialog_facebook);
 
         ib_facebook.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,14 +173,18 @@ public class EditProfileFragment extends Fragment {
         ib_linkedIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewPager.setCurrentItem(1);
+                LinkedInDialogFragment linkedInDialog = new LinkedInDialogFragment();
+
+                linkedInDialog.show(getFragmentManager(), "LinkedInDialog");
             }
         });
 
         ib_twitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewPager.setCurrentItem(1);
+                TwitterDialogFragment twitterDialog = new TwitterDialogFragment();
+
+                twitterDialog.show(getFragmentManager(), "TwitterDialog");
             }
         });
     }
