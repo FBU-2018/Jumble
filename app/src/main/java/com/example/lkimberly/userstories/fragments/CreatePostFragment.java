@@ -37,12 +37,14 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.lkimberly.userstories.BitmapScaler;
 import com.example.lkimberly.userstories.R;
+import com.example.lkimberly.userstories.activities.MainActivity;
 import com.example.lkimberly.userstories.activities.MapActivity;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.User;
@@ -106,7 +108,7 @@ public class CreatePostFragment extends Fragment {
 
     // Calendar init
     Calendar myCalendar = Calendar.getInstance();
-    String dateFormat = "MM/dd/yyyy";
+    String dateFormat = "MM/dd/yy";
     DatePickerDialog.OnDateSetListener date;
     SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
 
@@ -136,6 +138,12 @@ public class CreatePostFragment extends Fragment {
         bCreateJob = view.findViewById(R.id.bCreateJob);
         ivPhoto = getActivity().findViewById(R.id.ivPhoto);
         ivJobPhoto = getActivity().findViewById(R.id.ivJobPhoto);
+
+        NumberPicker numberPicker = getActivity().findViewById(R.id.numberPicker);
+        numberPicker.setMinValue(1);
+        numberPicker.setMaxValue(10);
+
+        numberPicker.setOnValueChangedListener(onValueChangeListener);
 
         newJob = new Job();
 
@@ -233,11 +241,11 @@ public class CreatePostFragment extends Fragment {
 
         // set the time of the job
 
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat mdFormat = new SimpleDateFormat("hh:mm a");
-        String currentTime = mdFormat.format(calendar.getTime());
+        //Calendar calendar = Calendar.getInstance();
+        //SimpleDateFormat mdFormat = new SimpleDateFormat("hh:mm a");
+        //String currentTime = mdFormat.format(calendar.getTime());
 
-        etTime.setText(currentTime);
+        etTime.setText("00:00 AM");
 
         etTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -257,14 +265,22 @@ public class CreatePostFragment extends Fragment {
                             minStr = minStr + "0";
                         }
 
+                        String tagStr = "AM";
+
                         if (selectedHour >= 12) {
+                            tagStr = "PM";
+
                             if (selectedHour > 12) {
                                 selectedHour -= 12;
                             }
-                            etTime.setText(selectedHour + minStr + selectedMinute + " PM");
-                        } else {
-                            etTime.setText(selectedHour + minStr + selectedMinute + " AM");
                         }
+
+                        String hourStr = String.valueOf(selectedHour);
+                        if (selectedHour < 10) {
+                            hourStr = "0" + hourStr;
+                        }
+
+                        etTime.setText(hourStr + minStr + selectedMinute + " " +  tagStr);
                     }
                 }, hour, minute, false);
                 mTimePicker.setTitle("Select Time");
@@ -272,10 +288,28 @@ public class CreatePostFragment extends Fragment {
             }
         });
 
+        // time estimation
+
+        etEstimation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         if (isServicesOK()) {
             init();
         }
     }
+
+    NumberPicker.OnValueChangeListener onValueChangeListener =
+            new NumberPicker.OnValueChangeListener(){
+                @Override
+                public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                    Toast.makeText(getActivity(),
+                            "selected number " + numberPicker.getValue(), Toast.LENGTH_SHORT);
+                }
+            };
 
     private void updateDate() {
         etDate.setText(sdf.format(myCalendar.getTime()));
