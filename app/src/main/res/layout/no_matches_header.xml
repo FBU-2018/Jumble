@@ -19,12 +19,11 @@
                 android:id="@+id/tv_noMatches"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bg_gradient_divider"
+                android:background="@drawable/jumble_gradient_divider"
                 android:gravity="center"
                 android:text="The following jobs have no matches yet..."
-                android:textColor="@android:color/primary_text_dark"
-                android:textSize="18sp"
-                card_view:fontFamily="serif" />
+                android:textColor="@color/blueteal_9"
+                android:textSize="18sp" />
 
         </android.support.v7.widget.LinearLayoutCompat>
 

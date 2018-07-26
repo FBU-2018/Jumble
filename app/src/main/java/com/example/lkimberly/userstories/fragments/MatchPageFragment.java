@@ -68,11 +68,11 @@ public class MatchPageFragment extends Fragment {
         adapter = new MatchPageAdapter(getActivity(), matchesModelList);
         rvMatches.setAdapter(adapter);
 
-        int spaceInPixels = 100;
-        DividerItemDecoration divider = new DividerItemDecoration(getApplicationContext(), VERTICAL);
+        int spaceInPixels = 0;
+//        DividerItemDecoration divider = new DividerItemDecoration(getApplicationContext(), VERTICAL);
 //        divider.setDrawable(getContext().getResources().getDrawable(R.drawable.ic_linear_separator_1));
-        rvMatches.addItemDecoration(divider);
-        rvMatches.addItemDecoration(new RecyclerViewItemDecorator(spaceInPixels));
+//        rvMatches.addItemDecoration(divider);
+//        rvMatches.addItemDecoration(new RecyclerViewItemDecorator(spaceInPixels));
 
         loadMatches(false);
 

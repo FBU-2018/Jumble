@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -48,6 +49,8 @@ public class ProfileFragment extends Fragment {
     public static final int GET_FROM_GALLERY = 3;
     File photoFile;
 
+    RatingBar ratingBar;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_profile, container, false);
@@ -69,6 +72,7 @@ public class ProfileFragment extends Fragment {
         tvInstitution = view.findViewById(R.id.tv_profile_institution);
         tvPhoneNumber = view.findViewById(R.id.tv_profile_phone_number);
 //        tvSocialMedia = view.findViewById(R.id.tv_profile_link);
+        ratingBar = view.findViewById(R.id.rb_profile_ratings_bar);
 
         try {
             tvUsername.setText(user.getName());
@@ -87,6 +91,8 @@ public class ProfileFragment extends Fragment {
         } catch (NullPointerException e) {
             Log.d("ProfileFragment", "No Profile Pic");
         }
+
+        ratingBar.setRating((float) (parseDouble(user.get("rating").toString()) * 5));
 
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,5 +151,14 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
+    }
+
+    double parseDouble(String ratio) {
+        if (ratio.contains("/")) {
+            String[] rat = ratio.split("/");
+            return Double.parseDouble(rat[0]) / Double.parseDouble(rat[1]);
+        } else {
+            return Double.parseDouble(ratio);
+        }
     }
 }

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -39,7 +38,7 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
     public ImageView ivJobImage;
     public TextView tvJobName;
     public TextView tvJobDescription;
-    public CalendarView calendarView;
+    public TextView tvDate;
     public TextView tvTime;
     public TextView matchName;
     public RatingBar ratingBar;
@@ -82,7 +81,7 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
         ivJobImage = (ImageView) findViewById(R.id.iv_jobDetailsJobPicture);
         tvJobName = (TextView) findViewById(R.id.tv_jobDetailsJobTitle);
         tvJobDescription = (TextView) findViewById(R.id.tv_jobDetailsJobDescription);
-        calendarView = (CalendarView) findViewById(R.id.cv_jobDetailsCalendar);
+        tvDate = (TextView) findViewById(R.id.tv_jobDetailsDateValue);
         tvTime = (TextView) findViewById(R.id.tv_jobDetailsTime);
         matchName = (TextView) findViewById(R.id.tv_jobDetailsMatchName);
         ratingBar = (RatingBar) findViewById(R.id.rb_jobDetailsRatingsBar);
@@ -113,11 +112,13 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
         tvJobDescription.setText(job.get("description").toString());
         // calendar
         tvTime.setText(job.get("time").toString());
+        tvDate.setText(job.get("date").toString());
         String compensationFromJobString = (String) job.get("compensation");
         if (compensationFromJobString != null) {
             compensation.setText(compensationFromJobString);
         }
 
+        // Handle if view is for a user swiping jobs or for a job poster
         if (viewForUser) {
             ratingBar.setVisibility(View.GONE);
             matchName.setVisibility(View.GONE);
@@ -159,12 +160,15 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
             });
         }
 
+        // Configure back button listener
         backButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     returnToMatchesFeed();
                 }
             });
+
+        // Configure seekbar listener
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {

@@ -126,36 +126,6 @@ public class MatchCarouselAdapter extends RecyclerView.Adapter<MatchCarouselAdap
             e.printStackTrace();
         }
 
-//        holder.tvRating
-
-
-        // TODO: refactor below for raing when we convert to images from text
-//        final String postLikes = post.getPostLIikes();
-//
-//        if (postLikes != null) {
-//            if (Integer.valueOf(postLikes) != 0) {
-//                holder.tvLikes.setText(postLikes + " Likes");
-//            }
-//        }
-//        holder.ibLikes.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                holder.ibLikes.setColorFilter(Color.RED);
-//                int numLikes;
-//                if (post.getPostLIikes() == null){
-//                    numLikes = 0;
-//                } else {
-//                    numLikes = Integer.valueOf(post.getPostLIikes());
-//                }
-//                post.setLikes(Integer.toString(numLikes + 1));
-//                post.saveInBackground();
-//
-//            }
-//        });
-
-        //
-
-
     }
 
     @Override
