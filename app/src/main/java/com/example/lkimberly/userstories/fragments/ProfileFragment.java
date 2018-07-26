@@ -1,6 +1,7 @@
 package com.example.lkimberly.userstories.fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,7 +36,11 @@ public class ProfileFragment extends Fragment {
     TextView tvUsername;
     TextView tvInstitution;
     TextView tvPhoneNumber;
-    TextView tvSocialMedia;
+//    TextView tvSocialMedia;
+
+    ImageButton facebook_ib;
+    ImageButton linkedIn_ib;
+    ImageButton twitter_ib;
 
     private String imagePath = "";
     public final String APP_TAG = "MyCustomApp";
@@ -51,7 +57,7 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
         Log.d("fragment", "on Create is called!");
-        User user = (User) ParseUser.getCurrentUser();
+        final User user = (User) ParseUser.getCurrentUser();
 
         // Grab a reference to our view pager.
         viewPager = getActivity().findViewById(R.id.pager);
@@ -62,13 +68,13 @@ public class ProfileFragment extends Fragment {
         tvUsername = view.findViewById(R.id.tv_profile_name);
         tvInstitution = view.findViewById(R.id.tv_profile_institution);
         tvPhoneNumber = view.findViewById(R.id.tv_profile_phone_number);
-        tvSocialMedia = view.findViewById(R.id.tv_profile_link);
+//        tvSocialMedia = view.findViewById(R.id.tv_profile_link);
 
         try {
             tvUsername.setText(user.getName());
             tvInstitution.setText(user.getInstitution());
             tvPhoneNumber.setText(user.getPhoneNumber());
-            tvSocialMedia.setText(user.getLinkedIn());
+//            tvSocialMedia.setText(user.getLinkedIn());
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -93,6 +99,34 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 logOut();
+            }
+        });
+
+        facebook_ib = view.findViewById(R.id.facebook_ib);
+        linkedIn_ib = view.findViewById(R.id.linkedIn_ib);
+        twitter_ib = view.findViewById(R.id.twitter_ib);
+
+        facebook_ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(user.getFacebook()));
+                startActivity(browserIntent);
+            }
+        });
+
+        linkedIn_ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(user.getLinkedIn()));
+                startActivity(browserIntent);
+            }
+        });
+
+        twitter_ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(user.getTwitter()));
+                startActivity(browserIntent);
             }
         });
     }

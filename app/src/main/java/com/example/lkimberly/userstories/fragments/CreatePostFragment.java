@@ -59,6 +59,8 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.parceler.Parcels;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -91,6 +93,7 @@ public class CreatePostFragment extends Fragment {
     EditText etTime;
     //EditText etLocation;
     EditText etEstimation;
+    EditText etMoney;
 
     ImageButton ibPhoto;
     Button bCreateJob;
@@ -99,6 +102,7 @@ public class CreatePostFragment extends Fragment {
 
     Job newJob;
     ParseFile parseFile;
+    String imagePath;
 
     // Calendar init
     Calendar myCalendar = Calendar.getInstance();
@@ -107,6 +111,7 @@ public class CreatePostFragment extends Fragment {
     SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
 
     private static final int ERROR_DIALOG_REQUEST = 9001;
+    private final int REQUEST_CODE = 123;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -125,17 +130,18 @@ public class CreatePostFragment extends Fragment {
 
         //etLocation = view.findViewById(R.id.etLocation);
         etEstimation = view.findViewById(R.id.etEstimation);
+        etMoney = view.findViewById(R.id.etMoney);
 
         ibPhoto = view.findViewById(R.id.ibPhoto);
         bCreateJob = view.findViewById(R.id.bCreateJob);
         ivPhoto = getActivity().findViewById(R.id.ivPhoto);
         ivJobPhoto = getActivity().findViewById(R.id.ivJobPhoto);
 
+        newJob = new Job();
+
         bCreateJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newJob = new Job();
-
                 newJob.setTitle(etTitle.getText().toString());
                 newJob.setDescription(etDescription.getText().toString());
                 newJob.setTime(etTime.getText().toString());
@@ -143,10 +149,7 @@ public class CreatePostFragment extends Fragment {
 
                 //newJob.setLocation(etLocation.getText().toString());
                 newJob.setEstimation(etEstimation.getText().toString());
-
-                if (parseFile != null) {
-                    newJob.put("image", parseFile);
-                }
+                newJob.setMoney(etMoney.getText().toString());
 
                 etTitle.setText("");
                 etDescription.setText("");
@@ -155,10 +158,13 @@ public class CreatePostFragment extends Fragment {
 
                 //etLocation.setText("");
                 etEstimation.setText("");
+                etMoney.setText("");
+
+                btnMap.setText("");
 
                 newJob.setUser(ParseUser.getCurrentUser());
 
-                final ParseFile parseFile = new ParseFile(photoFile);
+                final ParseFile parseFile = new ParseFile(new File(imagePath));
 
                 Log.d("newJobSave", "1. Success!");
 
@@ -225,6 +231,14 @@ public class CreatePostFragment extends Fragment {
             }
         });
 
+        // set the time of the job
+
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat mdFormat = new SimpleDateFormat("hh:mm a");
+        String currentTime = mdFormat.format(calendar.getTime());
+
+        etTime.setText(currentTime);
+
         etTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -237,26 +251,24 @@ public class CreatePostFragment extends Fragment {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
 
+                        Log.d("time picker", "selectedHour = " + selectedHour + ", selectedMinute = " + selectedMinute);
+                        String minStr = ":";
                         if (selectedMinute < 10) {
+                            minStr = minStr + "0";
+                        }
+
+                        if (selectedHour >= 12) {
                             if (selectedHour > 12) {
                                 selectedHour -= 12;
-                                etTime.setText(selectedHour + ":0" + selectedMinute + " PM");
-                            } else {
-                                etTime.setText(selectedHour + ":0" + selectedMinute + " AM");
                             }
+                            etTime.setText(selectedHour + minStr + selectedMinute + " PM");
                         } else {
-                            if (selectedHour > 12) {
-                                selectedHour -= 12;
-                                etTime.setText(selectedHour + ":" + selectedMinute + " AM");
-                            } else {
-                                etTime.setText(selectedHour + ":" + selectedMinute + " PM");
-                            }
+                            etTime.setText(selectedHour + minStr + selectedMinute + " AM");
                         }
                     }
                 }, hour, minute, false);
                 mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
-
             }
         });
 
@@ -271,7 +283,7 @@ public class CreatePostFragment extends Fragment {
 
     private void init() {
         if (mLocationPermissionsGranted) {
-            getDeviceLocation();
+                getDeviceLocation();
         }
 
         btnMap = getActivity().findViewById(R.id.btnMap);
@@ -281,7 +293,8 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MapActivity.class);
-                startActivity(intent);
+                intent.putExtra("newJob", Parcels.wrap(newJob));
+                startActivityForResult(intent, REQUEST_CODE);
             }
         });
     }
@@ -374,16 +387,11 @@ public class CreatePostFragment extends Fragment {
             if (resultCode == RESULT_OK) {
                 User user = (User) getCurrentUser();
 
-                String imagePath = photoFile.getAbsolutePath();
+                imagePath = photoFile.getAbsolutePath();
                 Bitmap rawTakenImage = BitmapFactory.decodeFile(imagePath);
                 Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 400);
                 Bitmap rotatedBitmap = rotate(resizedBitmap, imagePath);
                 ivPhoto.setImageBitmap(rotatedBitmap);
-
-                ParseFile parseFile = new ParseFile(new File(imagePath));
-
-                user.put("image", parseFile);
-                user.saveInBackground();
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
@@ -400,22 +408,37 @@ public class CreatePostFragment extends Fragment {
                         filePathColumn, null, null, null);
                 cursor.moveToFirst();
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                String imagePath = cursor.getString(columnIndex);
+                imagePath = cursor.getString(columnIndex);
 
                 Bitmap rawTakenImage = BitmapFactory.decodeFile(imagePath);
                 Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 400);
 
                 Bitmap rotatedBitmap = rotate(resizedBitmap, imagePath);
                 ivPhoto.setImageBitmap(rotatedBitmap);
-
-                ParseFile parseFile = new ParseFile(new File(imagePath));
-
-                user.put("image", parseFile);
-                user.saveInBackground();
                 cursor.close();
             }
         }
+
+//        Log.d("Back from MapActivity", "1");
+//        if (requestCode == REQUEST_CODE) {
+//            Log.d("Back from MapActivity", "2");
+//            if (resultCode == RESULT_OK) {
+//                Log.d("Back from MapActivity", "HELLO");
+//                newJob = Parcels.unwrap(data.getParcelableExtra("newJob"));
+//                btnMap.setText(newJob.getLocation());
+//            } else {
+//                Log.d("Something went wrong", "sad");
+//            }
+//        }
     }
+
+    public void updateLocation(Job job) {
+        Log.d("CreatePostFragment", "trying to update location");
+        newJob = job;
+        btnMap.setText(job.getLocation());
+    }
+
+    // make a function get map info --> does what code above does
 
     public Bitmap rotate(Bitmap bitmap, String imagePath) {
         ExifInterface exifInterface = null;

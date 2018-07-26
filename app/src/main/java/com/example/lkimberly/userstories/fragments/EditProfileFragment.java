@@ -1,25 +1,24 @@
 package com.example.lkimberly.userstories.fragments;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.hardware.Camera;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -56,15 +55,14 @@ public class EditProfileFragment extends Fragment {
 
     private ViewPager viewPager;
 
-    TextView tv_name;
-    TextView tv_institution;
-    TextView tv_phoneNumber;
-    TextView tv_link;
-
     EditText et_name;
     EditText et_institution;
     EditText et_phoneNumber;
-    EditText et_link;
+//    EditText et_link;
+
+    ImageButton ib_facebook;
+    ImageButton ib_linkedIn;
+    ImageButton ib_twitter;
 
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
@@ -90,24 +88,29 @@ public class EditProfileFragment extends Fragment {
         edit_profile_iv = getActivity().findViewById(R.id.edit_profile_iv);
         profile_iv = getActivity().findViewById(R.id.profile_iv);
 
-        tv_name = getActivity().findViewById(R.id.tv_profile_name);
-        tv_institution = getActivity().findViewById(R.id.tv_profile_institution);
-        tv_phoneNumber = getActivity().findViewById(R.id.tv_profile_phone_number);
-        tv_link = getActivity().findViewById(R.id.tv_profile_link);
-
         et_name = getActivity().findViewById(R.id.profile_name);
         et_institution = getActivity().findViewById(R.id.profile_institution);
         et_phoneNumber = getActivity().findViewById(R.id.profile_phone_number);
-        et_link = getActivity().findViewById(R.id.profile_link);
+//        et_link = getActivity().findViewById(R.id.profile_link);
 
         et_name.setText(user.getName());
         et_institution.setText(user.getInstitution());
         et_phoneNumber.setText(user.getPhoneNumber());
-        et_link.setText(user.getLinkedIn());
+//        et_link.setText(user.getLinkedIn());
+
+        ib_facebook = getActivity().findViewById(R.id.ib_facebook);
+        ib_linkedIn = getActivity().findViewById(R.id.ib_linkedIn);
+        ib_twitter = getActivity().findViewById(R.id.ib_twitter);
 
         saveProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                TextView tv_name = getActivity().findViewById(R.id.tv_profile_name);
+                TextView tv_institution = getActivity().findViewById(R.id.tv_profile_institution);
+                TextView tv_phoneNumber = getActivity().findViewById(R.id.tv_profile_phone_number);
+//                TextView tv_link = getActivity().findViewById(R.id.tv_profile_link);
+
                 String name = et_name.getText().toString();
                 if (!name.equals("")) {
                     tv_name.setText(name);
@@ -126,13 +129,13 @@ public class EditProfileFragment extends Fragment {
                     user.setPhoneNumber(phoneNumber);
                 }
 
-                String link = et_link.getText().toString();
-                if (!link.equals("")) {
-                    tv_link.setText(link);
-                    user.setLinkedIn(link);
-                }
+//                String link = et_link.getText().toString();
+//                if (!link.equals("")) {
+//                    tv_link.setText(link);
+//                    user.setLinkedIn(link);
+//                }
 
-                viewPager.setCurrentItem(3);
+                viewPager.setCurrentItem(0);
                 user.saveInBackground();
             }
         });
@@ -153,6 +156,37 @@ public class EditProfileFragment extends Fragment {
             Log.d("EditProfileFragment", "profile picture does not exist!");
             e.printStackTrace();
         }
+
+        final Dialog dialog = new Dialog(getActivity());
+
+        dialog.setContentView(R.layout.dialog_facebook);
+
+        ib_facebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FacebookDialogFragment facebookDialog = new FacebookDialogFragment();
+
+                facebookDialog.show(getFragmentManager(), "FacebookDialog");
+            }
+        });
+
+        ib_linkedIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LinkedInDialogFragment linkedInDialog = new LinkedInDialogFragment();
+
+                linkedInDialog.show(getFragmentManager(), "LinkedInDialog");
+            }
+        });
+
+        ib_twitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TwitterDialogFragment twitterDialog = new TwitterDialogFragment();
+
+                twitterDialog.show(getFragmentManager(), "TwitterDialog");
+            }
+        });
     }
 
 

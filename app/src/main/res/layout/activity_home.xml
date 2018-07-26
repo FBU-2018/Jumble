@@ -43,7 +43,7 @@
                     android:layout_marginEnd="30dp"
                     android:layout_marginRight="30dp"
                     android:background="@android:color/transparent"
-                    android:tint="#e41fd8"
+                    android:tint="@color/colorMainDark"
                     app:srcCompat="@drawable/ic_instagram_profile" />
             </RelativeLayout>
 
@@ -68,8 +68,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/border_top"
-        app:itemIconTint="#e41fd8"
-        app:itemTextColor="#e41fd8"
+        app:itemIconTint="@color/colorMainDark"
+        app:itemTextColor="@color/colorMainDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

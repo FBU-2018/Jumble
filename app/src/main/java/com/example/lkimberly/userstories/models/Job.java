@@ -19,9 +19,13 @@ public class Job  extends ParseObject {
     private static final String KEY_LOCATION = "location";
     private static final String KEY_ESTIMATION = "estimation";
 
-
     private static final String KEY_IMAGE = "image";
     private static final String KEY_USER = "user";
+
+    private static final String KEY_LATITUDE = "latitude";
+    private static final String KEY_LONGITUDE = "longitude";
+
+    private static final String KEY_MONEY = "money";
 
     public String getTitle() {
         return getString(KEY_TITLE);
@@ -85,6 +89,30 @@ public class Job  extends ParseObject {
 
     public void setUser(ParseUser user) {
         put(KEY_USER, user);
+    }
+
+    public static String getLatitude() {
+        return KEY_LATITUDE;
+    }
+
+    public void setLatitude(String latitude) {
+        put(KEY_LATITUDE, latitude);
+    }
+
+    public static String getLongitude() {
+        return KEY_LONGITUDE;
+    }
+
+    public void setLongitude(String longitude) {
+        put(KEY_LONGITUDE, longitude);
+    }
+
+    public static String getMoney() {
+        return KEY_MONEY;
+    }
+
+    public void setMoney(String money) {
+        put(KEY_MONEY, money);
     }
 
     public static class Query extends ParseQuery<Job> {

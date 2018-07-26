@@ -6,17 +6,41 @@
     android:orientation="vertical"
     android:id="@+id/action_edit_profile">
 
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/profile_name"
+        android:layout_toStartOf="@+id/profile_name"
+        android:src="@drawable/ic_person" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/profile_name"
+        android:src="@drawable/ic_work" />
+
+    <ImageView
+        android:id="@+id/imageView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/profile_phone_number"
+        android:layout_toStartOf="@+id/profile_name"
+        android:src="@drawable/ic_phone" />
+
     <Button
         android:id="@+id/save_profile_btn"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="288dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
         android:background="@drawable/button_border"
         android:text="Save"
-        android:textColor="#ffede2" />
+        android:textColor="@color/colorMainLight" />
 
     <ImageView
         android:id="@+id/edit_profile_iv"
@@ -27,102 +51,43 @@
         android:layout_marginTop="40dp"
         app:srcCompat="@color/black" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="225dp"
-        android:text="Name"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        android:textStyle="bold" />
-
     <EditText
         android:id="@+id/profile_name"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/save_profile_btn"
-        android:layout_alignTop="@+id/tvTitle"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="225dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="210dp"
         android:background="@drawable/edittext_rounded_corners"
         android:ems="10"
-        android:padding="5dp"
-        android:layout_alignRight="@+id/save_profile_btn" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="275dp"
-        android:text="Institution"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        android:textStyle="bold" />
+        android:padding="5dp" />
 
     <EditText
         android:id="@+id/profile_institution"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/save_profile_btn"
-        android:layout_alignTop="@+id/textView2"
-        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/profile_name"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
         android:background="@drawable/edittext_rounded_corners"
         android:ems="10"
-        android:padding="5dp"
-        android:layout_alignRight="@+id/save_profile_btn" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="81dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="325dp"
-        android:text="Phone Number"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        android:textStyle="bold" />
+        android:padding="5dp" />
 
     <EditText
         android:id="@+id/profile_phone_number"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/save_profile_btn"
-        android:layout_alignTop="@+id/textView"
-        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/profile_institution"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
         android:background="@drawable/edittext_rounded_corners"
         android:ems="10"
-        android:padding="5dp"
-        android:layout_alignRight="@+id/save_profile_btn" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="88dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="375dp"
-        android:text="Link to Social Media"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/profile_link"
-        android:layout_width="175dp"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/save_profile_btn"
-        android:layout_alignTop="@+id/textView3"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/edittext_rounded_corners"
-        android:ems="10"
-        android:padding="5dp"
-        android:layout_alignRight="@+id/save_profile_btn" />
+        android:padding="5dp" />
 
     <ImageButton
         android:id="@+id/ib_profile_photo"
@@ -136,5 +101,36 @@
         android:src="@drawable/ic_instagram_new_post"
         android:layout_marginRight="108dp"
         android:layout_alignParentRight="true" />
+
+    <ImageButton
+        android:id="@+id/ib_facebook"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignTop="@+id/ib_twitter"
+        android:layout_toEndOf="@+id/imageView11"
+        android:background="@color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/facebook_icon" />
+
+    <ImageButton
+        android:id="@+id/ib_linkedIn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignTop="@+id/ib_facebook"
+        android:layout_centerHorizontal="true"
+        android:background="@color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/linkedin_icon" />
+
+    <ImageButton
+        android:id="@+id/ib_twitter"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignEnd="@+id/profile_name"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="141dp"
+        android:background="@color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/twitter_icon" />
 
 </RelativeLayout>
