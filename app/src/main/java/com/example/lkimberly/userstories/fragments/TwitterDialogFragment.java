@@ -15,7 +15,7 @@ import com.example.lkimberly.userstories.models.User;
 
 import static com.parse.ParseUser.getCurrentUser;
 
-public class LinkedInDialogFragment extends DialogFragment {
+public class TwitterDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class LinkedInDialogFragment extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.dialog_linkedin, null);
+        final View view = inflater.inflate(R.layout.dialog_twitter, null);
 
         final EditText etLinks = view.findViewById(R.id.etLinks);
 
@@ -36,7 +36,7 @@ public class LinkedInDialogFragment extends DialogFragment {
 
                         final String link = etLinks.getText().toString();
                         if (!link.equals("")) {
-                            user.setLinkedIn(link);
+                            user.setTwitter(link);
                             user.saveInBackground();
                         } else {
                             Toast.makeText(getActivity(), "You did not enter a url", Toast.LENGTH_SHORT).show();

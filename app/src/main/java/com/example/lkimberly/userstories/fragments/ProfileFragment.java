@@ -1,6 +1,7 @@
 package com.example.lkimberly.userstories.fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,11 +38,16 @@ public class ProfileFragment extends Fragment {
     TextView tvPhoneNumber;
 //    TextView tvSocialMedia;
 
+    ImageButton facebook_ib;
+    ImageButton linkedIn_ib;
+    ImageButton twitter_ib;
+
     private String imagePath = "";
     public final String APP_TAG = "MyCustomApp";
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     public static final int GET_FROM_GALLERY = 3;
     File photoFile;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_profile, container, false);
@@ -50,7 +57,7 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
         Log.d("fragment", "on Create is called!");
-        User user = (User) ParseUser.getCurrentUser();
+        final User user = (User) ParseUser.getCurrentUser();
 
         // Grab a reference to our view pager.
         viewPager = getActivity().findViewById(R.id.pager);
@@ -92,6 +99,34 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 logOut();
+            }
+        });
+
+        facebook_ib = view.findViewById(R.id.facebook_ib);
+        linkedIn_ib = view.findViewById(R.id.linkedIn_ib);
+        twitter_ib = view.findViewById(R.id.twitter_ib);
+
+        facebook_ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(user.getFacebook()));
+                startActivity(browserIntent);
+            }
+        });
+
+        linkedIn_ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(user.getLinkedIn()));
+                startActivity(browserIntent);
+            }
+        });
+
+        twitter_ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(user.getTwitter()));
+                startActivity(browserIntent);
             }
         });
     }

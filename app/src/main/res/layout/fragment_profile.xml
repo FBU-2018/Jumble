@@ -12,8 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="40dp"
-        android:layout_toStartOf="@+id/imageButton2"
+        android:layout_alignStart="@+id/imageView8"
+        android:layout_marginBottom="63dp"
         android:background="@drawable/button_border"
         android:padding="5dp"
         android:text="Edit"
@@ -72,8 +72,9 @@
         android:id="@+id/log_out_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/edit_profile_btn"
-        android:layout_toEndOf="@+id/imageButton2"
+        android:layout_marginEnd="80dp"
         android:background="@drawable/button_border"
         android:padding="5dp"
         android:text="Log Out"
@@ -107,17 +108,17 @@
         android:src="@drawable/ic_phone" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/facebook_ib"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignStart="@+id/profile_iv"
-        android:layout_alignTop="@+id/imageButton2"
+        android:layout_alignTop="@+id/linkedIn_ib"
         android:background="@color/transparent"
         android:scaleType="fitXY"
         android:src="@drawable/facebook_icon" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/linkedIn_ib"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_below="@+id/tv_profile_phone_number"
@@ -128,11 +129,11 @@
         android:src="@drawable/linkedin_icon" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/twitter_ib"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignEnd="@+id/profile_iv"
-        android:layout_alignTop="@+id/imageButton"
+        android:layout_alignTop="@+id/facebook_ib"
         android:background="@color/transparent"
         android:scaleType="fitXY"
         android:src="@drawable/twitter_icon" />
