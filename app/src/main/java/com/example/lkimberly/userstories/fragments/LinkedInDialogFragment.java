@@ -49,6 +49,8 @@ public class LinkedInDialogFragment extends DialogFragment {
                     }
                 })
                 .setCancelable(false);
-        return builder.create();
+        Dialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        return dialog;
     }
 }
