@@ -221,5 +221,6 @@
         android:layout_toStartOf="@+id/etEstimation"
         android:padding="3dp"
         android:scaleType="fitXY"
-        android:src="@drawable/ic_money" />
+        android:src="@drawable/ic_money"
+        android:inputType="number"/>
 </RelativeLayout>
