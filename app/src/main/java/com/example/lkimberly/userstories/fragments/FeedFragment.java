@@ -110,7 +110,8 @@ public class FeedFragment extends Fragment {
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
-                makeToast(getContext(), "Clicked!");
+                makeToast(getContext(), "Details");
+                swipeCardAdapter.goToDetailsPage(((SwipeCard) dataObject).getJob());
             }
         });
 

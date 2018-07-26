@@ -119,12 +119,14 @@ public class ProfileDetailsActivity extends AppCompatActivity {
         });
 
         if (job.get("match") != null) {
-            ParseUser userWhoMatched = (ParseUser) job.get("userWhoMatched");
-            if (userWhoMatched != null) {
-                if (userWhoMatched.getObjectId().equals(user.getObjectId())) {
-                    matchButton.setText("You have a match for this job");
-                }
-            }
+//            ParseUser userWhoMatched = (ParseUser) job.get("userWhoMatched");
+//            if (userWhoMatched != null) {
+//                if (userWhoMatched.getObjectId().equals(user.getObjectId())) {
+//                    matchButton.setText("You have a match for this job");
+//                }
+//            }
+            Log.d("Whats the job?", job.get("title").toString());
+            matchButton.setText("You have a match for this job");
 
         }
 

@@ -7,11 +7,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,17 +45,24 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
     public RatingBar ratingBar;
     private GoogleMap gmap;
     public ParseUser userWhoMatchedWithMe;
-
+    public TextView compensation;
     public TextView ratingTitle;
     public TextView matchTitle;
     public Job job;
     public Matches match;
-
-    public Button endInteractionButton;
-
+    public ImageButton endInteractionButton;
     public ImageButton backButton;
+    public SeekBar seekBar;
+    public TextView myRatingTV;
+    public int myRatingValue;
+    public boolean hasBeenRated;
+    public View divider;
 
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
+
+    private boolean viewForUser;
+
+
 
 
     @Override
@@ -79,14 +86,23 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
         tvTime = (TextView) findViewById(R.id.tv_jobDetailsTime);
         matchName = (TextView) findViewById(R.id.tv_jobDetailsMatchName);
         ratingBar = (RatingBar) findViewById(R.id.rb_jobDetailsRatingsBar);
-        endInteractionButton = (Button) findViewById(R.id.btn_jobDetailsEndJob);
+        endInteractionButton = (ImageButton) findViewById(R.id.btn_jobDetailsEndJob);
         matchTitle = (TextView) findViewById(R.id.tv_jobDetailsMatchTitle);
         ratingTitle = (TextView) findViewById(R.id.tv_jobDetailsRatingTitle);
         backButton = (ImageButton) findViewById(R.id.ib_jobDetailsBackButton);
-
+        compensation = (TextView) findViewById(R.id.tv_jobDetailsPrice);
+        seekBar = (SeekBar) findViewById(R.id.sb_jobDetailsSeekBar);
+        myRatingTV = (TextView) findViewById(R.id.tv_jobDetailsMyRatingValue);
+        divider = (View) findViewById(R.id.place_autocomplete_separator);
         job = Parcels.unwrap(getIntent().getParcelableExtra("job"));
+        viewForUser = getIntent().getBooleanExtra("viewForPotentialHire", false);
         match = (Matches) job.get("match");
 
+        if (job.get("hasBeenRated") == null) {
+            hasBeenRated = false;
+        } else {
+            hasBeenRated = (boolean) job.get("hasBeenRated");
+        }
 
         try {
             Glide.with(JobDetailsActivity.this).load(((ParseFile) job.get("image")).getUrl()).into(ivJobImage);
@@ -97,44 +113,113 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
         tvJobDescription.setText(job.get("description").toString());
         // calendar
         tvTime.setText(job.get("time").toString());
+        String compensationFromJobString = (String) job.get("compensation");
+        if (compensationFromJobString != null) {
+            compensation.setText(compensationFromJobString);
+        }
 
-        userWhoMatchedWithMe = job.getParseUser("userWhoMatched");
-        if (userWhoMatchedWithMe == null) {
+        if (viewForUser) {
             ratingBar.setVisibility(View.GONE);
             matchName.setVisibility(View.GONE);
             matchTitle.setVisibility(View.GONE);
             ratingTitle.setVisibility(View.GONE);
+            endInteractionButton.setVisibility(View.GONE);
+            seekBar.setVisibility(View.GONE);
+            myRatingTV.setVisibility(View.GONE);
+            divider.setVisibility(View.GONE);
         } else {
-            try {
-                matchName.setText(userWhoMatchedWithMe.fetchIfNeeded().get("name").toString());
-            } catch (ParseException e) {
-                e.printStackTrace();
+            userWhoMatchedWithMe = job.getParseUser("userWhoMatched");
+            if (userWhoMatchedWithMe == null) {
+                ratingBar.setVisibility(View.GONE);
+                matchName.setVisibility(View.GONE);
+                matchTitle.setVisibility(View.GONE);
+                ratingTitle.setVisibility(View.GONE);
+                seekBar.setVisibility(View.GONE);
+                myRatingTV.setVisibility(View.GONE);
+                divider.setVisibility(View.GONE);
+            } else {
+                try {
+                    matchName.setText(userWhoMatchedWithMe.fetchIfNeeded().get("name").toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                ratingBar.setRating((float) (parseDouble(userWhoMatchedWithMe.get("rating").toString()) * 5));
             }
-            ratingBar.setRating((float) (parseDouble(userWhoMatchedWithMe.get("rating").toString()) * 5));
+
+
+            endInteractionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (userWhoMatchedWithMe == null) {
+                        handlEndJob();
+                    } else {
+                        endJobOrMatchDialogue();
+                    }
+                }
+            });
         }
 
-
-        endInteractionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (userWhoMatchedWithMe == null) {
-                    handlEndJob();
-                } else {
-                    endJobOrMatchDialogue();
-                }
-            }
-        });
-
-
         backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    returnToMatchesFeed();
+                }
+            });
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onClick(View view) {
-                returnToMatchesFeed();
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                int myRatingValueInt = (int) ((i/100.0)*5);
+                myRatingTV.setText(String.valueOf(myRatingValueInt));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                int value = seekBar.getProgress();
+                value = (int) ((value/100.0)*5);
+                updateMyRating(value);
+
             }
         });
 
+    }
 
+    public void updateMyRating(int value){
+        int userWhoMatchedTotalScore = Integer.valueOf((String) userWhoMatchedWithMe.get("totalScore"));
+        int userWhoMatchedTimesRated = Integer.valueOf((String) userWhoMatchedWithMe.get("timesRated"));
 
+        if (hasBeenRated != true) {
+            hasBeenRated = true;
+            myRatingValue = value;
+
+            userWhoMatchedTotalScore += value;
+            userWhoMatchedTimesRated += 1;
+
+        } else {
+            int myOldRating = myRatingValue;
+            myRatingValue = value;
+
+            userWhoMatchedTotalScore -= myOldRating;
+
+            userWhoMatchedTotalScore += value;
+        }
+
+        final int updatedRating = (int) userWhoMatchedTotalScore/userWhoMatchedTimesRated;
+
+        userWhoMatchedWithMe.put("rating", String.valueOf(updatedRating) + "/" + String .valueOf(5));
+        userWhoMatchedWithMe.put("timesRated", String.valueOf(userWhoMatchedTimesRated));
+        userWhoMatchedWithMe.put("totalScore", String.valueOf(userWhoMatchedTotalScore));
+        userWhoMatchedWithMe.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                Toast.makeText(getBaseContext(), "Rating received!", Toast.LENGTH_SHORT).show();
+                Log.d("Rating", String.valueOf(updatedRating));
+            }
+        });
     }
 
     public void returnToMatchesFeed() {

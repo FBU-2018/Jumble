@@ -108,7 +108,7 @@ public class CreatePostFragment extends Fragment {
 
     // Calendar init
     Calendar myCalendar = Calendar.getInstance();
-    String dateFormat = "MM/dd/yyyy";
+    String dateFormat = "MM/dd/yy";
     DatePickerDialog.OnDateSetListener date;
     SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
 

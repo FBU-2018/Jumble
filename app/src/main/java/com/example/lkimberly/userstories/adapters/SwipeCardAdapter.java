@@ -1,6 +1,7 @@
 package com.example.lkimberly.userstories.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.lkimberly.userstories.R;
+import com.example.lkimberly.userstories.activities.HomeActivity;
+import com.example.lkimberly.userstories.activities.JobDetailsActivity;
+import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.SwipeCard;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -20,6 +26,8 @@ public class SwipeCardAdapter extends BaseAdapter {
   Context context;
   LayoutInflater inflater;
   List<SwipeCard> mJobs;
+  public final int REQUEST_CODE = 23;
+
 
   public SwipeCardAdapter(
       Context context, LayoutInflater layoutInflater, List<SwipeCard> swipeCardList) {
@@ -71,11 +79,22 @@ public class SwipeCardAdapter extends BaseAdapter {
       Log.d("Card Adapter", "No Pic");
     }
 
+    viewHolder.job = mJobs.get(position).getJob();
+
     return convertView;
   }
 
-  private static class ViewHolder {
+  private static class ViewHolder{
     public TextView textView1, textView2;
     public ImageView ivJob;
+    public Job job;
+
+  }
+
+  public void goToDetailsPage(Job job){
+    Intent i = new Intent(context, JobDetailsActivity.class);
+    i.putExtra("job", Parcels.wrap(job));
+    i.putExtra("viewForPotentialHire", true);
+    ((HomeActivity) context).startActivityForResult(i, REQUEST_CODE);
   }
 }
