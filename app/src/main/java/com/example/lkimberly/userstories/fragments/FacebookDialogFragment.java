@@ -48,6 +48,9 @@ public class FacebookDialogFragment extends DialogFragment {
                         dialog.cancel();
                     }
                 });
-        return builder.setCancelable(false).show();
+
+        Dialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        return dialog;
     }
 }

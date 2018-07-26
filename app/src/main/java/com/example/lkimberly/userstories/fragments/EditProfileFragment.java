@@ -189,7 +189,6 @@ public class EditProfileFragment extends Fragment {
         });
     }
 
-
     public void onLaunchCamera() {
         // create Intent to take a picture and return control to the calling application
         final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

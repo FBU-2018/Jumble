@@ -49,6 +49,8 @@ public class TwitterDialogFragment extends DialogFragment {
                     }
                 })
                 .setCancelable(false);
-        return builder.create();
+        Dialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        return dialog;
     }
 }
