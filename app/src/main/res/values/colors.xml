@@ -47,7 +47,7 @@
     <color name="blue_9">#ff00264a</color>
     <color name="blueteal_0">#ffd6eef8</color>
     <color name="blueteal_1">#ff78d0ef</color>
-    <color name="blueteal_10">#ff02dce5</color>
+    <color name="blueteal_10">#43e8d8</color>
     <color name="blueteal_2">#ff61c8ec</color>
     <color name="blueteal_3">#ff4bc0ea</color>
     <color name="blueteal_4">#ff34b8e7</color>
@@ -57,7 +57,7 @@
     <color name="blueteal_6">#ff1b9fce</color>
     <color name="blueteal_7">#ff188db7</color>
     <color name="blueteal_8">#ff147b9f</color>
-    <color name="blueteal_9">#ff126a89</color>
+    <color name="blueteal_9">#126a89</color>
     <color name="blur_mask_tint_color">#66f1f1f1</color>
     <color name="body_text">#ff999999</color>
     <color name="border_color">#ffcccccc</color>

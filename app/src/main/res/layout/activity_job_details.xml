@@ -27,7 +27,7 @@
             android:id="@+id/tb_jobDetailsToolBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/camera_gradient_end"
+            android:background="@drawable/edittext_rounded_corners"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -46,7 +46,7 @@
                     android:layout_alignParentTop="true"
                     android:background="@android:color/transparent"
                     android:src="?attr/actionModeCloseDrawable"
-                    android:tint="#bc2a8d" />
+                    android:tint="#43e8d8" />
 
                 <ImageButton
                     android:id="@+id/btn_jobDetailsEndJob"
@@ -55,6 +55,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:background="@android:color/transparent"
+                    android:tint="#43e8d8"
                     app:srcCompat="@drawable/ic_flag_magenta_24dp" />
 
             </RelativeLayout>

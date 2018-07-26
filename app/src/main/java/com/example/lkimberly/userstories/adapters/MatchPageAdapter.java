@@ -187,7 +187,7 @@ public class MatchPageAdapter extends RecyclerView.Adapter {
                                                                 .error(placeholderId)
                                                                 .fitCenter()
                                                 )
-//                                                .apply(requestOptions)
+                                                .apply(requestOptions)
                                                 .into(imageView);
                                     } else {
                                         Glide.with(VHheader.itemView.getContext())
