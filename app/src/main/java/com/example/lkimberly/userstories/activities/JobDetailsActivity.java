@@ -180,6 +180,7 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 int value = seekBar.getProgress();
+                value = (int) ((value/100.0)*5);
                 updateMyRating(value);
 
             }
@@ -209,9 +210,9 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
 
         final int updatedRating = (int) userWhoMatchedTotalScore/userWhoMatchedTimesRated;
 
-        userWhoMatchedWithMe.put("rating", updatedRating + "/" + 5);
-        userWhoMatchedWithMe.put("timesRated", userWhoMatchedTimesRated);
-        userWhoMatchedWithMe.put("totalScore", userWhoMatchedTotalScore);
+        userWhoMatchedWithMe.put("rating", String.valueOf(updatedRating) + "/" + String .valueOf(5));
+        userWhoMatchedWithMe.put("timesRated", String.valueOf(userWhoMatchedTimesRated));
+        userWhoMatchedWithMe.put("totalScore", String.valueOf(userWhoMatchedTotalScore));
         userWhoMatchedWithMe.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
