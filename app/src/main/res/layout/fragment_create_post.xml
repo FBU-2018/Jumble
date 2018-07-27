@@ -17,6 +17,7 @@
         android:background="@drawable/edittext_rounded_corners"
         android:ems="10"
         android:hint="Fee?"
+        android:focusable="false"
         android:inputType="textCapSentences|textMultiLine"
         android:maxLines="1"
         android:padding="5dp"

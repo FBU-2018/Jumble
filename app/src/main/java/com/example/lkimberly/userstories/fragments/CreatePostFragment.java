@@ -234,6 +234,16 @@ public class CreatePostFragment extends Fragment {
             }
         });
 
+        // set the fee
+
+        etMoney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FeePickerFragment feePickerDialog = new FeePickerFragment();
+                feePickerDialog.show(getFragmentManager(), "FeePickerDialog");
+            }
+        });
+
         // set the time of the job
 
         //Calendar calendar = Calendar.getInstance();
@@ -289,7 +299,6 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 NumberPickerFragment numberPickerDialog = new NumberPickerFragment();
-
                 numberPickerDialog.show(getFragmentManager(), "NumberPickerDialog");
             }
         });
@@ -299,16 +308,6 @@ public class CreatePostFragment extends Fragment {
         }
     }
 
-    NumberPicker.OnValueChangeListener onValueChangeListener =
-            new NumberPicker.OnValueChangeListener(){
-                @Override
-                public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                    Toast.makeText(getActivity(),
-                            "selected number " + numberPicker.getValue(), Toast.LENGTH_SHORT);
-
-                    etEstimation.setText(i1 + " hours");
-                }
-            };
 
     private void updateDate() {
         etDate.setText(sdf.format(myCalendar.getTime()));
