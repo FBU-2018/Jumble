@@ -14,5 +14,4 @@
         android:id="@+id/action_comment"
         android:icon="@drawable/ic_comment"
         android:title="Matches" />
-
 </menu>

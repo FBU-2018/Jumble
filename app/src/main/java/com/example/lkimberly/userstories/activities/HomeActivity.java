@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 
@@ -139,16 +140,28 @@ public class HomeActivity extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
                 switch (item.getItemId()) {
                     case R.id.action_home:
                         // Set the item to the first item in our list.
                         // This is the home placeholder fragment.
+
+                        ib_profile.setSelected(false);
+                        bottomNavigation.getMenu().getItem(0).setIcon(R.drawable.instagram_home_filled_24);
+                        bottomNavigation.getMenu().getItem(1).setIcon(R.drawable.instagram_new_post_outline_24);
+                        bottomNavigation.getMenu().getItem(2).setIcon(R.drawable.ic_chat_bubble_outline_24dp);
+
                         viewPager.setCurrentItem(2);
 //                        homePageRecycler.refresh();
                         return true;
                     case R.id.action_discover:
                         // Set the item to the first item in our list.
                         // This is the discovery placeholder fragment.
+                        ib_profile.setSelected(false);
+                        bottomNavigation.getMenu().getItem(0).setIcon(R.drawable.instagram_home_outline_24);
+                        bottomNavigation.getMenu().getItem(1).setIcon(R.drawable.instagram_new_post_filled_24);
+                        bottomNavigation.getMenu().getItem(2).setIcon(R.drawable.ic_chat_bubble_outline_24dp);
+
                         viewPager.setCurrentItem(3);
                         return true;
                     case R.id.action_comment:
@@ -158,6 +171,11 @@ public class HomeActivity extends AppCompatActivity {
 
 //                        adapter.notifyDataSetChanged();
 //                        myMatchPageFragment.refresh();
+                        ib_profile.setSelected(false);
+                        bottomNavigation.getMenu().getItem(0).setIcon(R.drawable.instagram_home_outline_24);
+                        bottomNavigation.getMenu().getItem(1).setIcon(R.drawable.instagram_new_post_outline_24);
+                        bottomNavigation.getMenu().getItem(2).setIcon(R.drawable.ic_chat_bubble_filled_24dp);
+
                         viewPager.setCurrentItem(4);
                         return true;
                     default:
@@ -172,8 +190,13 @@ public class HomeActivity extends AppCompatActivity {
         ib_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewPager.setCurrentItem(0);
                 bottomNavigation.setSelectedItemId(-1);
+                ib_profile.setSelected(true);
+                viewPager.setCurrentItem(0);
+
+                bottomNavigation.getMenu().getItem(0).setIcon(R.drawable.instagram_home_outline_24);
+                bottomNavigation.getMenu().getItem(1).setIcon(R.drawable.instagram_new_post_outline_24);
+                bottomNavigation.getMenu().getItem(2).setIcon(R.drawable.ic_chat_bubble_outline_24dp);
             }
         });
 
@@ -185,7 +208,6 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         viewPager.setCurrentItem(2);
-
     }
 
     @Override
