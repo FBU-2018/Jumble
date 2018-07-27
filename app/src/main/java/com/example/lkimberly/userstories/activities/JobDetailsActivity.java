@@ -430,9 +430,13 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
 
         try {
             addresses = geocoder.getFromLocation(latitude, longitude,1);
+            Address address = addresses.get(0);
+            String addressString = address.getAddressLine(0) + ", "
+                    + address.getAddressLine(1) + ", "
+                    + address.getAddressLine(2);
             googleMap.addMarker(new MarkerOptions()
                     .position(coords)
-                    .title(addresses.get(0).toString()));
+                    .title(addressString));
         } catch (IOException e) {
             e.printStackTrace();
         }
