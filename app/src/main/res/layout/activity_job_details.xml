@@ -91,7 +91,7 @@
     <com.google.android.gms.maps.MapView
         android:id="@+id/mv_jobDetailsMap"
         android:layout_width="match_parent"
-        android:layout_height="103dp"
+        android:layout_height="144dp"
         android:layout_below="@id/tv_jobDetailsDateValue"
         android:layout_marginTop="25dp" />
 
