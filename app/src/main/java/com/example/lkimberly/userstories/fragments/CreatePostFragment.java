@@ -23,6 +23,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -139,12 +140,6 @@ public class CreatePostFragment extends Fragment {
         ivPhoto = getActivity().findViewById(R.id.ivPhoto);
         ivJobPhoto = getActivity().findViewById(R.id.ivJobPhoto);
 
-        NumberPicker numberPicker = getActivity().findViewById(R.id.numberPicker);
-        numberPicker.setMinValue(1);
-        numberPicker.setMaxValue(10);
-
-        numberPicker.setOnValueChangedListener(onValueChangeListener);
-
         newJob = new Job();
 
         bCreateJob.setOnClickListener(new View.OnClickListener() {
@@ -239,13 +234,23 @@ public class CreatePostFragment extends Fragment {
             }
         });
 
+        // set the fee
+
+        etMoney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FeePickerFragment feePickerDialog = new FeePickerFragment();
+                feePickerDialog.show(getFragmentManager(), "FeePickerDialog");
+            }
+        });
+
         // set the time of the job
 
         //Calendar calendar = Calendar.getInstance();
         //SimpleDateFormat mdFormat = new SimpleDateFormat("hh:mm a");
         //String currentTime = mdFormat.format(calendar.getTime());
 
-        etTime.setText("00:00 AM");
+        etTime.setText("12:00 AM");
 
         etTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -265,10 +270,10 @@ public class CreatePostFragment extends Fragment {
                             minStr = minStr + "0";
                         }
 
-                        String tagStr = "AM";
+                        String periodStr = "AM";
 
                         if (selectedHour >= 12) {
-                            tagStr = "PM";
+                            periodStr = "PM";
 
                             if (selectedHour > 12) {
                                 selectedHour -= 12;
@@ -280,7 +285,7 @@ public class CreatePostFragment extends Fragment {
                             hourStr = "0" + hourStr;
                         }
 
-                        etTime.setText(hourStr + minStr + selectedMinute + " " +  tagStr);
+                        etTime.setText(hourStr + minStr + selectedMinute + " " +  periodStr);
                     }
                 }, hour, minute, false);
                 mTimePicker.setTitle("Select Time");
@@ -293,7 +298,8 @@ public class CreatePostFragment extends Fragment {
         etEstimation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                NumberPickerFragment numberPickerDialog = new NumberPickerFragment();
+                numberPickerDialog.show(getFragmentManager(), "NumberPickerDialog");
             }
         });
 
@@ -302,14 +308,6 @@ public class CreatePostFragment extends Fragment {
         }
     }
 
-    NumberPicker.OnValueChangeListener onValueChangeListener =
-            new NumberPicker.OnValueChangeListener(){
-                @Override
-                public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                    Toast.makeText(getActivity(),
-                            "selected number " + numberPicker.getValue(), Toast.LENGTH_SHORT);
-                }
-            };
 
     private void updateDate() {
         etDate.setText(sdf.format(myCalendar.getTime()));

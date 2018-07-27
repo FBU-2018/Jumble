@@ -17,6 +17,7 @@
         android:background="@drawable/edittext_rounded_corners"
         android:ems="10"
         android:hint="Fee?"
+        android:focusable="false"
         android:inputType="textCapSentences|textMultiLine"
         android:maxLines="1"
         android:padding="5dp"
@@ -71,6 +72,7 @@
         android:background="@drawable/edittext_rounded_corners"
         android:ems="10"
         android:hint="How many hours?"
+        android:focusable="false"
         android:inputType="textCapSentences|textMultiLine"
         android:maxLines="1"
         android:padding="5dp"
@@ -226,14 +228,5 @@
         android:scaleType="fitXY"
         android:src="@drawable/ic_money"
         android:inputType="number"/>
-
-    <NumberPicker
-        android:id="@+id/numberPicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/etTitle"
-        android:layout_marginEnd="21dp"
-        android:layout_marginTop="-10dp" />
 
 </RelativeLayout>

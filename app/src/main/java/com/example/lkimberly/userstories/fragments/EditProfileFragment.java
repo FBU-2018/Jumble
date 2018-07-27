@@ -165,7 +165,6 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FacebookDialogFragment facebookDialog = new FacebookDialogFragment();
-
                 facebookDialog.show(getFragmentManager(), "FacebookDialog");
             }
         });
@@ -174,7 +173,6 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 LinkedInDialogFragment linkedInDialog = new LinkedInDialogFragment();
-
                 linkedInDialog.show(getFragmentManager(), "LinkedInDialog");
             }
         });
@@ -183,7 +181,6 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 TwitterDialogFragment twitterDialog = new TwitterDialogFragment();
-
                 twitterDialog.show(getFragmentManager(), "TwitterDialog");
             }
         });
