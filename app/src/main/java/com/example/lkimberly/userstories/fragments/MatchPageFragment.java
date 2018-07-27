@@ -158,13 +158,14 @@ public class MatchPageFragment extends Fragment {
 
                                 Collections.sort(usersList, new Comparator<ParseUser>(){
                                     public int compare(ParseUser p1, ParseUser p2){
-                                        return (int) ((parseDouble((String) p1.get("rating")) - (parseDouble((String) p2.get("rating")))));
+                                        return Double.compare(parseDouble((String) p1.get("rating")),(parseDouble((String) p2.get("rating"))));
                                     }
                                 });
 
                                 Collections.reverse(usersList);
-                                Log.d("User list", usersList.toString());
-
+                                for (ParseUser u : usersList) {
+                                    Log.d("User list", (String) u.get("rating"));
+                                }
                                 matchesModelList.add(new MatchDataModel(0, usersList,jobOfCurrentUser));
                             }
 

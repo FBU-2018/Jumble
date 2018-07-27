@@ -92,7 +92,9 @@ public class ProfileFragment extends Fragment {
             Log.d("ProfileFragment", "No Profile Pic");
         }
 
-        ratingBar.setRating((float) (parseDouble(user.get("rating").toString()) * 5));
+        try {
+            ratingBar.setRating((float) (parseDouble(user.get("rating").toString()) * 5));
+        } catch (NullPointerException noRatingError) {}
 
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
