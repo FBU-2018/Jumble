@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "784053882430",
+    "firebase_url": "https://fbu18-210818.firebaseio.com",
+    "project_id": "fbu18-210818",
+    "storage_bucket": "fbu18-210818.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784053882430:android:9961548a2cdc9a72",
+        "android_client_info": {
+          "package_name": "com.example.lkimberly.userstories"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784053882430-ctl93g7oe3j4pl09tiqaq3thbt2otqec.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADIZdEKH-8H67tBchJoa7HyXhad1G9XzQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

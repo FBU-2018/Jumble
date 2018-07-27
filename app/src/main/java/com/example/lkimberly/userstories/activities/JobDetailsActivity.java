@@ -3,6 +3,8 @@ package com.example.lkimberly.userstories.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -23,6 +25,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -30,6 +33,10 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
     // Activity to provide information for user on the specific job they
@@ -115,7 +122,12 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
         tvDate.setText(job.get("date").toString());
         String compensationFromJobString = (String) job.get("compensation");
         if (compensationFromJobString != null) {
+            compensation.setTextColor(getResources().getColor(R.color.black));
             compensation.setText(compensationFromJobString);
+        } else {
+            compensation.setTextColor(getResources().getColor(R.color.grey_5));
+            compensation.setText("$$$$$");
+
         }
 
         // Handle if view is for a user swiping jobs or for a job poster
@@ -395,11 +407,40 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(this, Locale.getDefault());
+
         gmap = googleMap;
         gmap.setMinZoomPreference(12);
-        LatLng ny = new LatLng(40.7143528, -74.0059731);
-        gmap.moveCamera(CameraUpdateFactory.newLatLng(ny));
-    }
+        LatLng coords;
+        double latitude;
+        double longitude;
+        try {
+            latitude = Double.valueOf((String)job.get("latitude"));
+            longitude = Double.valueOf((String)job.get("longitude"));
+            coords = new LatLng(latitude, longitude);
 
+        } catch (NullPointerException e) {
+            latitude = 40.7143528;
+            longitude = -74.0059731;
+            coords = new LatLng(40.7143528, -74.0059731);
+        }
+        gmap.moveCamera(CameraUpdateFactory.newLatLng(coords));
+
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude,1);
+            Address address = addresses.get(0);
+            String addressString = address.getAddressLine(0) + ", "
+                    + address.getAddressLine(1) + ", "
+                    + address.getAddressLine(2);
+            googleMap.addMarker(new MarkerOptions()
+                    .position(coords)
+                    .title(addressString));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }
