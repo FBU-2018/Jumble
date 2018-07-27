@@ -1,4 +1,8 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
+// OneSignal
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 
 android {
     compileSdkVersion 28
@@ -11,6 +15,12 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.useSupportLibrary = true
+
+        manifestPlaceholders = [
+                onesignal_app_id: '571ad724-0eb3-41f2-a5b7-4a468c36910a',
+                // Project number pulled from dashboard, local value is ignored.
+                onesignal_google_project_number: 'REMOTE'
+        ]
     }
     buildTypes {
         release {
@@ -61,6 +71,13 @@ dependencies {
     implementation 'com.google.android.gms:play-services-places:15.0.1'
 
     // Notifications
-    implementation "com.android.support:support-compat:28.0.0-alpha3"
+//    implementation "com.android.support:support-compat:28.0.0-alpha3"
+
+    // Firebase
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.google.firebase:firebase-messaging:17.1.0'
+
+    // OneSignal
+    implementation 'com.onesignal:OneSignal:[3.9.1, 3.99.99]'
 
 }
