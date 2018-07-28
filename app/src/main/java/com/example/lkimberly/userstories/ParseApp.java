@@ -7,7 +7,7 @@ import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.Matches;
 import com.example.lkimberly.userstories.models.User;
 
-import com.onesignal.OneSignal;
+//import com.onesignal.OneSignal;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -17,10 +17,10 @@ public class ParseApp extends Application {
         super.onCreate();
 
         // OneSignal Initialization
-        OneSignal.startInit(this)
-                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-                .unsubscribeWhenNotificationsAreDisabled(true)
-                .init();
+//        OneSignal.startInit(this)
+//                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+//                .unsubscribeWhenNotificationsAreDisabled(true)
+//                .init();
 
         ParseObject.registerSubclass(Job.class);
         ParseObject.registerSubclass(User.class);

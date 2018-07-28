@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.HomeActivity" />
-        <activity android:name=".activities.SignupActivity" />
+        <activity android:name=".activities.SignUpActivity" />
         <activity android:name=".activities.ProfileDetailsActivity" />
         <activity
             android:name=".activities.JobDetailsActivity"

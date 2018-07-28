@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.SignupActivity">
+    tools:context=".activities.SignUpActivity">
 
     <EditText
         android:id="@+id/signup_password_et"
@@ -13,7 +13,6 @@
         android:layout_centerInParent="true"
         android:ems="10"
         android:hint="Create password"
-        android:inputType="textPassword"
         android:background="@drawable/edittext_rounded_corners"/>
 
     <TextView
@@ -61,4 +60,31 @@
         android:text="Sign Up"
         android:textColor="@color/colorMainLight" />
 
+    <ImageView
+        android:id="@+id/iv_email_correct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/iv_username_correct"
+        android:layout_below="@+id/signup_password_et"
+        android:visibility="invisible"
+        app:srcCompat="@android:drawable/checkbox_on_background" />
+
+    <ImageView
+        android:id="@+id/iv_password_correct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/iv_username_correct"
+        android:layout_centerVertical="true"
+        android:visibility="invisible"
+        app:srcCompat="@android:drawable/checkbox_on_background" />
+
+    <ImageView
+        android:id="@+id/iv_username_correct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/signup_password_et"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="56dp"
+        android:visibility="invisible"
+        app:srcCompat="@android:drawable/checkbox_on_background" />
 </RelativeLayout>
