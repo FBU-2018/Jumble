@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.models.Job;
@@ -19,6 +21,8 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     Button signupButton;
     EditText username_et;
     EditText password_et;
+
+    ImageView iv_username_check;
+    ImageView iv_password_check;
 
     List<Job> jobs = new ArrayList<>();
 
@@ -62,12 +69,55 @@ public class MainActivity extends AppCompatActivity {
         username_et = findViewById(R.id.username_et);
         password_et = findViewById(R.id.password_et);
 
+        iv_username_check = findViewById(R.id.iv_username_check);
+        iv_password_check = findViewById(R.id.iv_password_check);
+
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String username = username_et.getText().toString();
-                final String password = password_et.getText().toString();
-                login(username, password);
+
+                boolean isUsernameEmpty = false;
+                boolean isPasswordEmpty = false;
+
+                String username = "";
+                String userInputStr = username_et.getText().toString();
+                if (!userInputStr.equals("")) {
+                    username = userInputStr;
+                    iv_username_check.setVisibility(VISIBLE);
+                } else {
+                    isUsernameEmpty = true;
+                    iv_username_check.setVisibility(INVISIBLE);
+                }
+
+                String password = "";
+                final String passwordInputStr = password_et.getText().toString();
+                if (!passwordInputStr.equals("")) {
+                    password = passwordInputStr;
+                    iv_password_check.setVisibility(VISIBLE);
+                } else {
+                    isPasswordEmpty = true;
+                    iv_password_check.setVisibility(INVISIBLE);
+                }
+
+                if (isUsernameEmpty || isPasswordEmpty) {
+                    String requirement = "Please enter a";
+                    if (isUsernameEmpty) {
+                        requirement += " username";
+                    }
+
+                    if (isPasswordEmpty) {
+                        if (isUsernameEmpty) {
+                            requirement += " and password";
+                        } else {
+                            requirement += " password";
+                        }
+                    }
+
+                    requirement += "!";
+                    Toast.makeText(getApplicationContext(), requirement, Toast.LENGTH_LONG).show();
+                } else {
+                    login(username, password);
+                }
             }
         });
 

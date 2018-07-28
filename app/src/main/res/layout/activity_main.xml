@@ -69,4 +69,23 @@
         android:text="Sign Up"
         android:textColor="#ffede2" />
 
+    <ImageView
+        android:id="@+id/iv_password_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/iv_username_check"
+        android:layout_marginBottom="246dp"
+        android:visibility="invisible"
+        app:srcCompat="@android:drawable/checkbox_on_background" />
+
+    <ImageView
+        android:id="@+id/iv_username_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/username_et"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="37dp"
+        android:visibility="invisible"
+        app:srcCompat="@android:drawable/checkbox_on_background" />
 </RelativeLayout>

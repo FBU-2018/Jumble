@@ -53,8 +53,10 @@ public class SignUpActivity extends AppCompatActivity {
 
                 if (!usernameInputStr.equals("")) {
                     username = usernameInputStr;
+                    iv_username_correct.setVisibility(View.VISIBLE);
                 } else {
                     isEmptyUsernameText = true;
+                    iv_username_correct.setVisibility(View.INVISIBLE);
                 }
 
                 String password = "";
@@ -62,8 +64,10 @@ public class SignUpActivity extends AppCompatActivity {
 
                 if (!passwordInputStr.equals("")) {
                     password = passwordInputStr;
+                    iv_password_correct.setVisibility(View.VISIBLE);
                 } else {
                     isEmptyPasswordText = true;
+                    iv_password_correct.setVisibility(View.INVISIBLE);
                 }
 
                 String email = "";
@@ -71,17 +75,16 @@ public class SignUpActivity extends AppCompatActivity {
 
                 if (!emailInputStr.equals("")) {
                     email = emailInputStr;
+                    iv_email_correct.setVisibility(View.VISIBLE);
                 } else {
                     isEmptyEmailText = true;
+                    iv_email_correct.setVisibility(View.INVISIBLE);
                 }
 
                 if (isEmptyUsernameText || isEmptyPasswordText || isEmptyEmailText) {
                     String requirement = "Please enter a";
                     if (isEmptyUsernameText) {
                         requirement += " username";
-                        iv_username_correct.setVisibility(View.INVISIBLE);
-                    } else {
-                        iv_username_correct.setVisibility(View.VISIBLE);
                     }
 
                     if (isEmptyPasswordText) {
@@ -90,9 +93,6 @@ public class SignUpActivity extends AppCompatActivity {
                         } else {
                             requirement += " password";
                         }
-                        iv_password_correct.setVisibility(View.INVISIBLE);
-                    } else {
-                        iv_password_correct.setVisibility(View.VISIBLE);
                     }
 
                     if (isEmptyEmailText) {
@@ -101,9 +101,6 @@ public class SignUpActivity extends AppCompatActivity {
                         } else {
                             requirement += "n email";
                         }
-                        iv_email_correct.setVisibility(View.INVISIBLE);
-                    } else {
-                        iv_email_correct.setVisibility(View.VISIBLE);
                     }
 
                     requirement += "!";
