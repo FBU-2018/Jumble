@@ -16,17 +16,17 @@ if (process.env.FCM_API_KEY) {
    apiKey: process.env.FCM_API_KEY || ''};
 }
 
-var server = new ParseServer({
-  databaseURI: 'mongodb://heroku_j8mkx7b1:2fgh2tjh27i9a88qimbdihsnvh@ds135441.mlab.com:35441/heroku_j8mkx7b1',
-  cloud: './cloud/main.js',
-  appId: 'fbu-2018-jumble',
-  masterKey: 'fbu-2018-key',
-  push: {
-    android: {
-      apiKey: 'AAAAto1Azj4:APA91bFn1oH_hLJClj29LIxz_M6S9JsKmF-Kw5THpqTNZiQhwJKmahv3CEmdx6SefV9scaLUV0eUcIdzsHHYjSnKl10ufo6yN-IDQnRw4z9UFF7sysn2E_7oZPKGPjQzJFMU3sEXKNEWAxY3ofiLJ9R3rK6Ht94OVA' // The Server API Key of FCM
-    }
-  } 
-});
+//var server = new ParseServer({
+//  databaseURI: 'mongodb://heroku_j8mkx7b1:2fgh2tjh27i9a88qimbdihsnvh@ds135441.mlab.com:35441/heroku_j8mkx7b1',
+//  cloud: './cloud/main.js',
+//  appId: 'fbu-2018-jumble',
+//  masterKey: 'fbu-2018-key',
+//  push: {
+//    android: {
+//      apiKey: 'AAAAto1Azj4:APA91bFn1oH_hLJClj29LIxz_M6S9JsKmF-Kw5THpqTNZiQhwJKmahv3CEmdx6SefV9scaLUV0eUcIdzsHHYjSnKl10ufo6yN-IDQnRw4z9UFF7sysn2E_7oZPKGPjQzJFMU3sEXKNEWAxY3ofiLJ9R3rK6Ht94OVA' // The Server API Key of FCM
+//    }
+//  }
+//});
 
 var api = new ParseServer({
   push: pushConfig,
