@@ -10,11 +10,11 @@
     },
     "APP_ID": {
       "description": "A unique identifier for your app.",
-      "value": "fbu-2018-jumble"
+      "value": "myAppId"
     },
     "MASTER_KEY": {
       "description": "A key that overrides all permissions. Keep this secret.",
-      "value": "fbu-2018-key"
+      "value": "myMasterKey"
     },
     "SERVER_URL": {
       "description": "URL to connect to your Heroku instance (update with your app's name + PARSE_MOUNT)",
