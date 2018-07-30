@@ -114,6 +114,7 @@ public class CreatePostFragment extends Fragment {
     ImageView iv_date_time_complete;
     ImageView iv_estimation_complete;
     ImageView iv_money_complete;
+    ImageView iv_location_complete;
 
     // Calendar init
     Calendar myCalendar = Calendar.getInstance();
@@ -153,8 +154,43 @@ public class CreatePostFragment extends Fragment {
         iv_date_time_complete = view.findViewById(R.id.iv_date_time_complete);
         iv_estimation_complete = view.findViewById(R.id.iv_hours_complete);
         iv_money_complete = view.findViewById(R.id.iv_fee_complete);
+        iv_location_complete = view.findViewById(R.id.iv_location_complete);
 
         etTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                iv_title_complete.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etDescription.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                iv_description_complete.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etTime.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -167,9 +203,46 @@ public class CreatePostFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                if (!etDate.equals("")) {
+                    iv_date_time_complete.setVisibility(View.VISIBLE);
+                }
             }
         });
+
+        etEstimation.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                iv_estimation_complete.setVisibility(View.VISIBLE);
+            }
+        });
+
+        etMoney.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                iv_money_complete.setVisibility(View.VISIBLE);
+            }
+        });
+
 
         newJob = new Job();
 
@@ -188,7 +261,6 @@ public class CreatePostFragment extends Fragment {
                 if (!title.equals("")) {
                     newJob.setTitle(title);
                     etTitle.setText("");
-                    iv_title_complete.setVisibility(View.VISIBLE);
                 } else {
                     isTitleEmpty = true;
                 }
@@ -198,7 +270,6 @@ public class CreatePostFragment extends Fragment {
                 if (!description.equals("")) {
                     newJob.setDescription(description);
                     etDescription.setText("");
-                    iv_description_complete.setVisibility(View.VISIBLE);
                 } else {
                     isDescriptionEmpty = true;
                 }
@@ -212,7 +283,6 @@ public class CreatePostFragment extends Fragment {
                     newJob.setDate(date);
                     etTime.setText("");
                     etDate.setText("");
-                    iv_date_time_complete.setVisibility(View.VISIBLE);
                 } else {
                     isTimeDateEmpty = true;
                 }
@@ -222,7 +292,6 @@ public class CreatePostFragment extends Fragment {
                 if (!estimation.equals("")) {
                     newJob.setEstimation(estimation);
                     etEstimation.setText("");
-                    iv_estimation_complete.setVisibility(View.VISIBLE);
                 } else {
                     isEstimationEmpty = true;
                 }
@@ -232,13 +301,11 @@ public class CreatePostFragment extends Fragment {
                 if (!money.equals("")) {
                     newJob.setMoney(money);
                     etMoney.setText("");
-                    iv_money_complete.setVisibility(View.VISIBLE);
                 } else {
                     isMoneyEmpty = true;
                 }
 
                 btnMap.setText("");
-
 
                 if (isTitleEmpty || isDescriptionEmpty || isTimeDateEmpty || isEstimationEmpty || isMoneyEmpty) {
 
@@ -585,6 +652,7 @@ public class CreatePostFragment extends Fragment {
         Log.d("CreatePostFragment", "trying to update location");
         newJob = job;
         btnMap.setText(job.getLocation());
+        iv_location_complete.setVisibility(View.VISIBLE);
     }
 
     // make a function get map info --> does what code above does
@@ -691,6 +759,7 @@ public class CreatePostFragment extends Fragment {
                                 if (addresses.size() > 0) {
                                     Address address = addresses.get(0);
                                     btnMap.setText(address.getAddressLine(0));
+                                    iv_location_complete.setVisibility(View.VISIBLE);
 //                                    result.append(address.getLocality());
 //                                    result.append(address.getCountryName());
                                 }
