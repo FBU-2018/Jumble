@@ -6,9 +6,9 @@ ADD . /parse
 WORKDIR /parse
 RUN npm install
 
-ENV APP_ID setYourAppId
-ENV MASTER_KEY setYourMasterKey
-ENV DATABASE_URI setMongoDBURI
+ENV APP_ID fbu-2018-jumble
+ENV MASTER_KEY fbu-2018-key
+ENV DATABASE_URI 'mongodb://heroku_j8mkx7b1:2fgh2tjh27i9a88qimbdihsnvh@ds135441.mlab.com:35441/heroku_j8mkx7b1'
 
 # Optional (default : 'parse/cloud/main.js')
 # ENV CLOUD_CODE_MAIN cloudCodePath

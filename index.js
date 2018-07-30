@@ -30,11 +30,11 @@ var server = new ParseServer({
 
 var api = new ParseServer({
   push: pushConfig,
-  databaseURI: databaseUri || 'mongodb://localhost:27017/dev',
+  databaseURI: databaseUri || 'mongodb://heroku_j8mkx7b1:2fgh2tjh27i9a88qimbdihsnvh@ds135441.mlab.com:35441/heroku_j8mkx7b1',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
-  appId: process.env.APP_ID || 'myAppId',
-  masterKey: process.env.MASTER_KEY || '', //Add your master key here. Keep it secret!
-  serverURL: process.env.SERVER_URL || 'http://localhost:1337/parse',  // Don't forget to change to https if needed
+  appId: process.env.APP_ID || 'fbu-2018-jumble',
+  masterKey: process.env.MASTER_KEY || 'fbu-2018-key', //Add your master key here. Keep it secret!
+  serverURL: process.env.SERVER_URL || 'https://fbu-2018-jumble.herokuapp.com/parse',  // Don't forget to change to https if needed
   liveQuery: {
     classNames: ["Posts", "Comments"] // List of classes to support for query subscriptions
   }
