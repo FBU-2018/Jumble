@@ -293,11 +293,11 @@ public class HomeActivity extends AppCompatActivity {
         // REQUEST_CODE is defined above
         Log.d("HomeActivity", "checking HomeActivity onActivityResult");
         if (resultCode == RESULT_OK) {
-            if (data.getBooleanExtra("refresh", false)) {
+            if (potentialIntent.getBooleanExtra("refresh", false)) {
                 myMatchPageFragment.refresh();
             }
 
-            if (data.getBooleanExtra("returnFromMap", false)) {
+            if (potentialIntent.getBooleanExtra("returnFromMap", false)) {
                 Log.d("HomeActivity", "back from Map");
                 Job job = Parcels.unwrap(data.getParcelableExtra("newJob"));
                 // call create post fragment
@@ -305,5 +305,4 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
     }
-
 }

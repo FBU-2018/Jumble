@@ -128,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     private void login(String username, String password) {
@@ -147,5 +146,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 }

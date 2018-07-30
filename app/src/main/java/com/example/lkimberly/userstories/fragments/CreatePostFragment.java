@@ -28,6 +28,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,6 +109,12 @@ public class CreatePostFragment extends Fragment {
     ParseFile parseFile;
     String imagePath;
 
+    ImageView iv_title_complete;
+    ImageView iv_description_complete;
+    ImageView iv_date_time_complete;
+    ImageView iv_estimation_complete;
+    ImageView iv_money_complete;
+
     // Calendar init
     Calendar myCalendar = Calendar.getInstance();
     String dateFormat = "MM/dd/yy";
@@ -140,61 +148,172 @@ public class CreatePostFragment extends Fragment {
         ivPhoto = getActivity().findViewById(R.id.ivPhoto);
         ivJobPhoto = getActivity().findViewById(R.id.ivJobPhoto);
 
+        iv_title_complete = view.findViewById(R.id.iv_title_complete);
+        iv_description_complete = view.findViewById(R.id.iv_detail_complete);
+        iv_date_time_complete = view.findViewById(R.id.iv_date_time_complete);
+        iv_estimation_complete = view.findViewById(R.id.iv_hours_complete);
+        iv_money_complete = view.findViewById(R.id.iv_fee_complete);
+
+        etTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         newJob = new Job();
 
         bCreateJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newJob.setTitle(etTitle.getText().toString());
-                newJob.setDescription(etDescription.getText().toString());
-                newJob.setTime(etTime.getText().toString());
-                newJob.setDate(etDate.getText().toString());
 
-                //newJob.setLocation(etLocation.getText().toString());
-                newJob.setEstimation(etEstimation.getText().toString());
-                newJob.setMoney(etMoney.getText().toString());
+                boolean isTitleEmpty = false;
+                boolean isDescriptionEmpty = false;
+                boolean isTimeDateEmpty = false;
+                boolean isEstimationEmpty = false;
+                boolean isMoneyEmpty = false;
 
-                etTitle.setText("");
-                etDescription.setText("");
-                etTime.setText("");
-                etDate.setText("");
+                String title = etTitle.getText().toString();
 
-                //etLocation.setText("");
-                etEstimation.setText("");
-                etMoney.setText("");
+                if (!title.equals("")) {
+                    newJob.setTitle(title);
+                    etTitle.setText("");
+                    iv_title_complete.setVisibility(View.VISIBLE);
+                } else {
+                    isTitleEmpty = true;
+                }
+
+                String description = etDescription.getText().toString();
+
+                if (!description.equals("")) {
+                    newJob.setDescription(description);
+                    etDescription.setText("");
+                    iv_description_complete.setVisibility(View.VISIBLE);
+                } else {
+                    isDescriptionEmpty = true;
+                }
+
+                String time = etTime.getText().toString();
+                String date = etDate.getText().toString();
+
+
+                if (!time.equals("") && !date.equals("")) {
+                    newJob.setTime(time);
+                    newJob.setDate(date);
+                    etTime.setText("");
+                    etDate.setText("");
+                    iv_date_time_complete.setVisibility(View.VISIBLE);
+                } else {
+                    isTimeDateEmpty = true;
+                }
+
+                String estimation = etEstimation.getText().toString();
+
+                if (!estimation.equals("")) {
+                    newJob.setEstimation(estimation);
+                    etEstimation.setText("");
+                    iv_estimation_complete.setVisibility(View.VISIBLE);
+                } else {
+                    isEstimationEmpty = true;
+                }
+
+                String money = etMoney.getText().toString();
+
+                if (!money.equals("")) {
+                    newJob.setMoney(money);
+                    etMoney.setText("");
+                    iv_money_complete.setVisibility(View.VISIBLE);
+                } else {
+                    isMoneyEmpty = true;
+                }
 
                 btnMap.setText("");
 
-                newJob.setUser(ParseUser.getCurrentUser());
 
-                final ParseFile parseFile = new ParseFile(new File(imagePath));
+                if (isTitleEmpty || isDescriptionEmpty || isTimeDateEmpty || isEstimationEmpty || isMoneyEmpty) {
 
-                Log.d("newJobSave", "1. Success!");
+                    String message = "Please enter a ";
+                    if (isTitleEmpty) {
+                        message += "title";
+                    }
 
-                parseFile.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e == null) {
-                            newJob.setImage(parseFile);
-
-                            newJob.saveInBackground(new SaveCallback() {
-                                @Override
-                                public void done(ParseException e) {
-                                    if (e == null) {
-                                        Log.d("CreatePostProject", "save job success!");
-                                        Toast.makeText(getContext(), "Job saved", Toast.LENGTH_LONG).show();
-                                    } else {
-                                        Log.d("CreatePostProject", "save job failed!");
-                                        e.printStackTrace();
-                                    }
-                                }
-                            });
+                    if (isDescriptionEmpty) {
+                        if (isTitleEmpty) {
+                            message += " and description";
                         } else {
-                            Log.d("CreatePostProject 2", "save job failed!");
-                            e.printStackTrace();
+                            message += "description";
                         }
                     }
-                });
+
+                    if (isTimeDateEmpty) {
+                        if (isDescriptionEmpty) {
+                            message += " and time or date";
+                        } else {
+                            message += "time or date";
+                        }
+                    }
+
+                    if (isEstimationEmpty) {
+                        if (isTimeDateEmpty) {
+                            message += " and estimation";
+                        } else {
+                            message += "n estimation";
+                        }
+                    }
+
+                    if (isMoneyEmpty) {
+                        if (isEstimationEmpty) {
+                            message += " and fee";
+                        } else {
+                            message += "fee";
+                        }
+                    }
+
+                    message += "!";
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                } else {
+
+                    newJob.setUser(ParseUser.getCurrentUser());
+
+                    final ParseFile parseFile = new ParseFile(new File(imagePath));
+
+                    Log.d("newJobSave", "1. Success!");
+
+                    parseFile.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                newJob.setImage(parseFile);
+
+                                newJob.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if (e == null) {
+                                            Log.d("CreatePostProject", "save job success!");
+                                            Toast.makeText(getContext(), "Job saved", Toast.LENGTH_LONG).show();
+                                        } else {
+                                            Log.d("CreatePostProject", "save job failed!");
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                            } else {
+                                Log.d("CreatePostProject 2", "save job failed!");
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
             }
         });
 
@@ -415,8 +534,8 @@ public class CreatePostFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
                 User user = (User) getCurrentUser();
 
                 imagePath = photoFile.getAbsolutePath();
@@ -424,20 +543,16 @@ public class CreatePostFragment extends Fragment {
                 Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 400);
                 Bitmap rotatedBitmap = rotate(resizedBitmap, imagePath);
                 ivPhoto.setImageBitmap(rotatedBitmap);
-            } else { // Result was a failure
-                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
-        }
 
-        if (requestCode == GET_FROM_GALLERY) {
-            if (resultCode == RESULT_OK) {
+            if (requestCode == GET_FROM_GALLERY) {
                 User user = (User) getCurrentUser();
 
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
                 Cursor cursor = getContext().getContentResolver().query(selectedImage,
-                        filePathColumn, null, null, null);
+                            filePathColumn, null, null, null);
                 cursor.moveToFirst();
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 imagePath = cursor.getString(columnIndex);
@@ -449,6 +564,8 @@ public class CreatePostFragment extends Fragment {
                 ivPhoto.setImageBitmap(rotatedBitmap);
                 cursor.close();
             }
+        } else { // Result was a failure
+            Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
         }
 
 //        Log.d("Back from MapActivity", "1");
