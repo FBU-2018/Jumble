@@ -1,8 +1,7 @@
 {
-  "name": "Parse Server Example",
-  "description": "An example Parse API server using the parse-server module",
-  "repository": "https://github.com/ParsePlatform/parse-server-example",
-  "logo": "https://avatars0.githubusercontent.com/u/1294580?v=3&s=200",
+  "name": "Jumble Server",
+  "description": "Server for Jumble project modelled after Parse Server Example",
+  "repository": "https://github.com/FBU-2018/Jumble",
   "env": {
     "PARSE_MOUNT": {
       "description": "Configure Parse API route.",
@@ -10,11 +9,11 @@
     },
     "APP_ID": {
       "description": "A unique identifier for your app.",
-      "value": ""
+      "value": "fbu-2018-jumble"
     },
     "MASTER_KEY": {
       "description": "A key that overrides all permissions. Keep this secret.",
-      "value": ""
+      "value": "fbu-2018-key"
     },
     "DATABASE_URI": {
       "description": "Connection string for your database.",

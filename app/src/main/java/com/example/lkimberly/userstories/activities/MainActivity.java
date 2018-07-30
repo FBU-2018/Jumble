@@ -15,10 +15,16 @@ import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.Matches;
 import com.example.lkimberly.userstories.models.User;
 import com.parse.LogInCallback;
+import com.parse.ParseCloud;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static android.view.View.INVISIBLE;
@@ -54,6 +60,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Testing push setup
+        JSONObject payload = new JSONObject();
+
+        try {
+            payload.put("sender", ParseInstallation.getCurrentInstallation().getInstallationId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        HashMap<String, String> data = new HashMap<>();
+        data.put("customData", payload.toString());
+
+        ParseCloud.callFunctionInBackground("pingReply", data);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {

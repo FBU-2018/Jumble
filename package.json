@@ -1,11 +1,11 @@
 {
-  "name": "parse-server-example",
+  "name": "Jumble Server",
   "version": "1.4.0",
-  "description": "An example Parse API server using the parse-server module",
+  "description": "Server for Jumble project modelled after Parse Server Example",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ParsePlatform/parse-server-example"
+    "url": "https://github.com/FBU-2018/Jumble"
   },
   "license": "MIT",
   "dependencies": {
