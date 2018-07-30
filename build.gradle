@@ -7,6 +7,9 @@ buildscript {
         jcenter()
 
         maven { url 'https://plugins.gradle.org/m2/'}
+
+        // JitPack for FCM Push Setup
+        maven { url "https://jitpack.io" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.3'
