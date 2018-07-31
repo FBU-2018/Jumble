@@ -3,6 +3,7 @@ package com.example.lkimberly.userstories.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationBuilderWithBuilderAccessor;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,9 @@ import com.example.lkimberly.userstories.adapters.SwipeCardAdapter;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.Matches;
 import com.example.lkimberly.userstories.models.SwipeCard;
+import com.example.lkimberly.userstories.models.User;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -88,6 +92,18 @@ public class FeedFragment extends Fragment {
             public void onRightCardExit(Object dataObject) {
                 SwipeCard currentCard = (SwipeCard) dataObject;
                 createMatch(currentCard);
+
+                ParseUser jobPoster = currentCard.getJob().getUser();
+
+                // Notifications
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference();
+
+                DatabaseReference pushRef = myRef.child("Your job has been matched!").push();
+                String uid = pushRef.getKey();
+
+                
+
                 makeToast(getContext(), "Right!");
             }
 
