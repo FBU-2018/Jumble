@@ -56,24 +56,12 @@ public class MainActivity extends AppCompatActivity {
     boolean two;
     boolean three;
 
+    Button testingFirebaseBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // Testing push setup
-        JSONObject payload = new JSONObject();
-
-        try {
-            payload.put("sender", ParseInstallation.getCurrentInstallation().getInstallationId());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        HashMap<String, String> data = new HashMap<>();
-        data.put("customData", payload.toString());
-
-        ParseCloud.callFunctionInBackground("pingReply", data);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
@@ -91,6 +79,16 @@ public class MainActivity extends AppCompatActivity {
 
         iv_username_check = findViewById(R.id.iv_username_check);
         iv_password_check = findViewById(R.id.iv_password_check);
+
+        testingFirebaseBtn = findViewById(R.id.testing_firebase_btn);
+
+        testingFirebaseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, TestingFirebase.class);
+                startActivity(intent);
+            }
+        });
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override

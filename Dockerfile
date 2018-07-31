@@ -11,9 +11,10 @@ ENV MASTER_KEY fbu-2018-key
 ENV DATABASE_URI mongodb://heroku_j8mkx7b1:2fgh2tjh27i9a88qimbdihsnvh@ds135441.mlab.com:35441/heroku_j8mkx7b1
 
 ENV FCM_API_KEY AAAAto1Azj4:APA91bEEDuiH6lHJyX4fsOn9RZfIW5f5UvizIl0NZeJV-m2y7fBdgUJiOPQC-FPsBwryzYvuo6RmpOx65X3q_KPUwPRR_N_E5HEa27enEms38Q08_AqtmBVYS366UGn5fg4iVrmQD0Zc9CxxwI5b-Z3zRut0mFn3lQ
+ENV SERVER_URL https://fbu-2018-jumble.herokuapp.com/parse
 
 # Optional (default : 'parse/cloud/main.js')
-# ENV CLOUD_CODE_MAIN cloudCodePath
+ENV CLOUD_CODE_MAIN cloud/main.js
 
 # Optional (default : '/parse')
 # ENV PARSE_MOUNT mountPath
