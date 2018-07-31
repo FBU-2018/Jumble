@@ -6,15 +6,13 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,7 +21,6 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -32,29 +29,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.GeolocationPermissions;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.NumberPicker;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.lkimberly.userstories.BitmapScaler;
 import com.example.lkimberly.userstories.R;
-import com.example.lkimberly.userstories.activities.MainActivity;
 import com.example.lkimberly.userstories.activities.MapActivity;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.User;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.parse.ParseException;
@@ -145,56 +136,69 @@ public class CreatePostFragment extends Fragment {
         bCreateJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newJob.setTitle(etTitle.getText().toString());
-                newJob.setDescription(etDescription.getText().toString());
-                newJob.setTime(etTime.getText().toString());
-                newJob.setDate(etDate.getText().toString());
+                if (etTitle.getText().toString().equals("") ||
+                        etDescription.getText().toString().equals("") ||
+                        etTime.getText().toString().equals("") ||
+                        etDate.getText().toString().equals("") ||
+                        etEstimation.getText().toString().equals("") ||
+                        etMoney.getText().toString().equals("") ||
+                        btnMap.getText().toString().equals("") ||
+                        imagePath == null) {
+                    Toast.makeText(getContext(), "Please fill out all entries and select a photo!", Toast.LENGTH_SHORT).show();
+                } else {
 
-                //newJob.setLocation(etLocation.getText().toString());
-                newJob.setEstimation(etEstimation.getText().toString());
-                newJob.setMoney(etMoney.getText().toString());
 
-                etTitle.setText("");
-                etDescription.setText("");
-                etTime.setText("");
-                etDate.setText("");
+                    newJob.setTitle(etTitle.getText().toString());
+                    newJob.setDescription(etDescription.getText().toString());
+                    newJob.setTime(etTime.getText().toString());
+                    newJob.setDate(etDate.getText().toString());
 
-                //etLocation.setText("");
-                etEstimation.setText("");
-                etMoney.setText("");
+                    //newJob.setLocation(etLocation.getText().toString());
+                    newJob.setEstimation(etEstimation.getText().toString());
+                    newJob.setMoney(etMoney.getText().toString());
 
-                btnMap.setText("");
+                    etTitle.setText("");
+                    etDescription.setText("");
+                    etTime.setText("");
+                    etDate.setText("");
 
-                newJob.setUser(ParseUser.getCurrentUser());
+                    //etLocation.setText("");
+                    etEstimation.setText("");
+                    etMoney.setText("");
 
-                final ParseFile parseFile = new ParseFile(new File(imagePath));
+                    btnMap.setText("");
 
-                Log.d("newJobSave", "1. Success!");
+                    newJob.setUser(ParseUser.getCurrentUser());
 
-                parseFile.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e == null) {
-                            newJob.setImage(parseFile);
+                    final ParseFile parseFile = new ParseFile(new File(imagePath));
 
-                            newJob.saveInBackground(new SaveCallback() {
-                                @Override
-                                public void done(ParseException e) {
-                                    if (e == null) {
-                                        Log.d("CreatePostProject", "save job success!");
-                                        Toast.makeText(getContext(), "Job saved", Toast.LENGTH_LONG).show();
-                                    } else {
-                                        Log.d("CreatePostProject", "save job failed!");
-                                        e.printStackTrace();
+                    Log.d("newJobSave", "1. Success!");
+
+                    parseFile.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                newJob.setImage(parseFile);
+
+                                newJob.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if (e == null) {
+                                            Log.d("CreatePostProject", "save job success!");
+                                            Toast.makeText(getContext(), "Job saved", Toast.LENGTH_LONG).show();
+                                        } else {
+                                            Log.d("CreatePostProject", "save job failed!");
+                                            e.printStackTrace();
+                                        }
                                     }
-                                }
-                            });
-                        } else {
-                            Log.d("CreatePostProject 2", "save job failed!");
-                            e.printStackTrace();
+                                });
+                            } else {
+                                Log.d("CreatePostProject 2", "save job failed!");
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         });
 
