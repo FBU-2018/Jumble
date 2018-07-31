@@ -12,8 +12,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -23,7 +21,6 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -34,20 +31,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.GeolocationPermissions;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.NumberPicker;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.lkimberly.userstories.BitmapScaler;
 import com.example.lkimberly.userstories.R;
-import com.example.lkimberly.userstories.activities.MainActivity;
 import com.example.lkimberly.userstories.activities.MapActivity;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.User;
@@ -56,9 +49,10 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -156,6 +150,8 @@ public class CreatePostFragment extends Fragment {
         iv_money_complete = view.findViewById(R.id.iv_fee_complete);
         iv_location_complete = view.findViewById(R.id.iv_location_complete);
 
+
+
         etTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -165,6 +161,10 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 iv_title_complete.setVisibility(View.VISIBLE);
+
+                if (i2 == 0) {
+                    iv_title_complete.setVisibility(View.INVISIBLE);
+                }
             }
 
             @Override
@@ -172,6 +172,7 @@ public class CreatePostFragment extends Fragment {
 
             }
         });
+
 
         etDescription.addTextChangedListener(new TextWatcher() {
             @Override
@@ -182,6 +183,10 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 iv_description_complete.setVisibility(View.VISIBLE);
+
+                if (i2 == 0) {
+                    iv_description_complete.setVisibility(View.INVISIBLE);
+                }
             }
 
             @Override
@@ -241,7 +246,9 @@ public class CreatePostFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
                 iv_money_complete.setVisibility(View.VISIBLE);
             }
+
         });
+
 
 
         newJob = new Job();
@@ -492,6 +499,7 @@ public class CreatePostFragment extends Fragment {
         if (isServicesOK()) {
             init();
         }
+
     }
 
 
