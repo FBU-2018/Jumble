@@ -252,8 +252,6 @@ public class CreatePostFragment extends Fragment {
             }
         });
 
-
-
         newJob = new Job();
 
         bCreateJob.setOnClickListener(new View.OnClickListener() {
