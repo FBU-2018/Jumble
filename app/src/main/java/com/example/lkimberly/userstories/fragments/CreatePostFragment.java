@@ -162,7 +162,11 @@ public class CreatePostFragment extends Fragment {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 iv_title_complete.setVisibility(View.VISIBLE);
 
-                if (i2 == 0) {
+                Log.d("et title text change", "charSequence = " + charSequence);
+                Log.d("et title text change", "i = " + i);
+                Log.d("et title text change", "i1 = " + i1);
+                Log.d("et title text change", "i2 = " + i2);
+                if (i == 0 && i2 == 0) {
                     iv_title_complete.setVisibility(View.INVISIBLE);
                 }
             }
@@ -184,7 +188,7 @@ public class CreatePostFragment extends Fragment {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 iv_description_complete.setVisibility(View.VISIBLE);
 
-                if (i2 == 0) {
+                if (i == 0 && i2 == 0) {
                     iv_description_complete.setVisibility(View.INVISIBLE);
                 }
             }
@@ -246,7 +250,6 @@ public class CreatePostFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
                 iv_money_complete.setVisibility(View.VISIBLE);
             }
-
         });
 
 
