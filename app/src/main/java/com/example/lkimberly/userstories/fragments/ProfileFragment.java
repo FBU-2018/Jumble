@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.activities.MainActivity;
 import com.example.lkimberly.userstories.models.User;
+import com.google.firebase.auth.FirebaseAuth;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -153,6 +154,9 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
+
+        // Log out of Firebase account
+        FirebaseAuth.getInstance().signOut();
     }
 
     double parseDouble(String ratio) {
