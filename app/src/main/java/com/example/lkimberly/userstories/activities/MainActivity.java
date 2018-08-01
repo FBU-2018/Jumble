@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                         if (isUsernameEmpty || isPasswordEmpty) {
                             requirement += " and email";
                         } else {
-                            requirement += " email";
+                            requirement += "n email";
                         }
                     }
 
@@ -200,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -216,5 +217,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+                */
     }
 }

@@ -152,6 +152,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+        /*
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -168,5 +169,6 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                     }
                 });
+                */
     }
 }

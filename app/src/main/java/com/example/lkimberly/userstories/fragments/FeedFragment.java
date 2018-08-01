@@ -10,14 +10,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.lkimberly.userstories.JobMatchInfo;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.adapters.SwipeCardAdapter;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.Matches;
 import com.example.lkimberly.userstories.models.SwipeCard;
 import com.example.lkimberly.userstories.models.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -37,6 +41,7 @@ public class FeedFragment extends Fragment {
 
     ParseUser currentUser;
     ArrayList<Job> jobs;
+
 
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
@@ -96,13 +101,22 @@ public class FeedFragment extends Fragment {
                 ParseUser jobPoster = currentCard.getJob().getUser();
 
                 // Notifications
+                String jobObjectId = currentCard.getJob().getObjectId();
+
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference();
+                DatabaseReference myRef = database.getReference("JobMatchInfo")
+                        .child(jobObjectId)
+                        .child("subscribedObjectId");
+                myRef.setValue("tatatat");
 
-                DatabaseReference pushRef = myRef.child("Your job has been matched!").push();
-                String uid = pushRef.getKey();
 
-                
+
+                Log.d("Swipe Right", "object id = " + jobObjectId);
+
+                //DatabaseReference pushRef = myRef.child("Your job has been matched!").push();
+                //String uid = pushRef.getKey();
+
+
 
                 makeToast(getContext(), "Right!");
             }

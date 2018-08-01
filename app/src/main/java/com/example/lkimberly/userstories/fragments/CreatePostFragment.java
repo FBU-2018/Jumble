@@ -40,6 +40,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.lkimberly.userstories.BitmapScaler;
+import com.example.lkimberly.userstories.JobMatchInfo;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.activities.MapActivity;
 import com.example.lkimberly.userstories.models.Job;
@@ -51,8 +52,11 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -118,6 +122,9 @@ public class CreatePostFragment extends Fragment {
 
     private static final int ERROR_DIALOG_REQUEST = 9001;
     private final int REQUEST_CODE = 123;
+
+    static ValueEventListener listener;
+    static String jobTitle;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -376,6 +383,53 @@ public class CreatePostFragment extends Fragment {
                                         if (e == null) {
                                             Log.d("CreatePostProject", "save job success!");
                                             Toast.makeText(getContext(), "Job saved", Toast.LENGTH_LONG).show();
+                                            String objectId = newJob.getObjectId();
+                                            jobTitle = newJob.getTitle();
+
+                                            Log.d("CreatePostProject", "save job id = " + objectId);
+                                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                            DatabaseReference myRef = database.getReference("JobMatchInfo")
+                                                    .child(objectId).child("subscribedObjectId");
+                                            myRef.setValue("");
+
+                                            //DatabaseReference pushRef = myRef.child("JobMatchInfo").push();
+                                            //JobMatchInfo jobMatchInfo = new JobMatchInfo();
+
+                                            //String uid = pushRef.getKey();
+
+                                            //jobMatchInfo.setPostedObjectId(objectId);
+                                            //jobMatchInfo.setSubscribedObjectId("");
+
+                                            //Log.d("uid", "uid" + uid);
+                                            //pushRef.setValue(jobMatchInfo);
+
+
+                                            listener = new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    String key = dataSnapshot.getKey();
+                                                    Object value = dataSnapshot.getValue();
+
+                                                    if (value == null) {
+                                                        return;
+                                                    }
+
+                                                    String subcribedObjectId = value.toString();
+
+                                                    Log.d("firebase listener", key + " and " + subcribedObjectId);
+                                                    Toast.makeText(getContext(), subcribedObjectId + " subscribed " + jobTitle, Toast.LENGTH_LONG).show();
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+
+                                                }
+                                            };
+                                            DatabaseReference subscribedObjectIdRef = database.getReference("JobMatchInfo")
+                                                    .child(objectId)
+                                                    .child("subscribedObjectId");
+                                            subscribedObjectIdRef.addValueEventListener(listener);
+
                                         } else {
                                             Log.d("CreatePostProject", "save job failed!");
                                             e.printStackTrace();

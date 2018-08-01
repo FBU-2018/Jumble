@@ -166,7 +166,7 @@ public class MatchPageFragment extends Fragment {
 
                                 Collections.reverse(usersList);
                                 for (ParseUser u : usersList) {
-                                    Log.d("User list", (String) u.get("rating"));
+                                    //Log.d("User list", (String) u.get("rating"));
                                 }
                                 matchesModelList.add(new MatchDataModel(0, usersList,jobOfCurrentUser));
                             }
