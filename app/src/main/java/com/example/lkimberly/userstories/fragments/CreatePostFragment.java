@@ -331,7 +331,7 @@ public class CreatePostFragment extends Fragment {
                     }
 
                     if (isTimeDateEmpty) {
-                        if (isDescriptionEmpty) {
+                        if (isTitleEmpty || isDescriptionEmpty) {
                             message += " and time or date";
                         } else {
                             message += "time or date";
@@ -339,7 +339,7 @@ public class CreatePostFragment extends Fragment {
                     }
 
                     if (isEstimationEmpty) {
-                        if (isTimeDateEmpty) {
+                        if (isTitleEmpty || isDescriptionEmpty || isTimeDateEmpty) {
                             message += " and estimation";
                         } else {
                             message += "n estimation";
@@ -347,7 +347,7 @@ public class CreatePostFragment extends Fragment {
                     }
 
                     if (isMoneyEmpty) {
-                        if (isEstimationEmpty) {
+                        if (isTitleEmpty || isDescriptionEmpty || isTimeDateEmpty || isEstimationEmpty) {
                             message += " and fee";
                         } else {
                             message += "fee";

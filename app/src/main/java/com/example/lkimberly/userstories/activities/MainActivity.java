@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if (isEmailEmpty) {
-                        if (isPasswordEmpty) {
+                        if (isUsernameEmpty || isPasswordEmpty) {
                             requirement += " and email";
                         } else {
                             requirement += " email";
