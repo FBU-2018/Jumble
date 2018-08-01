@@ -219,14 +219,67 @@
         android:src="@drawable/ic_time" />
 
     <ImageView
-        android:id="@+id/imageView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/etMoney"
         android:layout_toStartOf="@+id/etEstimation"
+        android:inputType="number"
         android:padding="3dp"
         android:scaleType="fitXY"
-        android:src="@drawable/ic_money"
-        android:inputType="number"/>
+        android:src="@drawable/ic_money" />
 
+    <ImageView
+        android:id="@+id/iv_date_time_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/etDate"
+        android:layout_alignStart="@+id/iv_title_complete"
+        android:visibility="invisible"
+        android:src="@android:drawable/checkbox_on_background" />
+
+    <ImageView
+        android:id="@+id/iv_fee_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/etMoney"
+        android:layout_alignStart="@+id/iv_date_time_complete"
+        android:visibility="invisible"
+        android:src="@android:drawable/checkbox_on_background" />
+
+    <ImageView
+        android:id="@+id/iv_location_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView6"
+        android:layout_alignStart="@+id/iv_date_time_complete"
+        android:visibility="invisible"
+        android:src="@android:drawable/checkbox_on_background" />
+
+    <ImageView
+        android:id="@+id/iv_hours_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/etEstimation"
+        android:layout_alignStart="@+id/iv_date_time_complete"
+        android:visibility="invisible"
+        android:src="@android:drawable/checkbox_on_background" />
+
+    <ImageView
+        android:id="@+id/iv_detail_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/etDescription"
+        android:layout_alignStart="@+id/iv_title_complete"
+        android:visibility="invisible"
+        android:src="@android:drawable/checkbox_on_background" />
+
+    <ImageView
+        android:id="@+id/iv_title_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/etTitle"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="53dp"
+        android:visibility="invisible"
+        android:src="@android:drawable/checkbox_on_background" />
 </RelativeLayout>

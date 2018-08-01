@@ -15,10 +15,16 @@ import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.Matches;
 import com.example.lkimberly.userstories.models.User;
 import com.parse.LogInCallback;
+import com.parse.ParseCloud;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static android.view.View.INVISIBLE;
@@ -50,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     boolean two;
     boolean three;
 
+    Button testingFirebaseBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +79,16 @@ public class MainActivity extends AppCompatActivity {
 
         iv_username_check = findViewById(R.id.iv_username_check);
         iv_password_check = findViewById(R.id.iv_password_check);
+
+        testingFirebaseBtn = findViewById(R.id.testing_firebase_btn);
+
+        testingFirebaseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, TestingFirebase.class);
+                startActivity(intent);
+            }
+        });
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     private void login(String username, String password) {
@@ -147,5 +164,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 }

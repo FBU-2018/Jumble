@@ -25,6 +25,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +50,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.opencsv.CSVReader;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -56,11 +59,14 @@ import com.parse.SaveCallback;
 import org.parceler.Parcels;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import static android.app.Activity.RESULT_OK;
 import static com.example.lkimberly.userstories.fragments.ProfileFragment.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE;
@@ -98,6 +104,13 @@ public class CreatePostFragment extends Fragment {
     ParseFile parseFile;
     String imagePath;
 
+    ImageView iv_title_complete;
+    ImageView iv_description_complete;
+    ImageView iv_date_time_complete;
+    ImageView iv_estimation_complete;
+    ImageView iv_money_complete;
+    ImageView iv_location_complete;
+
     // Calendar init
     Calendar myCalendar = Calendar.getInstance();
     String dateFormat = "MM/dd/yy";
@@ -131,42 +144,242 @@ public class CreatePostFragment extends Fragment {
         ivPhoto = getActivity().findViewById(R.id.ivPhoto);
         ivJobPhoto = getActivity().findViewById(R.id.ivJobPhoto);
 
+        iv_title_complete = view.findViewById(R.id.iv_title_complete);
+        iv_description_complete = view.findViewById(R.id.iv_detail_complete);
+        iv_date_time_complete = view.findViewById(R.id.iv_date_time_complete);
+        iv_estimation_complete = view.findViewById(R.id.iv_hours_complete);
+        iv_money_complete = view.findViewById(R.id.iv_fee_complete);
+        iv_location_complete = view.findViewById(R.id.iv_location_complete);
+
+
+
+        etTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                iv_title_complete.setVisibility(View.VISIBLE);
+
+                if (i2 == 0) {
+                    iv_title_complete.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
+        etDescription.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                iv_description_complete.setVisibility(View.VISIBLE);
+
+                if (i2 == 0) {
+                    iv_description_complete.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etTime.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!etDate.equals("")) {
+                    iv_date_time_complete.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        etEstimation.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                iv_estimation_complete.setVisibility(View.VISIBLE);
+            }
+        });
+
+        etMoney.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                iv_money_complete.setVisibility(View.VISIBLE);
+            }
+
+        });
+
+
+
         newJob = new Job();
 
         bCreateJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (etTitle.getText().toString().equals("") ||
-                        etDescription.getText().toString().equals("") ||
-                        etTime.getText().toString().equals("") ||
-                        etDate.getText().toString().equals("") ||
-                        etEstimation.getText().toString().equals("") ||
-                        etMoney.getText().toString().equals("") ||
-                        btnMap.getText().toString().equals("") ||
-                        imagePath == null) {
-                    Toast.makeText(getContext(), "Please fill out all entries and select a photo!", Toast.LENGTH_SHORT).show();
-                } else {
 
+//                if (etTitle.getText().toString().equals("") ||
+//                        etDescription.getText().toString().equals("") ||
+//                        etTime.getText().toString().equals("") ||
+//                        etDate.getText().toString().equals("") ||
+//                        etEstimation.getText().toString().equals("") ||
+//                        etMoney.getText().toString().equals("") ||
+//                        btnMap.getText().toString().equals("") ||
+//                        imagePath == null) {
+//                    Toast.makeText(getContext(), "Please fill out all entries and select a photo!", Toast.LENGTH_SHORT).show();
+//                } else {
+//
+//
+//                    newJob.setTitle(etTitle.getText().toString());
+//                    newJob.setDescription(etDescription.getText().toString());
+//                    newJob.setTime(etTime.getText().toString());
+//                    newJob.setDate(etDate.getText().toString());
+//
+//                    //newJob.setLocation(etLocation.getText().toString());
+//                    newJob.setEstimation(etEstimation.getText().toString());
+//                    newJob.setMoney(etMoney.getText().toString());
+//                }
 
-                    newJob.setTitle(etTitle.getText().toString());
-                    newJob.setDescription(etDescription.getText().toString());
-                    newJob.setTime(etTime.getText().toString());
-                    newJob.setDate(etDate.getText().toString());
+                boolean isTitleEmpty = false;
+                boolean isDescriptionEmpty = false;
+                boolean isTimeDateEmpty = false;
+                boolean isEstimationEmpty = false;
+                boolean isMoneyEmpty = false;
 
-                    //newJob.setLocation(etLocation.getText().toString());
-                    newJob.setEstimation(etEstimation.getText().toString());
-                    newJob.setMoney(etMoney.getText().toString());
+                String title = etTitle.getText().toString();
 
+                if (!title.equals("")) {
+                    newJob.setTitle(title);
                     etTitle.setText("");
+                } else {
+                    isTitleEmpty = true;
+                }
+
+                String description = etDescription.getText().toString();
+
+                if (!description.equals("")) {
+                    newJob.setDescription(description);
                     etDescription.setText("");
+                } else {
+                    isDescriptionEmpty = true;
+                }
+
+                String time = etTime.getText().toString();
+                String date = etDate.getText().toString();
+
+
+                if (!time.equals("") && !date.equals("")) {
+                    newJob.setTime(time);
+                    newJob.setDate(date);
                     etTime.setText("");
                     etDate.setText("");
+                } else {
+                    isTimeDateEmpty = true;
+                }
 
-                    //etLocation.setText("");
+                String estimation = etEstimation.getText().toString();
+
+                if (!estimation.equals("")) {
+                    newJob.setEstimation(estimation);
                     etEstimation.setText("");
-                    etMoney.setText("");
+                } else {
+                    isEstimationEmpty = true;
+                }
 
-                    btnMap.setText("");
+                String money = etMoney.getText().toString();
+
+                if (!money.equals("")) {
+                    newJob.setMoney(money);
+                    etMoney.setText("");
+                } else {
+                    isMoneyEmpty = true;
+                }
+
+
+                btnMap.setText("");
+
+                if (isTitleEmpty || isDescriptionEmpty || isTimeDateEmpty || isEstimationEmpty || isMoneyEmpty) {
+
+                    String message = "Please enter a ";
+                    if (isTitleEmpty) {
+                        message += "title";
+                    }
+
+                    if (isDescriptionEmpty) {
+                        if (isTitleEmpty) {
+                            message += " and description";
+                        } else {
+                            message += "description";
+                        }
+                    }
+
+                    if (isTimeDateEmpty) {
+                        if (isDescriptionEmpty) {
+                            message += " and time or date";
+                        } else {
+                            message += "time or date";
+                        }
+                    }
+
+                    if (isEstimationEmpty) {
+                        if (isTimeDateEmpty) {
+                            message += " and estimation";
+                        } else {
+                            message += "n estimation";
+                        }
+                    }
+
+                    if (isMoneyEmpty) {
+                        if (isEstimationEmpty) {
+                            message += " and fee";
+                        } else {
+                            message += "fee";
+                        }
+                    }
+
+                    message += "!";
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                } else {
 
                     newJob.setUser(ParseUser.getCurrentUser());
 
@@ -232,9 +445,11 @@ public class CreatePostFragment extends Fragment {
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(getContext(), date, myCalendar
+                DatePickerDialog datePicker = new DatePickerDialog(getContext(), date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                        myCalendar.get(Calendar.DAY_OF_MONTH));
+                datePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                datePicker.show();
             }
         });
 
@@ -310,6 +525,7 @@ public class CreatePostFragment extends Fragment {
         if (isServicesOK()) {
             init();
         }
+
     }
 
 
@@ -319,7 +535,7 @@ public class CreatePostFragment extends Fragment {
 
     private void init() {
         if (mLocationPermissionsGranted) {
-                getDeviceLocation();
+            getDeviceLocation();
         }
 
         btnMap = getActivity().findViewById(R.id.btnMap);
@@ -419,8 +635,8 @@ public class CreatePostFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
                 User user = (User) getCurrentUser();
 
                 imagePath = photoFile.getAbsolutePath();
@@ -428,13 +644,9 @@ public class CreatePostFragment extends Fragment {
                 Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 400);
                 Bitmap rotatedBitmap = rotate(resizedBitmap, imagePath);
                 ivPhoto.setImageBitmap(rotatedBitmap);
-            } else { // Result was a failure
-                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
-        }
 
-        if (requestCode == GET_FROM_GALLERY) {
-            if (resultCode == RESULT_OK) {
+            if (requestCode == GET_FROM_GALLERY) {
                 User user = (User) getCurrentUser();
 
                 Uri selectedImage = data.getData();
@@ -453,6 +665,8 @@ public class CreatePostFragment extends Fragment {
                 ivPhoto.setImageBitmap(rotatedBitmap);
                 cursor.close();
             }
+        } else { // Result was a failure
+            Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
         }
 
 //        Log.d("Back from MapActivity", "1");
@@ -472,6 +686,7 @@ public class CreatePostFragment extends Fragment {
         Log.d("CreatePostFragment", "trying to update location");
         newJob = job;
         btnMap.setText(job.getLocation());
+        iv_location_complete.setVisibility(View.VISIBLE);
     }
 
     // make a function get map info --> does what code above does
@@ -578,6 +793,7 @@ public class CreatePostFragment extends Fragment {
                                 if (addresses.size() > 0) {
                                     Address address = addresses.get(0);
                                     btnMap.setText(address.getAddressLine(0));
+                                    iv_location_complete.setVisibility(View.VISIBLE);
 //                                    result.append(address.getLocality());
 //                                    result.append(address.getCountryName());
                                 }
@@ -599,4 +815,6 @@ public class CreatePostFragment extends Fragment {
             Log.e(TAG, "getDeviceLocation: Security Exception: " + e.getMessage());
         }
     }
+
+
 }

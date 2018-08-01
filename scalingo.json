@@ -1,0 +1,24 @@
+{
+  "name": "Jumble Server",
+  "description": "Server for Jumble project modelled after Parse Server Example",
+  "repository": "https://github.com/FBU-2018/Jumble",
+  "env": {
+    "PARSE_MOUNT": {
+      "description": "Configure Parse API route.",
+      "value": "/parse"
+    },
+    "APP_ID": {
+      "description": "A unique identifier for your app.",
+      "value": "fbu-2018-jumble"
+    },
+    "MASTER_KEY": {
+      "description": "A key that overrides all permissions. Keep this secret.",
+      "value": "fbu-2018-key"
+    },
+    "DATABASE_URI": {
+      "description": "Connection string for your database.",
+      "value": "$SCALINGO_MONGO_URL"
+    }
+  },
+  "addons": ["scalingo-mongodb"]
+}

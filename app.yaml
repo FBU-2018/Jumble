@@ -1,0 +1,13 @@
+runtime: nodejs
+env: flex
+
+env_variables:
+  # --REQUIRED--
+  DATABASE_URI: mongodb://heroku_j8mkx7b1:2fgh2tjh27i9a88qimbdihsnvh@ds135441.mlab.com:35441/heroku_j8mkx7b1
+  APP_ID: fbu-2018-jumble
+  MASTER_KEY: fbu-2018-key
+  SERVER_URL: https://fbu-2018-jumble.herokuapp.com/parse
+  # --OPTIONAL--
+  # FILE_KEY: <your-file-key>
+  # PARSE_MOUNT: /parse
+  # CLOUD_CODE_MAIN:  
