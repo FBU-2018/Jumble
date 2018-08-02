@@ -1,9 +1,12 @@
 package com.example.lkimberly.userstories.fragments;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationBuilderWithBuilderAccessor;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +33,8 @@ import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.parse.ParseUser.getCurrentUser;
 
 public class FeedFragment extends Fragment {
 
@@ -61,7 +66,7 @@ public class FeedFragment extends Fragment {
 
         jobs = new ArrayList<>();
 
-        currentUser = ParseUser.getCurrentUser();
+        currentUser = getCurrentUser();
 
         final Job.Query postsQuery = new Job.Query();
         postsQuery.getTop().withUser();
@@ -110,7 +115,7 @@ public class FeedFragment extends Fragment {
                         .child(jobObjectId)
                         .child("Details");
 
-                ParseUser currentUser = ParseUser.getCurrentUser();
+                ParseUser currentUser = getCurrentUser();
                 String name = currentUser.getUsername();
 
                 String message = name + ":" + jobObjectId + ":" + jobTitle;
@@ -123,7 +128,6 @@ public class FeedFragment extends Fragment {
 
                 //DatabaseReference pushRef = myRef.child("Your job has been matched!").push();
                 //String uid = pushRef.getKey();
-
 
 
                 makeToast(getContext(), "Right!");
@@ -194,7 +198,7 @@ public class FeedFragment extends Fragment {
 
                         Job job = objects.get(objects.size() - i - 1);
                         Log.d("Matched job id ", job.getObjectId());
-                        if (job.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                        if (job.getUser().getObjectId().equals(getCurrentUser().getObjectId())) {
                             String jobObjectId = job.getObjectId();
                             String jobTitle = job.getTitle();
 
@@ -215,10 +219,24 @@ public class FeedFragment extends Fragment {
                                         return;
                                     }
 
-                                    String subcribedObjectId = value.toString();
+                                    String subscribedObjectId = value.toString();
 
-                                    Log.d("firebase listener", key + " and " + subcribedObjectId);
-                                    Toast.makeText(getContext(), subcribedObjectId + " subscribed ", Toast.LENGTH_LONG).show();
+                                    Log.d("firebase listener", key + " and " + subscribedObjectId);
+                                    Toast.makeText(getContext(), subscribedObjectId + " subscribed ", Toast.LENGTH_LONG).show();
+
+                                    /*
+                                    if (subscribedObjectId.equals(getCurrentUser().getObjectId())) {
+                                        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getContext(), "channel_id");
+
+                                        notificationBuilder.setAutoCancel(true)
+                                                .setWhen(System.currentTimeMillis())
+                                                .setContentTitle("Hi")
+                                                .setContentText("Hiiiii");
+
+                                        NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+                                        notificationManager.notify(1, notificationBuilder.build());
+                                    }
+                                    */
                                 }
 
                                 @Override
