@@ -237,7 +237,6 @@ public class FeedFragment extends Fragment {
                                         notificationManager.notify(1, notificationBuilder.build());
                                     }
                                     */
-
                                 }
 
                                 @Override

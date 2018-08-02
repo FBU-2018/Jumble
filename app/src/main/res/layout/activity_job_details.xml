@@ -108,7 +108,6 @@
         android:maxLines="5"
         android:minLines="1"
         android:scrollbars = "vertical"
-        android:textAlignment="viewStart"
         tools:text="There should probably be some details here...?" />
 
     <TextView
@@ -121,7 +120,6 @@
         android:gravity="center"
         android:paddingStart="20dp"
         android:text="TextView"
-        android:textAlignment="viewStart"
         android:textSize="18sp"
         android:maxWidth="200dp"
         android:autoSizeTextType="uniform"
