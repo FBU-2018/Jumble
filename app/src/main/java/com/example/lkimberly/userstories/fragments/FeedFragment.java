@@ -174,7 +174,6 @@ public class FeedFragment extends Fragment {
     private void loadTopPosts() {
         final Job.Query postsQuery = new Job.Query();
         postsQuery.getTop().withUser();
-        final List<SwipeCard> tempList = new ArrayList<>();
         postsQuery.findInBackground(new FindCallback<Job>() {
             @Override
             public void done(List<Job> objects, ParseException e) {

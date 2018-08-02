@@ -96,6 +96,7 @@ dependencies {
     // GitPack for FCM Push Setup
     implementation 'com.parse:parse-fcm-android:1.17.3'
 
-    implementation "com.opencsv:opencsv:4.0"
+    implementation 'org.apache.commons:commons-csv:1.0'
+//    implementation 'com.opencsv:opencsv:3.9'
 
 }
