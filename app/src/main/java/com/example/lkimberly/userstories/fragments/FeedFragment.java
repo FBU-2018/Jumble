@@ -1,5 +1,7 @@
 package com.example.lkimberly.userstories.fragments;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
@@ -8,23 +10,35 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationBuilderWithBuilderAccessor;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.lkimberly.userstories.JobMatchInfo;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.adapters.SwipeCardAdapter;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.Matches;
 import com.example.lkimberly.userstories.models.SwipeCard;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.maps.android.SphericalUtil;
+
+import com.example.lkimberly.userstories.models.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -37,6 +51,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+
+import static com.parse.ParseUser.getCurrentUser;
 
 public class FeedFragment extends Fragment {
 
@@ -57,6 +73,8 @@ public class FeedFragment extends Fragment {
     private FusedLocationProviderClient mFusedLocationProvidentClient;
     private static final String TAG = "FeedFragment";
 
+    public static List<ValueEventListener> ValueEventListenerList = new ArrayList<>();
+
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
     @Override
@@ -75,7 +93,7 @@ public class FeedFragment extends Fragment {
 
         jobs = new ArrayList<>();
 
-        currentUser = ParseUser.getCurrentUser();
+        currentUser = getCurrentUser();
 
         final Job.Query postsQuery = new Job.Query();
         postsQuery.getTop().withUser();
@@ -112,6 +130,33 @@ public class FeedFragment extends Fragment {
             public void onRightCardExit(Object dataObject) {
                 SwipeCard currentCard = (SwipeCard) dataObject;
                 createMatch(currentCard);
+
+                ParseUser jobPoster = currentCard.getJob().getUser();
+
+                // Notifications
+                String jobObjectId = currentCard.getJob().getObjectId();
+                String jobTitle = currentCard.getJob().getTitle();
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("JobMatchInfo")
+                        .child(jobObjectId)
+                        .child("Details");
+
+                ParseUser currentUser = getCurrentUser();
+                String name = currentUser.getUsername();
+
+                String message = name + ":" + jobObjectId + ":" + jobTitle;
+
+                myRef.setValue(message);
+
+
+
+                Log.d("Swipe Right", "object id = " + jobObjectId);
+
+                //DatabaseReference pushRef = myRef.child("Your job has been matched!").push();
+                //String uid = pushRef.getKey();
+
+
                 makeToast(getContext(), "Right!");
             }
 
@@ -182,6 +227,57 @@ public class FeedFragment extends Fragment {
                     for (int i = 0; i < objects.size(); ++i) {
 
                         Job job = objects.get(objects.size() - i - 1);
+                        Log.d("Matched job id ", job.getObjectId());
+                        if (job.getUser().getObjectId().equals(getCurrentUser().getObjectId())) {
+                            String jobObjectId = job.getObjectId();
+                            String jobTitle = job.getTitle();
+
+                            Log.d("Found id", jobObjectId);
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference myRef = database.getReference("JobMatchInfo")
+                                    .child(jobObjectId).child("Details");
+                            myRef.setValue("");
+
+                            ValueEventListener listener;
+                            listener = new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    String key = dataSnapshot.getKey();
+                                    Object value = dataSnapshot.getValue();
+
+                                    if (value == null) {
+                                        return;
+                                    }
+
+                                    String subscribedObjectId = value.toString();
+
+                                    Log.d("firebase listener", key + " and " + subscribedObjectId);
+                                    Toast.makeText(getContext(), subscribedObjectId + " subscribed ", Toast.LENGTH_LONG).show();
+
+                                    /*
+                                    if (subscribedObjectId.equals(getCurrentUser().getObjectId())) {
+                                        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getContext(), "channel_id");
+
+                                        notificationBuilder.setAutoCancel(true)
+                                                .setWhen(System.currentTimeMillis())
+                                                .setContentTitle("Hi")
+                                                .setContentText("Hiiiii");
+
+                                        NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+                                        notificationManager.notify(1, notificationBuilder.build());
+                                    }
+                                    */
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            };
+
+                            myRef.addValueEventListener(listener);
+                            ValueEventListenerList.add(listener);
+                        }
 
                         try {
                             al.add(new SwipeCard(job.getTitle().toString(), job.getDescription().toString(), job.getImage().getUrl(), job));

@@ -105,8 +105,14 @@
         android:paddingEnd="10dp"
         android:paddingStart="20dp"
         android:text="TextView"
+<<<<<<< HEAD
         android:textAlignment="viewStart"
         android:textColor="@android:color/black"
+=======
+        android:maxLines="5"
+        android:minLines="1"
+        android:scrollbars = "vertical"
+>>>>>>> 378ffa40c98529b7894d8f2e6a5af190a056ec7f
         tools:text="There should probably be some details here...?" />
 
     <TextView
@@ -121,8 +127,11 @@
         android:maxWidth="200dp"
         android:paddingStart="20dp"
         android:text="TextView"
+<<<<<<< HEAD
         android:textAlignment="viewStart"
         android:textColor="@android:color/black"
+=======
+>>>>>>> 378ffa40c98529b7894d8f2e6a5af190a056ec7f
         android:textSize="18sp"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="163dp"

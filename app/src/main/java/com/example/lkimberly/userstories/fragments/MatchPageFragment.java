@@ -166,12 +166,10 @@ public class MatchPageFragment extends Fragment {
 
                                 Collections.reverse(usersList);
                                 for (ParseUser u : usersList) {
-                                    Log.d("User list", (String) u.get("rating"));
+                                    //Log.d("User list", (String) u.get("rating"));
                                 }
                                 matchesModelList.add(new MatchDataModel(0, usersList,jobOfCurrentUser));
                             }
-
-
 
                             // Query other jobs user may have
                             final Job.Query jobQuery = new Job.Query();
@@ -186,6 +184,8 @@ public class MatchPageFragment extends Fragment {
                                                 }
 
                                                 for (int i = 0; i < objects.size(); i++) {
+                                                    Log.d("Query JOB", objects.get(i).getObjectId());
+
                                                     if (!matchDict.keySet().contains(objects.get(i).getObjectId())) {
                                                         matchesModelList.add(new MatchDataModel(2, objects.get(i)));
                                                     }
@@ -199,8 +199,6 @@ public class MatchPageFragment extends Fragment {
                                             }
                                         }
                                     });
-
-
 
                         } else {
                             e.printStackTrace();

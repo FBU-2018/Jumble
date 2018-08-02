@@ -40,6 +40,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.lkimberly.userstories.BitmapScaler;
+import com.example.lkimberly.userstories.JobMatchInfo;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.activities.MapActivity;
 import com.example.lkimberly.userstories.models.Job;
@@ -50,6 +51,13 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -123,6 +131,8 @@ public class CreatePostFragment extends Fragment {
     private static final int ERROR_DIALOG_REQUEST = 9001;
     private final int REQUEST_CODE = 123;
 
+    static String jobTitle;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_create_post, container, false);
@@ -170,7 +180,11 @@ public class CreatePostFragment extends Fragment {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 iv_title_complete.setVisibility(View.VISIBLE);
 
-                if (i2 == 0) {
+                Log.d("et title text change", "charSequence = " + charSequence);
+                Log.d("et title text change", "i = " + i);
+                Log.d("et title text change", "i1 = " + i1);
+                Log.d("et title text change", "i2 = " + i2);
+                if (i == 0 && i2 == 0) {
                     iv_title_complete.setVisibility(View.INVISIBLE);
                 }
             }
@@ -192,7 +206,7 @@ public class CreatePostFragment extends Fragment {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 iv_description_complete.setVisibility(View.VISIBLE);
 
-                if (i2 == 0) {
+                if (i == 0 && i2 == 0) {
                     iv_description_complete.setVisibility(View.INVISIBLE);
                 }
             }
@@ -254,10 +268,7 @@ public class CreatePostFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
                 iv_money_complete.setVisibility(View.VISIBLE);
             }
-
         });
-
-
 
         newJob = new Job();
 
@@ -339,7 +350,7 @@ public class CreatePostFragment extends Fragment {
                     }
 
                     if (isTimeDateEmpty) {
-                        if (isDescriptionEmpty) {
+                        if (isTitleEmpty || isDescriptionEmpty) {
                             message += " and time or date";
                         } else {
                             message += "time or date";
@@ -347,7 +358,7 @@ public class CreatePostFragment extends Fragment {
                     }
 
                     if (isEstimationEmpty) {
-                        if (isTimeDateEmpty) {
+                        if (isTitleEmpty || isDescriptionEmpty || isTimeDateEmpty) {
                             message += " and estimation";
                         } else {
                             message += "n estimation";
@@ -355,7 +366,7 @@ public class CreatePostFragment extends Fragment {
                     }
 
                     if (isMoneyEmpty) {
-                        if (isEstimationEmpty) {
+                        if (isTitleEmpty || isDescriptionEmpty || isTimeDateEmpty || isEstimationEmpty) {
                             message += " and fee";
                         } else {
                             message += "fee";
@@ -384,6 +395,41 @@ public class CreatePostFragment extends Fragment {
                                         if (e == null) {
                                             Log.d("CreatePostProject", "save job success!");
                                             Toast.makeText(getContext(), "Job saved", Toast.LENGTH_LONG).show();
+                                            String objectId = newJob.getObjectId();
+                                            jobTitle = newJob.getTitle();
+
+                                            Log.d("CreatePostProject", "save job id = " + objectId);
+                                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                            DatabaseReference myRef = database.getReference("JobMatchInfo")
+                                                    .child(objectId).child("Details");
+                                            myRef.setValue("");
+
+                                            ValueEventListener listener = new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    String key = dataSnapshot.getKey();
+                                                    Object value = dataSnapshot.getValue();
+
+                                                    if (value == null) {
+                                                        return;
+                                                    }
+
+                                                    String subscribedObjectId = value.toString();
+
+                                                    Log.d("firebase listener", key + " and " + subscribedObjectId);
+                                                    Toast.makeText(getContext(), subscribedObjectId + " subscribed " + jobTitle, Toast.LENGTH_LONG).show();
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+
+                                                }
+                                            };
+
+                                            myRef.addValueEventListener(listener);
+
+                                            FeedFragment.ValueEventListenerList.add(listener);
+
                                         } else {
                                             Log.d("CreatePostProject", "save job failed!");
                                             e.printStackTrace();

@@ -7,6 +7,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -103,6 +104,8 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
         job = Parcels.unwrap(getIntent().getParcelableExtra("job"));
         viewForUser = getIntent().getBooleanExtra("viewForPotentialHire", false);
         match = (Matches) job.get("match");
+
+        tvJobDescription.setMovementMethod(new ScrollingMovementMethod());
 
         if (job.get("hasBeenRated") == null) {
             hasBeenRated = false;
