@@ -42,6 +42,7 @@ public class FeedFragment extends Fragment {
     ParseUser currentUser;
     ArrayList<Job> jobs;
 
+    public static List<ValueEventListener> ValueEventListenerList = new ArrayList<>();
 
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
@@ -102,12 +103,19 @@ public class FeedFragment extends Fragment {
 
                 // Notifications
                 String jobObjectId = currentCard.getJob().getObjectId();
+                String jobTitle = currentCard.getJob().getTitle();
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference("JobMatchInfo")
                         .child(jobObjectId)
-                        .child("subscribedObjectId");
-                myRef.setValue("tatatat");
+                        .child("Details");
+
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                String name = currentUser.getUsername();
+
+                String message = name + ":" + jobObjectId + ":" + jobTitle;
+
+                myRef.setValue(message);
 
 
 
@@ -185,6 +193,43 @@ public class FeedFragment extends Fragment {
                     for (int i = 0; i < objects.size(); ++i) {
 
                         Job job = objects.get(objects.size() - i - 1);
+                        Log.d("Matched job id ", job.getObjectId());
+                        if (job.getUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                            String jobObjectId = job.getObjectId();
+                            String jobTitle = job.getTitle();
+
+                            Log.d("Found id", jobObjectId);
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference myRef = database.getReference("JobMatchInfo")
+                                    .child(jobObjectId).child("Details");
+                            myRef.setValue("");
+
+                            ValueEventListener listener;
+                            listener = new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    String key = dataSnapshot.getKey();
+                                    Object value = dataSnapshot.getValue();
+
+                                    if (value == null) {
+                                        return;
+                                    }
+
+                                    String subcribedObjectId = value.toString();
+
+                                    Log.d("firebase listener", key + " and " + subcribedObjectId);
+                                    Toast.makeText(getContext(), subcribedObjectId + " subscribed ", Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            };
+
+                            myRef.addValueEventListener(listener);
+                            ValueEventListenerList.add(listener);
+                        }
 
                         try {
                             al.add(new SwipeCard(job.getTitle().toString(), job.getDescription().toString(), job.getImage().getUrl(), job));

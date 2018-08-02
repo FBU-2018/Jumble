@@ -31,11 +31,13 @@ import com.example.lkimberly.userstories.fragments.FeedFragment;
 import com.example.lkimberly.userstories.fragments.MatchPageFragment;
 import com.example.lkimberly.userstories.fragments.ProfileFragment;
 import com.example.lkimberly.userstories.models.Job;
+import com.example.lkimberly.userstories.models.MatchDataModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -81,14 +83,13 @@ public class HomeActivity extends AppCompatActivity {
     CreatePostFragment myCreatePostFragment;
     MatchPageFragment myMatchPageFragment;
 
-
+    //match data (job followed by list of users who matched with that job
+    List<String> jobObjectIdList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 

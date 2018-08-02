@@ -123,7 +123,6 @@ public class CreatePostFragment extends Fragment {
     private static final int ERROR_DIALOG_REQUEST = 9001;
     private final int REQUEST_CODE = 123;
 
-    static ValueEventListener listener;
     static String jobTitle;
 
     @Override
@@ -389,22 +388,10 @@ public class CreatePostFragment extends Fragment {
                                             Log.d("CreatePostProject", "save job id = " + objectId);
                                             FirebaseDatabase database = FirebaseDatabase.getInstance();
                                             DatabaseReference myRef = database.getReference("JobMatchInfo")
-                                                    .child(objectId).child("subscribedObjectId");
+                                                    .child(objectId).child("Details");
                                             myRef.setValue("");
 
-                                            //DatabaseReference pushRef = myRef.child("JobMatchInfo").push();
-                                            //JobMatchInfo jobMatchInfo = new JobMatchInfo();
-
-                                            //String uid = pushRef.getKey();
-
-                                            //jobMatchInfo.setPostedObjectId(objectId);
-                                            //jobMatchInfo.setSubscribedObjectId("");
-
-                                            //Log.d("uid", "uid" + uid);
-                                            //pushRef.setValue(jobMatchInfo);
-
-
-                                            listener = new ValueEventListener() {
+                                            ValueEventListener listener = new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                                     String key = dataSnapshot.getKey();
@@ -414,10 +401,10 @@ public class CreatePostFragment extends Fragment {
                                                         return;
                                                     }
 
-                                                    String subcribedObjectId = value.toString();
+                                                    String subscribedObjectId = value.toString();
 
-                                                    Log.d("firebase listener", key + " and " + subcribedObjectId);
-                                                    Toast.makeText(getContext(), subcribedObjectId + " subscribed " + jobTitle, Toast.LENGTH_LONG).show();
+                                                    Log.d("firebase listener", key + " and " + subscribedObjectId);
+                                                    Toast.makeText(getContext(), subscribedObjectId + " subscribed " + jobTitle, Toast.LENGTH_LONG).show();
                                                 }
 
                                                 @Override
@@ -425,10 +412,10 @@ public class CreatePostFragment extends Fragment {
 
                                                 }
                                             };
-                                            DatabaseReference subscribedObjectIdRef = database.getReference("JobMatchInfo")
-                                                    .child(objectId)
-                                                    .child("subscribedObjectId");
-                                            subscribedObjectIdRef.addValueEventListener(listener);
+
+                                            myRef.addValueEventListener(listener);
+
+                                            FeedFragment.ValueEventListenerList.add(listener);
 
                                         } else {
                                             Log.d("CreatePostProject", "save job failed!");
