@@ -105,6 +105,9 @@
         android:paddingEnd="10dp"
         android:paddingStart="20dp"
         android:text="TextView"
+        android:maxLines="5"
+        android:minLines="1"
+        android:scrollbars = "vertical"
         android:textAlignment="viewStart"
         tools:text="There should probably be some details here...?" />
 

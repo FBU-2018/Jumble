@@ -72,17 +72,11 @@ public class ProfileFragment extends Fragment {
         tvUsername = view.findViewById(R.id.tv_profile_name);
         tvInstitution = view.findViewById(R.id.tv_profile_institution);
         tvPhoneNumber = view.findViewById(R.id.tv_profile_phone_number);
-//        tvSocialMedia = view.findViewById(R.id.tv_profile_link);
         ratingBar = view.findViewById(R.id.rb_profile_ratings_bar);
 
-        try {
-            tvUsername.setText(user.getName());
-            tvInstitution.setText(user.getInstitution());
-            tvPhoneNumber.setText(user.getPhoneNumber());
-//            tvSocialMedia.setText(user.getLinkedIn());
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+        tvUsername.setText(user.getName());
+        tvInstitution.setText(user.getInstitution());
+        tvPhoneNumber.setText(user.getPhoneNumber());
 
         try {
             Log.d("testing", "visited!");
