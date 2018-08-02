@@ -11,9 +11,8 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -22,8 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@drawable/border_bottom"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:layout_constraintBottom_toTopOf="@+id/content">
+            app:layout_constraintBottom_toTopOf="@+id/content"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
             <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
@@ -45,6 +44,15 @@
                     android:background="@android:color/transparent"
                     android:tint="@color/colorMainDark"
                     app:srcCompat="@drawable/ic_instagram_profile" />
+
+                <ImageView
+                    android:id="@+id/imageView16"
+                    android:layout_width="116dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    app:srcCompat="@drawable/jumble" />
+
             </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>
