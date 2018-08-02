@@ -35,6 +35,7 @@ import java.util.List;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
+import static java.security.AccessController.getContext;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -45,11 +46,9 @@ public class MainActivity extends AppCompatActivity {
     Button signupButton;
     EditText username_et;
     EditText password_et;
-    EditText email_et;
 
     ImageView iv_username_check;
     ImageView iv_password_check;
-    ImageView iv_email_check;
 
     List<Job> jobs = new ArrayList<>();
 
@@ -68,15 +67,10 @@ public class MainActivity extends AppCompatActivity {
 
     Button testingFirebaseBtn;
 
-    // Firebase setup
-    private FirebaseAuth mAuth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mAuth = FirebaseAuth.getInstance();
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
@@ -91,21 +85,9 @@ public class MainActivity extends AppCompatActivity {
         signupButton = findViewById(R.id.sign_up_button);
         username_et = findViewById(R.id.username_et);
         password_et = findViewById(R.id.password_et);
-        email_et = findViewById(R.id.email_et);
 
         iv_username_check = findViewById(R.id.iv_username_check);
         iv_password_check = findViewById(R.id.iv_password_check);
-        iv_email_check = findViewById(R.id.iv_email_check);
-
-        testingFirebaseBtn = findViewById(R.id.testing_firebase_btn);
-
-        testingFirebaseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, TestingFirebase.class);
-                startActivity(intent);
-            }
-        });
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
 
                 boolean isUsernameEmpty = false;
                 boolean isPasswordEmpty = false;
-                boolean isEmailEmpty = false;
 
                 String username = "";
                 String userInputStr = username_et.getText().toString();
@@ -135,17 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     iv_password_check.setVisibility(INVISIBLE);
                 }
 
-                String email = "";
-                String emailInputStr = email_et.getText().toString();
-                if (!emailInputStr.equals("")) {
-                    email = emailInputStr;
-                    iv_email_check.setVisibility(VISIBLE);
-                } else {
-                    isEmailEmpty = true;
-                    iv_email_check.setVisibility(INVISIBLE);
-                }
-
-                if (isUsernameEmpty || isPasswordEmpty || isEmailEmpty) {
+                if (isUsernameEmpty || isPasswordEmpty) {
                     String requirement = "Please enter a";
                     if (isUsernameEmpty) {
                         requirement += " username";
@@ -159,18 +130,10 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
-                    if (isEmailEmpty) {
-                        if (isUsernameEmpty || isPasswordEmpty) {
-                            requirement += " and email";
-                        } else {
-                            requirement += "n email";
-                        }
-                    }
-
                     requirement += "!";
                     Toast.makeText(getApplicationContext(), requirement, Toast.LENGTH_LONG).show();
                 } else {
-                    login(username, password, email);
+                    login(username, password);
                 }
             }
         });
@@ -184,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void login(String username, String password, String email) {
+    private void login(String username, String password) {
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
@@ -196,27 +159,9 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Log.d("MainActivity", "Login failed!");
                     e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Login failed!", Toast.LENGTH_LONG).show();
                 }
             }
         });
-
-        /*
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                */
     }
 }

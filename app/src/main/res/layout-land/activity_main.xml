@@ -9,8 +9,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/username_et"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:text="JUMBLE"
         android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -37,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/password_et"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-142dp"
         android:background="@drawable/edittext_rounded_corners"
         android:ems="10"
         android:hint="Username"
@@ -47,23 +48,13 @@
         android:id="@+id/password_et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/email_et"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="142dp"
         android:background="@drawable/edittext_rounded_corners"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
-        android:padding="5dp" />
-
-    <EditText
-        android:id="@+id/email_et"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@drawable/edittext_rounded_corners"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
         android:padding="5dp" />
 
     <Button
@@ -96,20 +87,4 @@
         android:visibility="invisible"
         app:srcCompat="@android:drawable/checkbox_on_background" />
 
-    <ImageView
-        android:id="@+id/iv_email_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/email_et"
-        android:layout_alignStart="@+id/iv_password_check"
-        android:visibility="invisible"
-        app:srcCompat="@android:drawable/checkbox_on_background" />
-
-    <Button
-        android:id="@+id/testing_firebase_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="Button" />
 </RelativeLayout>

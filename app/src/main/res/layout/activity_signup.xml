@@ -39,16 +39,6 @@
         android:inputType="textPersonName"
         android:background="@drawable/edittext_rounded_corners"/>
 
-    <EditText
-        android:id="@+id/signup_email_et"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/signup_password_et"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:hint="Enter email"
-        android:background="@drawable/edittext_rounded_corners"/>
-
     <Button
         android:id="@+id/signup_btn"
         android:layout_width="wrap_content"
@@ -59,15 +49,6 @@
         android:background="@drawable/button_border"
         android:text="Sign Up"
         android:textColor="@color/colorMainLight" />
-
-    <ImageView
-        android:id="@+id/iv_email_correct"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/iv_username_correct"
-        android:layout_below="@+id/signup_password_et"
-        android:visibility="invisible"
-        app:srcCompat="@android:drawable/checkbox_on_background" />
 
     <ImageView
         android:id="@+id/iv_password_correct"

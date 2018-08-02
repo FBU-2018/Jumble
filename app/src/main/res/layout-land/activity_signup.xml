@@ -7,18 +7,6 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/iv_email_correct"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/iv_username_correct"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="0dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/checkbox_on_background" />
-
-    <ImageView
         android:id="@+id/iv_password_correct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -78,28 +66,10 @@
         android:id="@+id/signup_password_et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/iv_email_correct"
-        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         android:background="@drawable/edittext_rounded_corners"
         android:ems="10"
         android:hint="Create password"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/signup_email_et"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/signup_password_et"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="140dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:background="@drawable/edittext_rounded_corners"
-        android:ems="10"
-        android:hint="Enter email"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.473"

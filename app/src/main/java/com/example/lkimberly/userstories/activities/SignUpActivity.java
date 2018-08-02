@@ -27,15 +27,10 @@ public class SignUpActivity extends AppCompatActivity {
 
     private EditText usernameInput;
     private EditText passwordInput;
-    private EditText emailInput;
     private Button createBtn;
 
     ImageView iv_username_correct;
     ImageView iv_password_correct;
-    ImageView iv_email_correct;
-
-    // Firebase setup
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +39,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         usernameInput = findViewById(R.id.signup_username_et);
         passwordInput = findViewById(R.id.signup_password_et);
-        emailInput = findViewById(R.id.signup_email_et);
         iv_username_correct = findViewById(R.id.iv_username_correct);
         iv_password_correct = findViewById(R.id.iv_password_correct);
-        iv_email_correct = findViewById(R.id.iv_email_correct);
 
         createBtn = findViewById(R.id.signup_btn);
 
@@ -57,7 +50,6 @@ public class SignUpActivity extends AppCompatActivity {
 
                 boolean isEmptyUsernameText = false;
                 boolean isEmptyPasswordText = false;
-                boolean isEmptyEmailText = false;
 
                 String username = "";
                 String usernameInputStr = usernameInput.getText().toString();
@@ -81,18 +73,7 @@ public class SignUpActivity extends AppCompatActivity {
                     iv_password_correct.setVisibility(View.INVISIBLE);
                 }
 
-                String email = "";
-                String emailInputStr = emailInput.getText().toString();
-
-                if (!emailInputStr.equals("")) {
-                    email = emailInputStr;
-                    iv_email_correct.setVisibility(View.VISIBLE);
-                } else {
-                    isEmptyEmailText = true;
-                    iv_email_correct.setVisibility(View.INVISIBLE);
-                }
-
-                if (isEmptyUsernameText || isEmptyPasswordText || isEmptyEmailText) {
+                if (isEmptyUsernameText || isEmptyPasswordText) {
                     String requirement = "Please enter a";
                     if (isEmptyUsernameText) {
                         requirement += " username";
@@ -106,32 +87,21 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                     }
 
-                    if (isEmptyEmailText) {
-                        if (isEmptyUsernameText || isEmptyPasswordText) {
-                            requirement += " and email";
-                        } else {
-                            requirement += "n email";
-                        }
-                    }
-
                     requirement += "!";
                     Toast.makeText(getApplicationContext(), requirement, Toast.LENGTH_LONG).show();
                 } else {
-                    signUp(username, password, email);
+                    signUp(username, password);
                 }
             }
         });
-
-        mAuth = FirebaseAuth.getInstance();
     }
 
-    private void signUp(String username, String password, String email) {
+    private void signUp(String username, String password) {
         // Create the ParseUser
         User user = new User();
         // Set core properties
         user.setUsername(username);
         user.setPassword(password);
-        user.setEmail(email);
         // Set custom properties
         // user.put("phone", "650-253-0000");
         // Invoke signUpInBackground
@@ -151,24 +121,5 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
-
-        /*
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(SignUpActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                */
     }
 }
