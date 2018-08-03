@@ -8,6 +8,9 @@
     <string name="date">Date</string>
     <string name="location">Location</string>
 
+    <string name="channel_name">HomeActivity</string>
+    <string name="channel_description">HomeActivity</string>
+
     <integer name="radius">15</integer>
     <integer name="margin">15</integer>
     <string name="title_activity_job_details">JobDetailsActivity</string>

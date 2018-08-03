@@ -27,9 +27,9 @@ public class ParseApp extends Application {
         ParseObject.registerSubclass(Matches.class);
 
         final Parse.Configuration configuration = new Parse.Configuration.Builder(this)
-                .applicationId("fbu-2018-jumble")
+                .applicationId("fbu-2018")
                 .clientKey("fbu-2018-key")
-                .server("http://fbu-2018-jumble.herokuapp.com/parse")
+                .server("http://fbu-2018.herokuapp.com/parse")
                 .build();
 
         Parse.initialize(configuration);
