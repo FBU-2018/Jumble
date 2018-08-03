@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lkimberly.userstories.R;
@@ -89,41 +91,55 @@ public class MainActivity extends AppCompatActivity {
         iv_username_check = findViewById(R.id.iv_username_check);
         iv_password_check = findViewById(R.id.iv_password_check);
 
+        final boolean[] isUsernameEmpty = {false};
+        final boolean[] isPasswordEmpty = {false};
+        final String[] username = {""};
+        final String[] password = {""};
+
+        username_et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                String userInputStr = username_et.getText().toString();
+                if (!userInputStr.equals("")) {
+                    username[0] = userInputStr;
+                    iv_username_check.setVisibility(VISIBLE);
+                } else {
+                    isUsernameEmpty[0] = true;
+                    iv_username_check.setVisibility(INVISIBLE);
+                }
+
+                return false;
+            }
+        });
+
+        password_et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                final String passwordInputStr = password_et.getText().toString();
+                if (!passwordInputStr.equals("")) {
+                    password[0] = passwordInputStr;
+                    iv_password_check.setVisibility(VISIBLE);
+                } else {
+                    isPasswordEmpty[0] = true;
+                    iv_password_check.setVisibility(INVISIBLE);
+                }
+
+                return false;
+            }
+        });
+
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                boolean isUsernameEmpty = false;
-                boolean isPasswordEmpty = false;
-
-                String username = "";
-                String userInputStr = username_et.getText().toString();
-                if (!userInputStr.equals("")) {
-                    username = userInputStr;
-                    iv_username_check.setVisibility(VISIBLE);
-                } else {
-                    isUsernameEmpty = true;
-                    iv_username_check.setVisibility(INVISIBLE);
-                }
-
-                String password = "";
-                final String passwordInputStr = password_et.getText().toString();
-                if (!passwordInputStr.equals("")) {
-                    password = passwordInputStr;
-                    iv_password_check.setVisibility(VISIBLE);
-                } else {
-                    isPasswordEmpty = true;
-                    iv_password_check.setVisibility(INVISIBLE);
-                }
-
-                if (isUsernameEmpty || isPasswordEmpty) {
+                if (isUsernameEmpty[0] || isPasswordEmpty[0]) {
                     String requirement = "Please enter a";
-                    if (isUsernameEmpty) {
+                    if (isUsernameEmpty[0]) {
                         requirement += " username";
                     }
 
-                    if (isPasswordEmpty) {
-                        if (isUsernameEmpty) {
+                    if (isPasswordEmpty[0]) {
+                        if (isUsernameEmpty[0]) {
                             requirement += " and password";
                         } else {
                             requirement += " password";
@@ -133,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                     requirement += "!";
                     Toast.makeText(getApplicationContext(), requirement, Toast.LENGTH_LONG).show();
                 } else {
-                    login(username, password);
+                    login(username[0], password[0]);
                 }
             }
         });
