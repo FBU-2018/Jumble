@@ -63,24 +63,26 @@
 
     <ImageView
         android:id="@+id/iv_password_check"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/iv_username_check"
-        android:layout_alignTop="@+id/password_et"
+        android:layout_marginBottom="234dp"
         android:backgroundTint="@color/green_3"
         android:visibility="invisible"
-        app:srcCompat="@drawable/checkbox" />
+        app:srcCompat="@android:drawable/checkbox_on_background" />
 
     <ImageView
         android:id="@+id/iv_username_check"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/username_et"
-        android:layout_marginEnd="33dp"
-        android:backgroundTint="@color/green_3"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="36dp"
+        android:layout_marginTop="258dp"
         android:visibility="invisible"
-        app:srcCompat="@drawable/checkbox" />
+        app:srcCompat="@android:drawable/checkbox_on_background"
+        android:backgroundTint="@color/green_3"/>
 
     <ImageView
         android:id="@+id/imageView14"

@@ -5,12 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lkimberly.userstories.R;
@@ -44,62 +42,45 @@ public class SignUpActivity extends AppCompatActivity {
         iv_username_correct = findViewById(R.id.iv_username_correct);
         iv_password_correct = findViewById(R.id.iv_password_correct);
 
-        final boolean[] isEmptyUsernameText = {false};
-        final boolean[] isEmptyPasswordText = {false};
-        final String[] username = {""};
-        final String[] password = {""};
-
-        usernameInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-
-                String usernameInputStr = usernameInput.getText().toString();
-
-                if (!usernameInputStr.equals("")) {
-                    isEmptyUsernameText[0] = false;
-                    username[0] = usernameInputStr;
-                    iv_username_correct.setVisibility(View.VISIBLE);
-                } else {
-                    isEmptyUsernameText[0] = true;
-                    iv_username_correct.setVisibility(View.INVISIBLE);
-                }
-
-                return false;
-            }
-        });
-
-        passwordInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-
-                String passwordInputStr = passwordInput.getText().toString();
-
-                if (!passwordInputStr.equals("")) {
-                    password[0] = passwordInputStr;
-                    iv_password_correct.setVisibility(View.VISIBLE);
-                } else {
-                    isEmptyPasswordText[0] = true;
-                    iv_password_correct.setVisibility(View.INVISIBLE);
-                }
-
-                return false;
-            }
-        });
-
         createBtn = findViewById(R.id.signup_btn);
 
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (isEmptyUsernameText[0] || isEmptyPasswordText[0]) {
+                boolean isEmptyUsernameText = false;
+                boolean isEmptyPasswordText = false;
+
+                String username = "";
+                String usernameInputStr = usernameInput.getText().toString();
+
+                if (!usernameInputStr.equals("")) {
+                    username = usernameInputStr;
+                    iv_username_correct.setVisibility(View.VISIBLE);
+                } else {
+                    isEmptyUsernameText = true;
+                    iv_username_correct.setVisibility(View.INVISIBLE);
+                }
+
+                String password = "";
+                String passwordInputStr = passwordInput.getText().toString();
+
+                if (!passwordInputStr.equals("")) {
+                    password = passwordInputStr;
+                    iv_password_correct.setVisibility(View.VISIBLE);
+                } else {
+                    isEmptyPasswordText = true;
+                    iv_password_correct.setVisibility(View.INVISIBLE);
+                }
+
+                if (isEmptyUsernameText || isEmptyPasswordText) {
                     String requirement = "Please enter a";
-                    if (isEmptyUsernameText[0]) {
+                    if (isEmptyUsernameText) {
                         requirement += " username";
                     }
 
-                    if (isEmptyPasswordText[0]) {
-                        if (isEmptyUsernameText[0]) {
+                    if (isEmptyPasswordText) {
+                        if (isEmptyUsernameText) {
                             requirement += " and password";
                         } else {
                             requirement += " password";
@@ -109,7 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
                     requirement += "!";
                     Toast.makeText(getApplicationContext(), requirement, Toast.LENGTH_LONG).show();
                 } else {
-                    signUp(username[0], password[0]);
+                    signUp(username, password);
                 }
             }
         });
