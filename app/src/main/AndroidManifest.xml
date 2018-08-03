@@ -25,24 +25,30 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.MainActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.HomeActivity" />
-        <activity android:name=".activities.SignUpActivity" />
-        <activity android:name=".activities.ProfileDetailsActivity" />
+        <activity android:name=".activities.HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.SignUpActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.ProfileDetailsActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.JobDetailsActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".activities.HomeActivity" />
         <!-- <activity -->
         <!-- android:name=".activities.JobDetailsActivity" -->
         <!-- android:label="@string/title_activity_job_details" -->
         <!-- android:theme="@style/AppTheme" /> -->
-        <activity android:name=".activities.MapActivity" />
+        <activity android:name=".activities.MapActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
