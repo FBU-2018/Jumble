@@ -40,12 +40,13 @@ public class FeedFragment extends Fragment {
 
     ArrayList<SwipeCard> al;
     SwipeCardAdapter swipeCardAdapter;
-    int i;
 
     SwipeFlingAdapterView flingContainer;
 
     ParseUser currentUser;
     ArrayList<Job> jobs;
+
+    boolean isFull = true;
 
     public static List<ValueEventListener> ValueEventListenerList = new ArrayList<>();
 
@@ -73,7 +74,9 @@ public class FeedFragment extends Fragment {
 
         al = new ArrayList<SwipeCard>();
 
-        loadTopPosts();
+        if (isFull) {
+            loadTopPosts();
+        }
 
         swipeCardAdapter = new SwipeCardAdapter(getContext(), getLayoutInflater(), al);
 
@@ -87,8 +90,7 @@ public class FeedFragment extends Fragment {
                 Log.d("LIST", "removed object!");
                 SwipeCard temp = al.remove(0);
                 swipeCardAdapter.notifyDataSetChanged();
-                al.add(temp);
-                swipeCardAdapter.notifyDataSetChanged();
+                isFull = false;
             }
 
             @Override
@@ -195,8 +197,7 @@ public class FeedFragment extends Fragment {
                 if (e == null) {
 
                     for (int i = 0; i < objects.size(); ++i) {
-
-                        Job job = objects.get(objects.size() - i - 1);
+                        Job job = objects.get(i);
                         Log.d("Matched job id ", job.getObjectId());
                         if (job.getUser().getObjectId().equals(getCurrentUser().getObjectId())) {
                             String jobObjectId = job.getObjectId();
@@ -225,7 +226,7 @@ public class FeedFragment extends Fragment {
                                     Toast.makeText(getContext(), subscribedObjectId + " subscribed ", Toast.LENGTH_LONG).show();
 
 
-                                    //if (subscribedObjectId.equals(getCurrentUser().getObjectId())) {
+                                    /*if (subscribedObjectId.equals(getCurrentUser().getObjectId())) {
                                         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getContext(), "CHANNEL_ID");
 
                                         notificationBuilder.setAutoCancel(true)
@@ -235,7 +236,7 @@ public class FeedFragment extends Fragment {
 
                                         NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
                                         notificationManager.notify(1, notificationBuilder.build());
-                                    //}
+                                    }*/
 
                                 }
 
@@ -250,7 +251,7 @@ public class FeedFragment extends Fragment {
                         }
 
                         try {
-                            al.add(new SwipeCard(job.getTitle().toString(), job.getDescription().toString(), job.getImage().getUrl(), job));
+                            al.add(new SwipeCard(job.getTitle(), job.getDescription(), job.getImage().getUrl(), job));
                         } catch (NullPointerException e2) {
                             al.add(new SwipeCard("EMPTY", "EMPTY", "EMPTY", null));
                         }
@@ -263,5 +264,4 @@ public class FeedFragment extends Fragment {
             }
         });
     }
-
 }

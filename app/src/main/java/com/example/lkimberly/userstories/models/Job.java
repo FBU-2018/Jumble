@@ -124,8 +124,7 @@ public class Job  extends ParseObject {
         public Query getTop() {
             orderByDescending("createdAt");
             setLimit(20);
-
-            return  this;
+            return this;
         }
 
         public Query withUser() {
@@ -133,6 +132,4 @@ public class Job  extends ParseObject {
             return this;
         }
     }
-
-
 }

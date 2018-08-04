@@ -76,23 +76,35 @@ public class ProfileFragment extends Fragment {
 
         if (user.getName() == null) {
             // a new user, has not set name yet
-            tvUsername.setText(user.getUsername());
+            String username = user.getUsername();
+            tvUsername.setText(username);
+            user.setName(username);
         } else {
-            tvUsername.setText(user.getName());
+            String name = user.getName();
+            tvUsername.setText(name);
+            user.setUsername(name);
         }
 
         if (user.getInstitution() == null) {
             // a new user, has not set institution yet
-            tvInstitution.setText("Unemployed");
+            String defaultInstitution = "Unemployed";
+            tvInstitution.setText(defaultInstitution);
+            user.setInstitution(defaultInstitution);
         } else {
-            tvInstitution.setText(user.getInstitution());
+            String institution = user.getInstitution();
+            tvInstitution.setText(institution);
+            user.setInstitution(institution);
         }
 
         if (user.getPhoneNumber() == null) {
             // a new user, has not set phone number yet
-            tvPhoneNumber.setText("111-111-1111");
+            String defaultNumber = "111-111-1111";
+            tvPhoneNumber.setText(defaultNumber);
+            user.setPhoneNumber(defaultNumber);
         } else {
-            tvPhoneNumber.setText(user.getPhoneNumber());
+            String phoneNumber = user.getPhoneNumber();
+            tvPhoneNumber.setText(phoneNumber);
+            user.setPhoneNumber(phoneNumber);
         }
 
         try {
