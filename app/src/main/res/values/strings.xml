@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Test</string>
+    <string name="app_name">Jumble</string>
     <string name="send_to">7049099021</string>
 
     <string name="title">Title</string>
@@ -7,6 +7,9 @@
     <string name="time">Time</string>
     <string name="date">Date</string>
     <string name="location">Location</string>
+
+    <string name="channel_name">HomeActivity</string>
+    <string name="channel_description">HomeActivity</string>
 
     <integer name="radius">15</integer>
     <integer name="margin">15</integer>

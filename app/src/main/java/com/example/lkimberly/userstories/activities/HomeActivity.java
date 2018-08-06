@@ -1,6 +1,8 @@
 package com.example.lkimberly.userstories.activities;
 
 import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -87,6 +89,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //photoFile = getPhotoFileUri("photo.jpg");
 
+        createNotificationChannel();
         // Add fragments
 
         fragments.add(new ProfileFragment());
@@ -148,6 +151,8 @@ public class HomeActivity extends AppCompatActivity {
                         // This is the home placeholder fragment.
 
                         ib_profile.setSelected(false);
+
+                        // reset the activation of icons after user goes to profile
                         bottomNavigation.getMenu().getItem(0).setIcon(R.drawable.instagram_home_filled_24);
                         bottomNavigation.getMenu().getItem(1).setIcon(R.drawable.instagram_new_post_outline_24);
                         bottomNavigation.getMenu().getItem(2).setIcon(R.drawable.ic_chat_bubble_outline_24dp);
@@ -159,6 +164,8 @@ public class HomeActivity extends AppCompatActivity {
                         // Set the item to the first item in our list.
                         // This is the discovery placeholder fragment.
                         ib_profile.setSelected(false);
+
+                        // reset the activation of icons after user goes to profile
                         bottomNavigation.getMenu().getItem(0).setIcon(R.drawable.instagram_home_outline_24);
                         bottomNavigation.getMenu().getItem(1).setIcon(R.drawable.instagram_new_post_filled_24);
                         bottomNavigation.getMenu().getItem(2).setIcon(R.drawable.ic_chat_bubble_outline_24dp);
@@ -173,6 +180,8 @@ public class HomeActivity extends AppCompatActivity {
 //                        adapter.notifyDataSetChanged();
 //                        myMatchPageFragment.refresh();
                         ib_profile.setSelected(false);
+
+                        // reset the activation of icons after user goes to profile
                         bottomNavigation.getMenu().getItem(0).setIcon(R.drawable.instagram_home_outline_24);
                         bottomNavigation.getMenu().getItem(1).setIcon(R.drawable.instagram_new_post_outline_24);
                         bottomNavigation.getMenu().getItem(2).setIcon(R.drawable.ic_chat_bubble_filled_24dp);
@@ -195,6 +204,7 @@ public class HomeActivity extends AppCompatActivity {
                 ib_profile.setSelected(true);
                 viewPager.setCurrentItem(0);
 
+                // other icons need to be blank when user is on the profile page
                 bottomNavigation.getMenu().getItem(0).setIcon(R.drawable.instagram_home_outline_24);
                 bottomNavigation.getMenu().getItem(1).setIcon(R.drawable.instagram_new_post_outline_24);
                 bottomNavigation.getMenu().getItem(2).setIcon(R.drawable.ic_chat_bubble_outline_24dp);
@@ -305,6 +315,22 @@ public class HomeActivity extends AppCompatActivity {
                 // call create post fragment
                 myCreatePostFragment.updateLocation(job);
             }
+        }
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("CHANNEL_ID", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
     }
 }

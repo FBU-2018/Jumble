@@ -40,7 +40,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.lkimberly.userstories.BitmapScaler;
-import com.example.lkimberly.userstories.JobMatchInfo;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.activities.MapActivity;
 import com.example.lkimberly.userstories.models.Job;
@@ -51,13 +50,11 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -168,8 +165,6 @@ public class CreatePostFragment extends Fragment {
         iv_money_complete = view.findViewById(R.id.iv_fee_complete);
         iv_location_complete = view.findViewById(R.id.iv_location_complete);
 
-
-
         etTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -180,10 +175,6 @@ public class CreatePostFragment extends Fragment {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 iv_title_complete.setVisibility(View.VISIBLE);
 
-                Log.d("et title text change", "charSequence = " + charSequence);
-                Log.d("et title text change", "i = " + i);
-                Log.d("et title text change", "i1 = " + i1);
-                Log.d("et title text change", "i2 = " + i2);
                 if (i == 0 && i2 == 0) {
                     iv_title_complete.setVisibility(View.INVISIBLE);
                 }
@@ -194,7 +185,6 @@ public class CreatePostFragment extends Fragment {
 
             }
         });
-
 
         etDescription.addTextChangedListener(new TextWatcher() {
             @Override
@@ -225,7 +215,9 @@ public class CreatePostFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                if (i == 0 && i2 == 0) {
+                    iv_date_time_complete.setVisibility(View.INVISIBLE);
+                }
             }
 
             @Override
@@ -244,7 +236,9 @@ public class CreatePostFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                if (i == 0 && i2 == 0) {
+                    iv_estimation_complete.setVisibility(View.INVISIBLE);
+                }
             }
 
             @Override
@@ -261,7 +255,9 @@ public class CreatePostFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                if (i == 0 && i2 == 0) {
+                    iv_estimation_complete.setVisibility(View.INVISIBLE);
+                }
             }
 
             @Override
@@ -275,12 +271,12 @@ public class CreatePostFragment extends Fragment {
         bCreateJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 boolean isTitleEmpty = false;
                 boolean isDescriptionEmpty = false;
                 boolean isTimeDateEmpty = false;
                 boolean isEstimationEmpty = false;
                 boolean isMoneyEmpty = false;
+                boolean isImagePathEmpty = false;
 
                 String title = etTitle.getText().toString();
 
@@ -307,8 +303,6 @@ public class CreatePostFragment extends Fragment {
                 if (!time.equals("") && !date.equals("")) {
                     newJob.setTime(time);
                     newJob.setDate(date);
-                    etTime.setText("");
-                    etDate.setText("");
                 } else {
                     isTimeDateEmpty = true;
                 }
@@ -334,7 +328,13 @@ public class CreatePostFragment extends Fragment {
 
                 btnMap.setText("");
 
-                if (isTitleEmpty || isDescriptionEmpty || isTimeDateEmpty || isEstimationEmpty || isMoneyEmpty) {
+                //newJob.setLocation("1101 Dextor Ave. Seattle, WA98101");
+
+                if (imagePath == null) {
+                    isImagePathEmpty = true;
+                }
+
+                if (isTitleEmpty || isDescriptionEmpty || isTimeDateEmpty || isEstimationEmpty || isMoneyEmpty || isImagePathEmpty) {
 
                     String message = "Please enter a ";
                     if (isTitleEmpty) {
@@ -373,6 +373,9 @@ public class CreatePostFragment extends Fragment {
                         }
                     }
 
+                    if (isImagePathEmpty) {
+                        message = "Please give this job a photo";
+                    }
                     message += "!";
                     Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
                 } else {
@@ -380,8 +383,6 @@ public class CreatePostFragment extends Fragment {
                     newJob.setUser(ParseUser.getCurrentUser());
 
                     final ParseFile parseFile = new ParseFile(new File(imagePath));
-
-                    Log.d("newJobSave", "1. Success!");
 
                     parseFile.saveInBackground(new SaveCallback() {
                         @Override

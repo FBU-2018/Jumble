@@ -209,7 +209,7 @@ public class MapActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MapActivity.this, HomeActivity.class);
-                Log.d("check address", newJob.getLocation());
+                //Log.d("check address", newJob.getLocation());
                 intent.putExtra("newJob", Parcels.wrap(newJob));
                 intent.putExtra("returnFromMap", true);
                 setResult(RESULT_OK, intent);

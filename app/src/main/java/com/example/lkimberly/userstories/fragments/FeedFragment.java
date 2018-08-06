@@ -1,6 +1,7 @@
 package com.example.lkimberly.userstories.fragments;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.location.Address;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lkimberly.userstories.JobMatchInfo;
@@ -58,12 +60,12 @@ public class FeedFragment extends Fragment {
 
     ArrayList<SwipeCard> al;
     SwipeCardAdapter swipeCardAdapter;
-    int i;
 
     SwipeFlingAdapterView flingContainer;
 
     ParseUser currentUser;
     ArrayList<Job> jobs;
+
 
     private static final int REQUEST_LOCATION = 1;
     LocationManager locationManager;
@@ -72,6 +74,10 @@ public class FeedFragment extends Fragment {
 
     private FusedLocationProviderClient mFusedLocationProvidentClient;
     private static final String TAG = "FeedFragment";
+
+    TextView tvNoMoreJobs;
+    boolean isFull = true;
+
 
     public static List<ValueEventListener> ValueEventListenerList = new ArrayList<>();
 
@@ -102,9 +108,16 @@ public class FeedFragment extends Fragment {
 
 //        loadTopPosts();
 
+        if (isFull) {
+            loadTopPosts();
+        }
+
+
         swipeCardAdapter = new SwipeCardAdapter(getContext(), getLayoutInflater(), al);
 
         flingContainer = getActivity().findViewById(R.id.frame);
+
+        tvNoMoreJobs = getActivity().findViewById(R.id.tv_no_more_jobs);
 
         flingContainer.setAdapter(swipeCardAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
@@ -114,8 +127,12 @@ public class FeedFragment extends Fragment {
                 Log.d("LIST", "removed object!");
                 SwipeCard temp = al.remove(0);
                 swipeCardAdapter.notifyDataSetChanged();
-                al.add(temp);
-                swipeCardAdapter.notifyDataSetChanged();
+                isFull = false;
+
+
+                if (al.size() == 0) {
+                    tvNoMoreJobs.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -225,8 +242,7 @@ public class FeedFragment extends Fragment {
                 if (e == null) {
 
                     for (int i = 0; i < objects.size(); ++i) {
-
-                        Job job = objects.get(objects.size() - i - 1);
+                        Job job = objects.get(i);
                         Log.d("Matched job id ", job.getObjectId());
                         if (job.getUser().getObjectId().equals(getCurrentUser().getObjectId())) {
                             String jobObjectId = job.getObjectId();
@@ -254,19 +270,20 @@ public class FeedFragment extends Fragment {
                                     Log.d("firebase listener", key + " and " + subscribedObjectId);
                                     Toast.makeText(getContext(), subscribedObjectId + " subscribed ", Toast.LENGTH_LONG).show();
 
-                                    /*
-                                    if (subscribedObjectId.equals(getCurrentUser().getObjectId())) {
-                                        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getContext(), "channel_id");
+                                    //if (subscribedObjectId.equals(getCurrentUser().getObjectId())) {
+                                        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getContext(), "CHANNEL_ID");
 
                                         notificationBuilder.setAutoCancel(true)
                                                 .setWhen(System.currentTimeMillis())
-                                                .setContentTitle("Hi")
-                                                .setContentText("Hiiiii");
+                                                .setContentTitle("Message")
+                                                .setContentText("Message text")
+                                                .setSmallIcon(R.drawable.icon)
+                                                .setChannelId("CHANNEL_ID");
 
                                         NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
                                         notificationManager.notify(1, notificationBuilder.build());
-                                    }
-                                    */
+                                    //}
+
                                 }
 
                                 @Override
@@ -280,9 +297,13 @@ public class FeedFragment extends Fragment {
                         }
 
                         try {
+
                             al.add(new SwipeCard(job.getTitle().toString(), job.getDescription().toString(), job.getImage().getUrl(), job));
                             rankList(al);
                             Collections.reverse(al);
+
+//                            al.add(new SwipeCard(job.getTitle(), job.getDescription(), job.getImage().getUrl(), job));
+
                         } catch (NullPointerException e2) {
                             rankList(al);
                             Collections.reverse(al);
@@ -323,7 +344,7 @@ public class FeedFragment extends Fragment {
                         new LatLng(userCurentLocation.getLatitude(), userCurentLocation.getLongitude()))/1000;
             } catch (NullPointerException nullEx) {
                 distanceInKm = 1;
-                nullEx.printStackTrace();
+//                nullEx.printStackTrace();
             }
 
         } catch (SecurityException secEx) {

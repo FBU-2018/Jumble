@@ -91,12 +91,10 @@ public class EditProfileFragment extends Fragment {
         et_name = getActivity().findViewById(R.id.profile_name);
         et_institution = getActivity().findViewById(R.id.profile_institution);
         et_phoneNumber = getActivity().findViewById(R.id.profile_phone_number);
-//        et_link = getActivity().findViewById(R.id.profile_link);
 
         et_name.setText(user.getName());
         et_institution.setText(user.getInstitution());
         et_phoneNumber.setText(user.getPhoneNumber());
-//        et_link.setText(user.getLinkedIn());
 
         ib_facebook = getActivity().findViewById(R.id.ib_facebook);
         ib_linkedIn = getActivity().findViewById(R.id.ib_linkedIn);

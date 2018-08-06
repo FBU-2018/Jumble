@@ -9,7 +9,7 @@
     },
     "APP_ID": {
       "description": "A unique identifier for your app.",
-      "value": "fbu-2018-jumble"
+      "value": "fbu-2018"
     },
     "MASTER_KEY": {
       "description": "A key that overrides all permissions. Keep this secret.",

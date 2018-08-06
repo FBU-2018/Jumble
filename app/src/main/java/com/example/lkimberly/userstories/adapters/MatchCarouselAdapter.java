@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -196,6 +195,9 @@ public class MatchCarouselAdapter extends RecyclerView.Adapter<MatchCarouselAdap
 
 
     double parseDouble(String ratio) {
+        if (ratio == null) {
+            return 0;
+        }
         if (ratio.contains("/")) {
             String[] rat = ratio.split("/");
             return Double.parseDouble(rat[0]) / Double.parseDouble(rat[1]);

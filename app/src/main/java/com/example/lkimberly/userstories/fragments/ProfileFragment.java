@@ -74,9 +74,38 @@ public class ProfileFragment extends Fragment {
         tvPhoneNumber = view.findViewById(R.id.tv_profile_phone_number);
         ratingBar = view.findViewById(R.id.rb_profile_ratings_bar);
 
-        tvUsername.setText(user.getName());
-        tvInstitution.setText(user.getInstitution());
-        tvPhoneNumber.setText(user.getPhoneNumber());
+        if (user.getName() == null) {
+            // a new user, has not set name yet
+            String username = user.getUsername();
+            tvUsername.setText(username);
+            user.setName(username);
+        } else {
+            String name = user.getName();
+            tvUsername.setText(name);
+            user.setUsername(name);
+        }
+
+        if (user.getInstitution() == null) {
+            // a new user, has not set institution yet
+            String defaultInstitution = "Unemployed";
+            tvInstitution.setText(defaultInstitution);
+            user.setInstitution(defaultInstitution);
+        } else {
+            String institution = user.getInstitution();
+            tvInstitution.setText(institution);
+            user.setInstitution(institution);
+        }
+
+        if (user.getPhoneNumber() == null) {
+            // a new user, has not set phone number yet
+            String defaultNumber = "111-111-1111";
+            tvPhoneNumber.setText(defaultNumber);
+            user.setPhoneNumber(defaultNumber);
+        } else {
+            String phoneNumber = user.getPhoneNumber();
+            tvPhoneNumber.setText(phoneNumber);
+            user.setPhoneNumber(phoneNumber);
+        }
 
         try {
             Log.d("testing", "visited!");

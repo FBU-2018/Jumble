@@ -6,19 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="134dp"
-        android:text="JUMBLE"
-        android:textSize="50sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/sign_in_btn"
         android:layout_width="wrap_content"
@@ -36,9 +23,14 @@
         android:id="@+id/username_et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/password_et"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="250dp"
         android:background="@drawable/edittext_rounded_corners"
         android:ems="10"
         android:hint="Username"
@@ -49,9 +41,9 @@
         android:id="@+id/password_et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/username_et"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="239dp"
+        android:layout_margin="10dp"
         android:background="@drawable/edittext_rounded_corners"
         android:ems="10"
         android:hint="Password"
@@ -72,21 +64,32 @@
     <ImageView
         android:id="@+id/iv_password_check"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/iv_username_check"
-        android:layout_marginBottom="246dp"
+        android:layout_height="21dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="234dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginTop="312dp"
+        android:backgroundTint="@color/green_3"
         android:visibility="invisible"
         app:srcCompat="@android:drawable/checkbox_on_background" />
 
     <ImageView
         android:id="@+id/iv_username_check"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/username_et"
+        android:layout_height="21dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="37dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="29dp"
+        android:layout_marginTop="258dp"
+        android:backgroundTint="@color/green_3"
         android:visibility="invisible"
         app:srcCompat="@android:drawable/checkbox_on_background" />
 
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/password_et"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/jumble" />
 </RelativeLayout>
