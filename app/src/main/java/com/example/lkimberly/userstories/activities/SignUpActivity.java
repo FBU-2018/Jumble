@@ -139,12 +139,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user2 = mAuth.getCurrentUser();
-        String userID = user2.getUid();
-        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = mFirebaseDatabase.getReference();
-//        myRef.child(userID).child("Email").child("Favorite Foods").child(newFood).setValue("true");
-//        toastMessage("Adding " + newFood + " to database...");
+        mAuth.createUserWithEmailAndPassword(email, password);
 
     }
 }

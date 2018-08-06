@@ -92,7 +92,7 @@ public class HomeActivity extends AppCompatActivity {
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-//        initFCM();
+        initFCM();
 
         //photoFile = getPhotoFileUri("photo.jpg");
 
