@@ -338,6 +338,7 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
                 };
                 thread.start();
                 //TODO: Go back to match feed
+
             }
         });
         //TODO: Refresh job match feed!!!

@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".activities.SignUpActivity">
 
+    <ImageView
+        android:id="@+id/iv_password_correct"
+        android:layout_width="wrap_content"
+        android:layout_height="21dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="234dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginTop="312dp"
+        android:backgroundTint="@color/green_3"
+        android:visibility="invisible"
+        app:srcCompat="@android:drawable/checkbox_on_background" />
+
     <EditText
         android:id="@+id/signup_password_et"
         android:layout_width="wrap_content"
@@ -48,22 +60,14 @@
         android:textColor="@color/colorMainLight" />
 
     <ImageView
-        android:id="@+id/iv_password_correct"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/iv_username_correct"
-        android:layout_marginTop="257dp"
-        android:visibility="invisible"
-        app:srcCompat="@android:drawable/checkbox_on_background" />
-
-    <ImageView
         android:id="@+id/iv_username_correct"
-        android:layout_width="wrap_content"
+        android:layout_width="19dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/signup_password_et"
-        android:layout_marginEnd="47dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/iv_password_correct"
+        android:layout_marginEnd="29dp"
+        android:layout_marginTop="257dp"
         android:visibility="invisible"
         app:srcCompat="@android:drawable/checkbox_on_background" />
 

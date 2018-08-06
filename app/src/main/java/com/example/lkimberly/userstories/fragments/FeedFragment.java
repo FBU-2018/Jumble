@@ -1,6 +1,7 @@
 package com.example.lkimberly.userstories.fragments;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Bundle;
@@ -234,18 +235,19 @@ public class FeedFragment extends Fragment {
                                     Log.d("firebase listener", key + " and " + subscribedObjectId);
                                     Toast.makeText(getContext(), subscribedObjectId + " subscribed ", Toast.LENGTH_LONG).show();
 
-
-                                    /*if (subscribedObjectId.equals(getCurrentUser().getObjectId())) {
+                                    //if (subscribedObjectId.equals(getCurrentUser().getObjectId())) {
                                         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getContext(), "CHANNEL_ID");
 
                                         notificationBuilder.setAutoCancel(true)
                                                 .setWhen(System.currentTimeMillis())
                                                 .setContentTitle("Message")
-                                                .setContentText("Message text");
+                                                .setContentText("Message text")
+                                                .setSmallIcon(R.drawable.icon)
+                                                .setChannelId("CHANNEL_ID");
 
                                         NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
                                         notificationManager.notify(1, notificationBuilder.build());
-                                    }*/
+                                    //}
 
                                 }
 

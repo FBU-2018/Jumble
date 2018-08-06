@@ -25,8 +25,8 @@
 
     <ImageView
         android:id="@+id/ivPhoto"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="107dp"
+        android:layout_height="104dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
@@ -55,10 +55,10 @@
         android:id="@+id/ibPhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="130dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginStart="-10dp"
+        android:layout_marginTop="98dp"
+        android:layout_toEndOf="@+id/bCreateJob"
         android:background="@drawable/button_rounded_corners"
         android:src="@drawable/ic_instagram_new_post" />
 

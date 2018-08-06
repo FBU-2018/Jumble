@@ -294,8 +294,6 @@ public class CreatePostFragment extends Fragment {
                 if (!time.equals("") && !date.equals("")) {
                     newJob.setTime(time);
                     newJob.setDate(date);
-                    etTime.setText("");
-                    etDate.setText("");
                 } else {
                     isTimeDateEmpty = true;
                 }

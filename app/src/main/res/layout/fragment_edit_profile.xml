@@ -93,14 +93,11 @@
         android:id="@+id/ib_profile_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_alignEnd="@+id/profile_name"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="108dp"
-        android:layout_marginTop="174dp"
+        android:layout_marginTop="176dp"
         android:background="@drawable/button_rounded_corners"
-        android:src="@drawable/ic_instagram_new_post"
-        android:layout_marginRight="108dp"
-        android:layout_alignParentRight="true" />
+        android:src="@drawable/ic_instagram_new_post" />
 
     <ImageButton
         android:id="@+id/ib_facebook"

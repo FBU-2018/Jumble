@@ -159,6 +159,8 @@ public class HomeActivity extends AppCompatActivity {
                         // This is the home placeholder fragment.
 
                         ib_profile.setSelected(false);
+
+                        // reset the activation of icons after user goes to profile
                         bottomNavigation.getMenu().getItem(0).setIcon(R.drawable.instagram_home_filled_24);
                         bottomNavigation.getMenu().getItem(1).setIcon(R.drawable.instagram_new_post_outline_24);
                         bottomNavigation.getMenu().getItem(2).setIcon(R.drawable.ic_chat_bubble_outline_24dp);
@@ -170,6 +172,8 @@ public class HomeActivity extends AppCompatActivity {
                         // Set the item to the first item in our list.
                         // This is the discovery placeholder fragment.
                         ib_profile.setSelected(false);
+
+                        // reset the activation of icons after user goes to profile
                         bottomNavigation.getMenu().getItem(0).setIcon(R.drawable.instagram_home_outline_24);
                         bottomNavigation.getMenu().getItem(1).setIcon(R.drawable.instagram_new_post_filled_24);
                         bottomNavigation.getMenu().getItem(2).setIcon(R.drawable.ic_chat_bubble_outline_24dp);
@@ -184,6 +188,8 @@ public class HomeActivity extends AppCompatActivity {
 //                        adapter.notifyDataSetChanged();
 //                        myMatchPageFragment.refresh();
                         ib_profile.setSelected(false);
+
+                        // reset the activation of icons after user goes to profile
                         bottomNavigation.getMenu().getItem(0).setIcon(R.drawable.instagram_home_outline_24);
                         bottomNavigation.getMenu().getItem(1).setIcon(R.drawable.instagram_new_post_outline_24);
                         bottomNavigation.getMenu().getItem(2).setIcon(R.drawable.ic_chat_bubble_filled_24dp);
@@ -206,6 +212,7 @@ public class HomeActivity extends AppCompatActivity {
                 ib_profile.setSelected(true);
                 viewPager.setCurrentItem(0);
 
+                // other icons need to be blank when user is on the profile page
                 bottomNavigation.getMenu().getItem(0).setIcon(R.drawable.instagram_home_outline_24);
                 bottomNavigation.getMenu().getItem(1).setIcon(R.drawable.instagram_new_post_outline_24);
                 bottomNavigation.getMenu().getItem(2).setIcon(R.drawable.ic_chat_bubble_outline_24dp);
