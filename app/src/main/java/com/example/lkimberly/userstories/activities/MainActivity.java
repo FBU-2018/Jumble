@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     Button signupButton;
     EditText username_et;
     EditText password_et;
+    EditText email_et;
 
     ImageView iv_username_check;
     ImageView iv_password_check;
@@ -67,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
 
     Button testingFirebaseBtn;
 
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,9 +89,31 @@ public class MainActivity extends AppCompatActivity {
         signupButton = findViewById(R.id.sign_up_button);
         username_et = findViewById(R.id.username_et);
         password_et = findViewById(R.id.password_et);
+        email_et = findViewById(R.id.email_et);
 
         iv_username_check = findViewById(R.id.iv_username_check);
         iv_password_check = findViewById(R.id.iv_password_check);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    Toast.makeText(getBaseContext(), "Successfully signed in with: " + user.getEmail(), Toast.LENGTH_SHORT);
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                    Toast.makeText(getBaseContext(), "Successfully signed out.", Toast.LENGTH_SHORT);
+                }
+                // ...
+            }
+        };
+
+        mAuth.addAuthStateListener(mAuthListener);
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +142,16 @@ public class MainActivity extends AppCompatActivity {
                     iv_password_check.setVisibility(INVISIBLE);
                 }
 
+                String email = "";
+                final String emailInputStr = email_et.getText().toString();
+                if (!emailInputStr.equals("")) {
+                    email = emailInputStr;
+//                    iv_password_check.setVisibility(VISIBLE);
+                } else {
+//                    isPasswordEmpty = true;
+//                    iv_password_check.setVisibility(INVISIBLE);
+                }
+
                 if (isUsernameEmpty || isPasswordEmpty) {
                     String requirement = "Please enter a";
                     if (isUsernameEmpty) {
@@ -133,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                     requirement += "!";
                     Toast.makeText(getApplicationContext(), requirement, Toast.LENGTH_LONG).show();
                 } else {
-                    login(username, password);
+                    login(username, password, email);
                 }
             }
         });
@@ -147,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void login(String username, String password) {
+    private void login(String username, String password, String email) {
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
@@ -163,5 +199,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        mAuth.signInWithEmailAndPassword(email,password);
     }
 }

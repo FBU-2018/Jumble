@@ -18,6 +18,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.parse.ParseException;
 import com.parse.SignUpCallback;
 
@@ -27,6 +29,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private EditText usernameInput;
     private EditText passwordInput;
+    private EditText emailInput;
     private Button createBtn;
 
     ImageView iv_username_correct;
@@ -39,6 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         usernameInput = findViewById(R.id.signup_username_et);
         passwordInput = findViewById(R.id.signup_password_et);
+        emailInput = findViewById(R.id.signup_email_et);
         iv_username_correct = findViewById(R.id.iv_username_correct);
         iv_password_correct = findViewById(R.id.iv_password_correct);
 
@@ -73,6 +77,17 @@ public class SignUpActivity extends AppCompatActivity {
                     iv_password_correct.setVisibility(View.INVISIBLE);
                 }
 
+                String email = "";
+                String emailInputStr = emailInput.getText().toString();
+
+                if (!emailInputStr.equals("")) {
+                    email = emailInputStr;
+//                    iv_password_correct.setVisibility(View.VISIBLE);
+                } else {
+//                    isEmptyPasswordText = true;
+//                    iv_password_correct.setVisibility(View.INVISIBLE);
+                }
+
                 if (isEmptyUsernameText || isEmptyPasswordText) {
                     String requirement = "Please enter a";
                     if (isEmptyUsernameText) {
@@ -90,13 +105,13 @@ public class SignUpActivity extends AppCompatActivity {
                     requirement += "!";
                     Toast.makeText(getApplicationContext(), requirement, Toast.LENGTH_LONG).show();
                 } else {
-                    signUp(username, password);
+                    signUp(username, password, email);
                 }
             }
         });
     }
 
-    private void signUp(String username, String password) {
+    private void signUp(String username, String password, String email) {
         // Create the ParseUser
         User user = new User();
         // Set core properties
@@ -121,5 +136,15 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user2 = mAuth.getCurrentUser();
+        String userID = user2.getUid();
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = mFirebaseDatabase.getReference();
+//        myRef.child(userID).child("Email").child("Favorite Foods").child(newFood).setValue("true");
+//        toastMessage("Adding " + newFood + " to database...");
+
     }
 }
