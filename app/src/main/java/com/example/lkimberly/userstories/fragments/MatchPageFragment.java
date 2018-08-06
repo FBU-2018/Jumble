@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.adapters.MatchPageAdapter;
@@ -44,10 +45,12 @@ public class MatchPageFragment extends Fragment {
     MatchPageAdapter adapter;
 
     public MatchPageFragment() {
+
     }
 
     private SwipeRefreshLayout swipeContainer;
 
+    TextView tv_no_matches;
 
     @Nullable
     @Override
@@ -59,6 +62,7 @@ public class MatchPageFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        tv_no_matches = view.findViewById(R.id.tv_no_matches);
         rvMatches = view.findViewById(R.id.rv_outerRecyclerView);
         rvMatches.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -90,10 +94,7 @@ public class MatchPageFragment extends Fragment {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-
-
     }
-
 
     double parseDouble(String ratio) {
         if (ratio.contains("/")) {
@@ -104,14 +105,11 @@ public class MatchPageFragment extends Fragment {
         }
     }
 
-
     public void refresh() {
         loadMatches(true);
         adapter.notifyDataSetChanged();
         rvMatches.scrollToPosition(0);
-
     }
-
 
     public void loadMatches(final boolean scrollToTop) {
         ParseObject currentUserPointer = ParseObject.createWithoutData("User",ParseUser.getCurrentUser().getObjectId());
@@ -131,8 +129,16 @@ public class MatchPageFragment extends Fragment {
                             matchDict.clear();
                             matchesModelList.clear();
                             Log.d("Objects", objects.toString());
+
+
+                            if (objects.size() == 0) {
+                                tv_no_matches.setVisibility(View.VISIBLE);
+                            }
+
+
                             for (int i = 0; i < objects.size(); i++) {
 
+                                Log.d("what is this", "this is a " + objects.get(i));
                                 Matches singleMatch = (Matches) objects.get(i);
                                 if (singleMatch.getJob() != null) {
                                     try {
@@ -200,6 +206,7 @@ public class MatchPageFragment extends Fragment {
                                         }
                                     });
 
+                            tv_no_matches.setVisibility(View.INVISIBLE);
                         } else {
                             e.printStackTrace();
                         }
@@ -207,5 +214,4 @@ public class MatchPageFragment extends Fragment {
                     }
                 });
     }
-
 }

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lkimberly.userstories.JobMatchInfo;
@@ -46,6 +47,7 @@ public class FeedFragment extends Fragment {
     ParseUser currentUser;
     ArrayList<Job> jobs;
 
+    TextView tvNoMoreJobs;
     boolean isFull = true;
 
     public static List<ValueEventListener> ValueEventListenerList = new ArrayList<>();
@@ -82,6 +84,8 @@ public class FeedFragment extends Fragment {
 
         flingContainer = getActivity().findViewById(R.id.frame);
 
+        tvNoMoreJobs = getActivity().findViewById(R.id.tv_no_more_jobs);
+
         flingContainer.setAdapter(swipeCardAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
@@ -91,6 +95,11 @@ public class FeedFragment extends Fragment {
                 SwipeCard temp = al.remove(0);
                 swipeCardAdapter.notifyDataSetChanged();
                 isFull = false;
+
+
+                if (al.size() == 0) {
+                    tvNoMoreJobs.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
