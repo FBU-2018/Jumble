@@ -50,6 +50,19 @@
         android:inputType="textPassword"
         android:padding="5dp" />
 
+    <EditText
+        android:id="@+id/email_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password_et"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-10dp"
+        android:background="@drawable/edittext_rounded_corners"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textPassword"
+        android:padding="5dp" />
+
     <Button
         android:id="@+id/sign_up_button"
         android:layout_width="wrap_content"
