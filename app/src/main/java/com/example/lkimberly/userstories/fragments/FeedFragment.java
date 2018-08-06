@@ -2,9 +2,14 @@ package com.example.lkimberly.userstories.fragments;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
+import android.app.NotificationChannelGroup;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationBuilderWithBuilderAccessor;
 import android.support.v4.app.NotificationCompat;
@@ -17,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.lkimberly.userstories.JobMatchInfo;
 import com.example.lkimberly.userstories.R;
+import com.example.lkimberly.userstories.activities.HomeActivity;
 import com.example.lkimberly.userstories.adapters.SwipeCardAdapter;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.Matches;
@@ -111,6 +117,7 @@ public class FeedFragment extends Fragment {
                 makeToast(getContext(), "Left!");
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onRightCardExit(Object dataObject) {
                 SwipeCard currentCard = (SwipeCard) dataObject;
@@ -134,12 +141,37 @@ public class FeedFragment extends Fragment {
 
                 myRef.setValue(message);
 
-
-
                 Log.d("Swipe Right", "object id = " + jobObjectId);
 
                 //DatabaseReference pushRef = myRef.child("Your job has been matched!").push();
                 //String uid = pushRef.getKey();
+
+                //if (subscribedObjectId.equals(getCurrentUser().getObjectId())) {
+
+                // Create an explicit intent for an Activity in your app
+                Intent intent = new Intent(getActivity(), HomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), 0, intent, 0);
+
+                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getContext(), "CHANNEL_ID");
+
+                notificationBuilder.setAutoCancel(true)
+                        .setWhen(System.currentTimeMillis())
+                        .setContentTitle("Your job has a new match!")
+//                        .setContentText("Check who it is")
+                        .setSmallIcon(R.drawable.icon)
+                        .setChannelId("CHANNEL_ID")
+                        // Set the intent that will fire when the user taps the notification
+                        .setContentIntent(pendingIntent);
+
+                // Create channel notification group
+                String groupId = jobObjectId;
+                CharSequence groupName = jobTitle;
+                NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.createNotificationChannelGroup(new NotificationChannelGroup(groupId, groupName));
+
+                notificationManager.notify(1, notificationBuilder.build());
+                //}
 
 
                 makeToast(getContext(), "Right!");
@@ -234,20 +266,6 @@ public class FeedFragment extends Fragment {
 
                                     Log.d("firebase listener", key + " and " + subscribedObjectId);
                                     Toast.makeText(getContext(), subscribedObjectId + " subscribed ", Toast.LENGTH_LONG).show();
-
-                                    //if (subscribedObjectId.equals(getCurrentUser().getObjectId())) {
-                                        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getContext(), "CHANNEL_ID");
-
-                                        notificationBuilder.setAutoCancel(true)
-                                                .setWhen(System.currentTimeMillis())
-                                                .setContentTitle("Message")
-                                                .setContentText("Message text")
-                                                .setSmallIcon(R.drawable.icon)
-                                                .setChannelId("CHANNEL_ID");
-
-                                        NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-                                        notificationManager.notify(1, notificationBuilder.build());
-                                    //}
 
                                 }
 
