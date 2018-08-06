@@ -33,6 +33,9 @@
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20sp"
+            android:maxLines="5"
+            android:minLines="1"
+            android:scrollbars = "vertical"
             tools:text="Job Description" />
 
         <TextView
@@ -79,6 +82,15 @@
             android:layout_margin="10dp"
             android:alpha="0"
             android:background="#5AF" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="200dp"
+            android:text="(Click for details)"
+            android:textSize="8sp" />
     </android.support.v7.widget.CardView>
 
 </RelativeLayout>
