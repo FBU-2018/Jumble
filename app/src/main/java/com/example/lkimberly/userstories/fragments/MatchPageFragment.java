@@ -32,7 +32,6 @@ import java.util.Map;
 
 public class MatchPageFragment extends Fragment {
 
-
     // match dictionary
     final Map<String, List<ParseUser>> matchDict= new HashMap<>();
     // the recycler view

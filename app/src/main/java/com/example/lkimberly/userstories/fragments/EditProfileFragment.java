@@ -107,7 +107,6 @@ public class EditProfileFragment extends Fragment {
                 TextView tv_name = getActivity().findViewById(R.id.tv_profile_name);
                 TextView tv_institution = getActivity().findViewById(R.id.tv_profile_institution);
                 TextView tv_phoneNumber = getActivity().findViewById(R.id.tv_profile_phone_number);
-//                TextView tv_link = getActivity().findViewById(R.id.tv_profile_link);
 
                 String name = et_name.getText().toString();
                 if (!name.equals("")) {
@@ -126,12 +125,6 @@ public class EditProfileFragment extends Fragment {
                     tv_phoneNumber.setText(phoneNumber);
                     user.setPhoneNumber(phoneNumber);
                 }
-
-//                String link = et_link.getText().toString();
-//                if (!link.equals("")) {
-//                    tv_link.setText(link);
-//                    user.setLinkedIn(link);
-//                }
 
                 viewPager.setCurrentItem(0);
                 user.saveInBackground();

@@ -28,6 +28,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -155,6 +156,7 @@ public class CreatePostFragment extends Fragment {
         iv_estimation_complete = view.findViewById(R.id.iv_hours_complete);
         iv_money_complete = view.findViewById(R.id.iv_fee_complete);
         iv_location_complete = view.findViewById(R.id.iv_location_complete);
+        btnMap = view.findViewById(R.id.btnMap);
 
         etTitle.addTextChangedListener(new TextWatcher() {
             @Override
@@ -164,10 +166,11 @@ public class CreatePostFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                iv_title_complete.setVisibility(View.VISIBLE);
 
                 if (i == 0 && i2 == 0) {
                     iv_title_complete.setVisibility(View.INVISIBLE);
+                } else {
+                    iv_title_complete.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -185,10 +188,11 @@ public class CreatePostFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                iv_description_complete.setVisibility(View.VISIBLE);
 
                 if (i == 0 && i2 == 0) {
                     iv_description_complete.setVisibility(View.INVISIBLE);
+                } else {
+                    iv_description_complete.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -208,14 +212,14 @@ public class CreatePostFragment extends Fragment {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (i == 0 && i2 == 0) {
                     iv_date_time_complete.setVisibility(View.INVISIBLE);
+                } else {
+                    iv_date_time_complete.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!etDate.equals("")) {
-                    iv_date_time_complete.setVisibility(View.VISIBLE);
-                }
+
             }
         });
 
@@ -229,12 +233,14 @@ public class CreatePostFragment extends Fragment {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (i == 0 && i2 == 0) {
                     iv_estimation_complete.setVisibility(View.INVISIBLE);
+                } else {
+                    iv_estimation_complete.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                iv_estimation_complete.setVisibility(View.VISIBLE);
+
             }
         });
 
@@ -247,13 +253,32 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (i == 0 && i2 == 0) {
-                    iv_estimation_complete.setVisibility(View.INVISIBLE);
+                    iv_money_complete.setVisibility(View.INVISIBLE);
+                } else {
+                    iv_money_complete.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                iv_money_complete.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        btnMap.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0) {
+                    // position the text type in the left top corner
+                    btnMap.setGravity(Gravity.START | Gravity.TOP);
+                }
             }
         });
 
@@ -273,7 +298,6 @@ public class CreatePostFragment extends Fragment {
 
                 if (!title.equals("")) {
                     newJob.setTitle(title);
-                    etTitle.setText("");
                 } else {
                     isTitleEmpty = true;
                 }
@@ -282,7 +306,6 @@ public class CreatePostFragment extends Fragment {
 
                 if (!description.equals("")) {
                     newJob.setDescription(description);
-                    etDescription.setText("");
                 } else {
                     isDescriptionEmpty = true;
                 }
@@ -302,7 +325,6 @@ public class CreatePostFragment extends Fragment {
 
                 if (!estimation.equals("")) {
                     newJob.setEstimation(estimation);
-                    etEstimation.setText("");
                 } else {
                     isEstimationEmpty = true;
                 }
@@ -311,17 +333,14 @@ public class CreatePostFragment extends Fragment {
 
                 if (!money.equals("")) {
                     newJob.setMoney(money);
-                    etMoney.setText("");
                 } else {
                     isMoneyEmpty = true;
                 }
 
-                btnMap.setText("");
-
-                //newJob.setLocation("1101 Dextor Ave. Seattle, WA98101");
-
                 if (imagePath == null) {
                     isImagePathEmpty = true;
+                } else {
+                    newJob.setLocation(btnMap.getText().toString());
                 }
 
                 if (isTitleEmpty || isDescriptionEmpty || isTimeDateEmpty || isEstimationEmpty || isMoneyEmpty || isImagePathEmpty) {
@@ -408,7 +427,7 @@ public class CreatePostFragment extends Fragment {
                                                     String subscribedObjectId = value.toString();
 
                                                     Log.d("firebase listener", key + " and " + subscribedObjectId);
-                                                    Toast.makeText(getContext(), subscribedObjectId + " subscribed " + jobTitle, Toast.LENGTH_LONG).show();
+                                                    //Toast.makeText(getContext(), subscribedObjectId + " subscribed " + jobTitle, Toast.LENGTH_LONG).show();
                                                 }
 
                                                 @Override
@@ -433,6 +452,11 @@ public class CreatePostFragment extends Fragment {
                             }
                         }
                     });
+
+                    etTitle.setText("");
+                    etMoney.setText("");
+                    etDescription.setText("");
+                    etEstimation.setText("");
                 }
             }
         });
@@ -560,7 +584,7 @@ public class CreatePostFragment extends Fragment {
                 getDeviceLocation();
         }
 
-        btnMap = getActivity().findViewById(R.id.btnMap);
+        //btnMap = getActivity().findViewById(R.id.btnMap);
         btnMap.setAllCaps(false);
         btnMap.setOnClickListener(new View.OnClickListener() {
 

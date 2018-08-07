@@ -126,14 +126,15 @@ public class HomeActivity extends AppCompatActivity {
                 switch (position) {
                     case 2:
                         bottomNavigation.setSelectedItemId(R.id.action_home);
-//                        homePageRecycler.refresh();
+                        //homePageRecycler.refresh();
+                        //myMatchPageFragment.refresh();
                         break;
                     case 3:
                         bottomNavigation.setSelectedItemId(R.id.action_discover);
                         break;
                     case 4:
                         bottomNavigation.setSelectedItemId(R.id.action_comment);
-//                        myMatchPageFragment.refresh();
+                        //myMatchPageFragment.refresh();
                         break;
                 }
             }
@@ -186,7 +187,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
 //                        adapter.notifyDataSetChanged();
-//                        myMatchPageFragment.refresh();
+                        // myMatchPageFragment.refresh();
                         ib_profile.setSelected(false);
 
                         // reset the activation of icons after user goes to profile

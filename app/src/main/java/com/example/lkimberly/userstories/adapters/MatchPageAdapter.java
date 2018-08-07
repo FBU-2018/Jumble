@@ -345,7 +345,6 @@ public class MatchPageAdapter extends RecyclerView.Adapter {
             Intent i = new Intent(view.getContext(), JobDetailsActivity.class);
             i.putExtra("job", Parcels.wrap(job));
             activity.startActivityForResult(i, REQUEST_CODE);
-
         }
     }
 

@@ -69,9 +69,6 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
 
     private boolean viewForUser;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,7 +164,7 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
                 @Override
                 public void onClick(View view) {
                     if (userWhoMatchedWithMe == null) {
-                        handlEndJob();
+                        handleEndJob();
                     } else {
                         endJobOrMatchDialogue();
                     }
@@ -295,10 +292,10 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
         alert.show();
     }
 
-    public void handlEndJob() {
+    public void handleEndJob() {
         final AlertDialog.Builder endJobAlertBuilder = new AlertDialog.Builder(this);
 
-        endJobAlertBuilder.setMessage("Are you sure you want to end this job?")
+        endJobAlertBuilder.setMessage("Are you sure you want to remove this job?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -316,7 +313,6 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
         android.app.AlertDialog alert = endJobAlertBuilder.create();
         alert.show();
     }
-
 
     public void endJobAction() {
         final Matches matchToDelete = (Matches) job.get("match");
@@ -338,6 +334,7 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
                 };
                 thread.start();
                 //TODO: Go back to match feed
+                returnToMatchesFeed();
 
             }
         });
@@ -444,7 +441,5 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
 }

@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NotificationBuilderWithBuilderAccessor;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.lkimberly.userstories.JobMatchInfo;
 import com.example.lkimberly.userstories.R;
+import com.example.lkimberly.userstories.activities.JobDetailsActivity;
 import com.example.lkimberly.userstories.adapters.SwipeCardAdapter;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.Matches;
@@ -58,6 +60,7 @@ public class FeedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         // Defines the xml file for the fragment
+
         return inflater.inflate(R.layout.fragment_feed, parent, false);
     }
 
@@ -119,6 +122,7 @@ public class FeedFragment extends Fragment {
                 ParseUser jobPoster = currentCard.getJob().getUser();
 
                 // Notifications
+                /*
                 String jobObjectId = currentCard.getJob().getObjectId();
                 String jobTitle = currentCard.getJob().getTitle();
 
@@ -133,10 +137,11 @@ public class FeedFragment extends Fragment {
                 String message = name + ":" + jobObjectId + ":" + jobTitle;
 
                 myRef.setValue(message);
+                */
 
 
 
-                Log.d("Swipe Right", "object id = " + jobObjectId);
+                //Log.d("Swipe Right", "object id = " + jobObjectId);
 
                 //DatabaseReference pushRef = myRef.child("Your job has been matched!").push();
                 //String uid = pushRef.getKey();
@@ -159,7 +164,6 @@ public class FeedFragment extends Fragment {
             }
         });
 
-
         // Optionally add an OnItemClickListener
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
@@ -168,7 +172,6 @@ public class FeedFragment extends Fragment {
                 swipeCardAdapter.goToDetailsPage(((SwipeCard) dataObject).getJob());
             }
         });
-
     }
 
     private void createMatch(SwipeCard currentCard) {
@@ -177,7 +180,7 @@ public class FeedFragment extends Fragment {
         newMatch.setJobSubscriber(currentUser);
         newMatch.setJob(currentCard.getJob());
 
-        Log.d("newMatchSave", "1. Success!");
+        Log.d("newMatchSave", "inside createMatch");
 
         newMatch.saveInBackground(new SaveCallback() {
             @Override
@@ -233,7 +236,7 @@ public class FeedFragment extends Fragment {
                                     String subscribedObjectId = value.toString();
 
                                     Log.d("firebase listener", key + " and " + subscribedObjectId);
-                                    Toast.makeText(getContext(), subscribedObjectId + " subscribed ", Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(getContext(), subscribedObjectId + " subscribed ", Toast.LENGTH_LONG).show();
 
                                     //if (subscribedObjectId.equals(getCurrentUser().getObjectId())) {
                                         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getContext(), "CHANNEL_ID");

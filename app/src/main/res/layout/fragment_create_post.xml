@@ -157,6 +157,7 @@
         android:maxLines="1"
         android:padding="5dp"
         android:textAlignment="textStart"
+        android:textAllCaps="false"
         android:textSize="15sp" />
 
     <ImageView

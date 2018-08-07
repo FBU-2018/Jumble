@@ -82,7 +82,7 @@ public class ProfileFragment extends Fragment {
         } else {
             String name = user.getName();
             tvUsername.setText(name);
-            user.setUsername(name);
+            user.setName(name);
         }
 
         if (user.getInstitution() == null) {
