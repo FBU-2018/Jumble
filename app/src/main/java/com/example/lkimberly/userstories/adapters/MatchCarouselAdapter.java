@@ -42,9 +42,6 @@ public class MatchCarouselAdapter extends RecyclerView.Adapter<MatchCarouselAdap
 
     private int mRowIndex = -1;
 
-
-
-
     // pass in the Tweets array into the constructor
     public MatchCarouselAdapter(Activity activity) {
         this.activity = activity;
