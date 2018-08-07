@@ -14,7 +14,8 @@ android:layout_height="match_parent" >
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="255dp"
         android:text="No job created yet!"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="invisible" />
 
     <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"

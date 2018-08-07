@@ -1,5 +1,6 @@
 package com.example.lkimberly.userstories.fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -7,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -114,6 +116,9 @@ public class ProfileFragment extends Fragment {
                     .into(ivProfile);
         } catch (NullPointerException e) {
             Log.d("ProfileFragment", "No Profile Pic");
+            Glide.with(ProfileFragment.this)
+                    .load(R.drawable.ic_instagram_profile)
+                    .into(ivProfile);
         }
 
         try {
@@ -141,24 +146,68 @@ public class ProfileFragment extends Fragment {
         facebook_ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(user.getFacebook()));
-                startActivity(browserIntent);
+                if (user.getFacebook() != null) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(user.getFacebook()));
+                    startActivity(browserIntent);
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Notice")
+                            .setMessage("You did not provide a link to your Facebook yet!")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
+                            })
+                            .setCancelable(false)
+                            .show();
+                }
             }
         });
 
         linkedIn_ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(user.getLinkedIn()));
-                startActivity(browserIntent);
+                String linkedInLink = user.getLinkedIn();
+                if (linkedInLink != null) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkedInLink));
+                    startActivity(browserIntent);
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Notice")
+                            .setMessage("You did not provide a link to your LinkedIn yet!")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
+                            })
+                            .setCancelable(false)
+                            .show();
+                }
             }
         });
 
         twitter_ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(user.getTwitter()));
-                startActivity(browserIntent);
+                String twitterLink = user.getTwitter();
+                if (twitterLink != null) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitterLink));
+                    startActivity(browserIntent);
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Notice")
+                            .setMessage("You did not provide a link to your Twitter yet!")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
+                            })
+                            .setCancelable(false)
+                            .show();
+                }
             }
         });
     }

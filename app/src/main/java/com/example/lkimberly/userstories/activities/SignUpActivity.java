@@ -42,7 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         usernameInput = findViewById(R.id.signup_username_et);
         passwordInput = findViewById(R.id.signup_password_et);
-        emailInput = findViewById(R.id.signup_email_et);
+        emailInput = findViewById(R.id.sign_up_email_et);
         iv_username_correct = findViewById(R.id.iv_username_correct);
         iv_password_correct = findViewById(R.id.iv_password_correct);
 

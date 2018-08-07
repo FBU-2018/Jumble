@@ -145,7 +145,9 @@ public class EditProfileFragment extends Fragment {
 
         } catch (NullPointerException e) {
             Log.d("EditProfileFragment", "profile picture does not exist!");
-            e.printStackTrace();
+            Glide.with(EditProfileFragment.this)
+                    .load(R.drawable.ic_instagram_profile)
+                    .into(edit_profile_iv);
         }
 
         final Dialog dialog = new Dialog(getActivity());

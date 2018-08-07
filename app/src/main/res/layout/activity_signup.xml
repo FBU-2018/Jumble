@@ -31,7 +31,7 @@
         android:padding="5dp" />
 
     <EditText
-        android:id="@+id/signup_email_et"
+        android:id="@+id/sign_up_email_et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/signup_password_et"
@@ -39,7 +39,7 @@
         android:layout_marginTop="-10dp"
         android:background="@drawable/edittext_rounded_corners"
         android:ems="10"
-        android:hint="New email "
+        android:hint="Enter email "
         android:padding="5dp" />
 
     <EditText
