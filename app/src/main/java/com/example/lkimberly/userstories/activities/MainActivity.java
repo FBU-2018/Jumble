@@ -25,6 +25,7 @@ import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -119,56 +120,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                boolean isUsernameEmpty = false;
-                boolean isPasswordEmpty = false;
+                String username = username_et.getText().toString();
+                String password = password_et.getText().toString();
+                String email = email_et.getText().toString();
 
-                String username = "";
-                String userInputStr = username_et.getText().toString();
-                if (!userInputStr.equals("")) {
-                    username = userInputStr;
-                    iv_username_check.setVisibility(VISIBLE);
-                } else {
-                    isUsernameEmpty = true;
-                    iv_username_check.setVisibility(INVISIBLE);
-                }
-
-                String password = "";
-                final String passwordInputStr = password_et.getText().toString();
-                if (!passwordInputStr.equals("")) {
-                    password = passwordInputStr;
-                    iv_password_check.setVisibility(VISIBLE);
-                } else {
-                    isPasswordEmpty = true;
-                    iv_password_check.setVisibility(INVISIBLE);
-                }
-
-                String email = "";
-                final String emailInputStr = email_et.getText().toString();
-                if (!emailInputStr.equals("")) {
-                    email = emailInputStr;
-//                    iv_password_check.setVisibility(VISIBLE);
-                } else {
-//                    isPasswordEmpty = true;
-//                    iv_password_check.setVisibility(INVISIBLE);
-                }
-
-                if (isUsernameEmpty || isPasswordEmpty) {
-                    String requirement = "Please enter a";
-                    if (isUsernameEmpty) {
-                        requirement += " username";
-                    }
-
-                    if (isPasswordEmpty) {
-                        if (isUsernameEmpty) {
-                            requirement += " and password";
-                        } else {
-                            requirement += " password";
-                        }
-                    }
-
-                    requirement += "!";
-                    Toast.makeText(getApplicationContext(), requirement, Toast.LENGTH_LONG).show();
-                } else {
+                boolean isFilled = checkIfFilled(username, password, email);
+                if (isFilled) {
                     login(username, password, email);
                 }
             }
@@ -177,8 +134,15 @@ public class MainActivity extends AppCompatActivity {
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-                startActivity(intent);
+                String username = username_et.getText().toString();
+                String password = password_et.getText().toString();
+                String email = email_et.getText().toString();
+
+                boolean isFilled = checkIfFilled(username, password, email);
+
+                if (isFilled) {
+                    signUp(username, password, email);
+                }
             }
         });
     }
@@ -196,10 +160,96 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("MainActivity", "Login failed!");
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(), "Login failed!", Toast.LENGTH_LONG).show();
+
+                    // return to avoid signing onto firebase
+                    return;
                 }
             }
         });
 
         mAuth.signInWithEmailAndPassword(email,password);
+    }
+
+    private void signUp(String username, String password, String email) {
+        // Create the ParseUser
+        User user = new User();
+        // Set core properties
+        user.setUsername(username);
+        user.setPassword(password);
+        // Set custom properties
+        // user.put("phone", "650-253-0000");
+        // Invoke signUpInBackground
+        user.signUpInBackground(new SignUpCallback() {
+            public void done(ParseException e) {
+                if (e == null) {
+                    // Hooray! Let them use the app now.
+                    Log.d("SignupActivity","Signup successful!");
+                    final Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    // Sign up didn't succeed. Look at the ParseException
+                    // to figure out what went wrong
+                    Log.e("SignupActivity","Signup failure.");
+                    e.printStackTrace();
+
+                    // return to avoid creating an account in firebase
+                    return;
+                }
+            }
+        });
+
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        mAuth.createUserWithEmailAndPassword(email, password);
+
+    }
+
+    public boolean checkIfFilled(String username, String password, String email) {
+
+        boolean isUsernameEmpty = false;
+        boolean isPasswordEmpty = false;
+
+        if (!username.equals("")) {
+            iv_username_check.setVisibility(VISIBLE);
+        } else {
+            isUsernameEmpty = true;
+            iv_username_check.setVisibility(INVISIBLE);
+        }
+
+        if (!password.equals("")) {
+            iv_password_check.setVisibility(VISIBLE);
+        } else {
+            isPasswordEmpty = true;
+            iv_password_check.setVisibility(INVISIBLE);
+        }
+
+        if (!email.equals("")) {
+//                    iv_password_check.setVisibility(VISIBLE);
+        } else {
+//                    isPasswordEmpty = true;
+//                    iv_password_check.setVisibility(INVISIBLE);
+        }
+
+        if (isUsernameEmpty || isPasswordEmpty) {
+            String requirement = "Please enter a";
+            if (isUsernameEmpty) {
+                requirement += " username";
+            }
+
+            if (isPasswordEmpty) {
+                if (isUsernameEmpty) {
+                    requirement += " and password";
+                } else {
+                    requirement += " password";
+                }
+            }
+
+            requirement += "!";
+            Toast.makeText(getApplicationContext(), requirement, Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        return true;
     }
 }

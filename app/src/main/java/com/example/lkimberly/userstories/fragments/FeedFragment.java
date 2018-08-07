@@ -302,7 +302,7 @@ public class FeedFragment extends Fragment {
                                     String subscribedObjectId = value.toString();
 
                                     Log.d("firebase listener", key + " and " + subscribedObjectId);
-                                    Toast.makeText(getContext(), subscribedObjectId + " subscribed ", Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(getContext(), subscribedObjectId + " subscribed ", Toast.LENGTH_LONG).show();
 
                                 }
 
