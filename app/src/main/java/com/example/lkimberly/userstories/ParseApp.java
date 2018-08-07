@@ -9,6 +9,7 @@ import com.example.lkimberly.userstories.models.User;
 
 //import com.onesignal.OneSignal;
 import com.parse.Parse;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 
 public class ParseApp extends Application {
@@ -33,5 +34,10 @@ public class ParseApp extends Application {
                 .build();
 
         Parse.initialize(configuration);
+
+        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+        installation.put("GCMSenderId", "784053882430");
+        installation.put("channel", "default");
+        installation.saveInBackground();
     }
 }

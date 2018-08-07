@@ -191,8 +191,8 @@ public class FeedFragment extends Fragment {
 
                 notificationBuilder.setAutoCancel(true)
                         .setWhen(System.currentTimeMillis())
-                        .setContentTitle("Your job has a new match!")
-//                        .setContentText("Check who it is")
+//                        .setContentTitle("Your job has a new match!")
+                        .setContentText("Your job has a new match!")
                         .setSmallIcon(R.drawable.icon)
                         .setChannelId("CHANNEL_ID")
                         // Set the intent that will fire when the user taps the notification
