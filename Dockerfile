@@ -12,6 +12,7 @@ ENV DATABASE_URI mongodb://heroku_86l8nj5d:nthvbkpajohdnjqtbd2vjspvbv@ds111562.m
 
 ENV FCM_API_KEY AAAAto1Azj4:APA91bEEDuiH6lHJyX4fsOn9RZfIW5f5UvizIl0NZeJV-m2y7fBdgUJiOPQC-FPsBwryzYvuo6RmpOx65X3q_KPUwPRR_N_E5HEa27enEms38Q08_AqtmBVYS366UGn5fg4iVrmQD0Zc9CxxwI5b-Z3zRut0mFn3lQ
 ENV SERVER_URL https://fbu-2018.herokuapp.com/parse
+ENV SENDER_ID 784053882430
 
 # Optional (default : 'parse/cloud/main.js')
 ENV CLOUD_CODE_MAIN cloud/main.js

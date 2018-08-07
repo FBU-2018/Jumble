@@ -13,7 +13,8 @@ if (!databaseUri) {
 
 if (process.env.FCM_API_KEY) {
    pushConfig['android'] = { 
-   apiKey: process.env.FCM_API_KEY || ''};
+   apiKey: process.env.FCM_API_KEY || 'AAAAto1Azj4:APA91bEEDuiH6lHJyX4fsOn9RZfIW5f5UvizIl0NZeJV-m2y7fBdgUJiOPQC-FPsBwryzYvuo6RmpOx65X3q_KPUwPRR_N_E5HEa27enEms38Q08_AqtmBVYS366UGn5fg4iVrmQD0Zc9CxxwI5b-Z3zRut0mFn3lQ',
+   senderId: process.env.SENDER_ID || '784053882430'};
 }
 
 //var server = new ParseServer({
