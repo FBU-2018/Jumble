@@ -99,4 +99,9 @@ dependencies {
     implementation 'org.apache.commons:commons-csv:1.0'
 //    implementation 'com.opencsv:opencsv:3.9'
 
+    // Trying imports
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+    implementation 'com.facebook.stetho:stetho:1.5.0'
+
+
 }

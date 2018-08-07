@@ -92,7 +92,7 @@ public class HomeActivity extends AppCompatActivity {
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        initFCM();
+//        initFCM();
 
         //photoFile = getPhotoFileUri("photo.jpg");
 
@@ -342,20 +342,20 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    private void sendRegistrationToServer(String token) {
-        Log.d(TAG, "sendRegistrationToServer: sending token to server: " + token);
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child(getString(R.string.dbnode_users))
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child(getString(R.string.field_messaging_token))
-                .setValue(token);
-    }
-
-
-    private void initFCM(){
-        String token = FirebaseInstanceId.getInstance().getToken();
-        Log.d(TAG, "initFCM: token: " + token);
-        sendRegistrationToServer(token);
-
-    }
+//    private void sendRegistrationToServer(String token) {
+//        Log.d(TAG, "sendRegistrationToServer: sending token to server: " + token);
+//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+//        reference.child(getString(R.string.dbnode_users))
+//                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+//                .child(getString(R.string.field_messaging_token))
+//                .setValue(token);
+//    }
+//
+//
+//    private void initFCM(){
+//        String token = FirebaseInstanceId.getInstance().getToken();
+//        Log.d(TAG, "initFCM: token: " + token);
+//        sendRegistrationToServer(token);
+//
+//    }
 }
