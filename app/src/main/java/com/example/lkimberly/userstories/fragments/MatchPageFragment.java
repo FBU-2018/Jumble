@@ -96,6 +96,9 @@ public class MatchPageFragment extends Fragment {
     }
 
     double parseDouble(String ratio) {
+        if (ratio == null) {
+            return 0;
+        }
         if (ratio.contains("/")) {
             String[] rat = ratio.split("/");
             return Double.parseDouble(rat[0]) / Double.parseDouble(rat[1]);

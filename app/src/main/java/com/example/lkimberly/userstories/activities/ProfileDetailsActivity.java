@@ -88,7 +88,6 @@ public class ProfileDetailsActivity extends AppCompatActivity {
 
         // get the correct place holder and image view for the current orientation
         int placeholderId = R.drawable.ic_instagram_profile;
-
         try {
             Glide.with(ivProfileImage.getContext())
                     .load(user.fetchIfNeeded().getParseFile("profilePicture").getUrl())
@@ -110,7 +109,11 @@ public class ProfileDetailsActivity extends AppCompatActivity {
 //        tvRating.setText(user.get("rating") != null ? user.get("rating").toString() : "I'm a beginer!");
         tvPhoneNumber.setText(user.get("phoneNumber") != null ? user.get("phoneNumber").toString() : "None");
 
-        ratingBar.setRating((float) (parseDouble(user.get("rating").toString()) * 5));
+        try {
+            ratingBar.setRating((float) (parseDouble(user.get("rating").toString()) * 5));
+        } catch (NullPointerException e) {
+            ratingBar.setRating((float) (0));
+        }
 
         backButton = (ImageView) findViewById(R.id.iv_backBtn);
         backButton.setOnClickListener(new View.OnClickListener() {

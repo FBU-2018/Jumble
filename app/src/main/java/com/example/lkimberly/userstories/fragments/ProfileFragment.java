@@ -178,8 +178,12 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        // Log out of Firebase account
-        FirebaseAuth.getInstance().signOut();
+//        // Log out of Firebase account
+//        FirebaseAuth.getInstance().signOut();
+
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        mAuth.signOut();
     }
 
     double parseDouble(String ratio) {

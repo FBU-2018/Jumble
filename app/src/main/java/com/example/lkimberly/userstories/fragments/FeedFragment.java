@@ -2,11 +2,22 @@ package com.example.lkimberly.userstories.fragments;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
+import android.app.NotificationChannelGroup;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NotificationBuilderWithBuilderAccessor;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -18,25 +29,38 @@ import android.widget.Toast;
 
 import com.example.lkimberly.userstories.JobMatchInfo;
 import com.example.lkimberly.userstories.R;
-import com.example.lkimberly.userstories.activities.JobDetailsActivity;
+import com.example.lkimberly.userstories.activities.HomeActivity;
 import com.example.lkimberly.userstories.adapters.SwipeCardAdapter;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.Matches;
 import com.example.lkimberly.userstories.models.SwipeCard;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.maps.android.SphericalUtil;
+
 import com.example.lkimberly.userstories.models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import static com.parse.ParseUser.getCurrentUser;
 
@@ -50,8 +74,18 @@ public class FeedFragment extends Fragment {
     ParseUser currentUser;
     ArrayList<Job> jobs;
 
+
+    private static final int REQUEST_LOCATION = 1;
+    LocationManager locationManager;
+    SphericalUtil mapsUtil;
+    Location userCurentLocation;
+
+    private FusedLocationProviderClient mFusedLocationProvidentClient;
+    private static final String TAG = "FeedFragment";
+
     TextView tvNoMoreJobs;
     boolean isFull = true;
+
 
     public static List<ValueEventListener> ValueEventListenerList = new ArrayList<>();
 
@@ -60,7 +94,6 @@ public class FeedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         // Defines the xml file for the fragment
-
         return inflater.inflate(R.layout.fragment_feed, parent, false);
     }
 
@@ -70,6 +103,7 @@ public class FeedFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Setup any handles to view objects here
         // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
+        getDeviceLocation();
 
         jobs = new ArrayList<>();
 
@@ -80,9 +114,12 @@ public class FeedFragment extends Fragment {
 
         al = new ArrayList<SwipeCard>();
 
+//        loadTopPosts();
+
         if (isFull) {
             loadTopPosts();
         }
+
 
         swipeCardAdapter = new SwipeCardAdapter(getContext(), getLayoutInflater(), al);
 
@@ -114,6 +151,7 @@ public class FeedFragment extends Fragment {
                 makeToast(getContext(), "Left!");
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onRightCardExit(Object dataObject) {
                 SwipeCard currentCard = (SwipeCard) dataObject;
@@ -122,7 +160,6 @@ public class FeedFragment extends Fragment {
                 ParseUser jobPoster = currentCard.getJob().getUser();
 
                 // Notifications
-                /*
                 String jobObjectId = currentCard.getJob().getObjectId();
                 String jobTitle = currentCard.getJob().getTitle();
 
@@ -137,14 +174,38 @@ public class FeedFragment extends Fragment {
                 String message = name + ":" + jobObjectId + ":" + jobTitle;
 
                 myRef.setValue(message);
-                */
 
-
-
-                //Log.d("Swipe Right", "object id = " + jobObjectId);
+                Log.d("Swipe Right", "object id = " + jobObjectId);
 
                 //DatabaseReference pushRef = myRef.child("Your job has been matched!").push();
                 //String uid = pushRef.getKey();
+
+                //if (subscribedObjectId.equals(getCurrentUser().getObjectId())) {
+
+                // Create an explicit intent for an Activity in your app
+                Intent intent = new Intent(getActivity(), HomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), 0, intent, 0);
+
+                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getContext(), "CHANNEL_ID");
+
+                notificationBuilder.setAutoCancel(true)
+                        .setWhen(System.currentTimeMillis())
+                        .setContentTitle("Your job has a new match!")
+//                        .setContentText("Check who it is")
+                        .setSmallIcon(R.drawable.icon)
+                        .setChannelId("CHANNEL_ID")
+                        // Set the intent that will fire when the user taps the notification
+                        .setContentIntent(pendingIntent);
+
+                // Create channel notification group
+                String groupId = jobObjectId;
+                CharSequence groupName = jobTitle;
+                NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.createNotificationChannelGroup(new NotificationChannelGroup(groupId, groupName));
+
+                notificationManager.notify(1, notificationBuilder.build());
+                //}
 
 
                 makeToast(getContext(), "Right!");
@@ -164,6 +225,7 @@ public class FeedFragment extends Fragment {
             }
         });
 
+
         // Optionally add an OnItemClickListener
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
@@ -172,6 +234,11 @@ public class FeedFragment extends Fragment {
                 swipeCardAdapter.goToDetailsPage(((SwipeCard) dataObject).getJob());
             }
         });
+
+
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+
     }
 
     private void createMatch(SwipeCard currentCard) {
@@ -180,7 +247,7 @@ public class FeedFragment extends Fragment {
         newMatch.setJobSubscriber(currentUser);
         newMatch.setJob(currentCard.getJob());
 
-        Log.d("newMatchSave", "inside createMatch");
+        Log.d("newMatchSave", "1. Success!");
 
         newMatch.saveInBackground(new SaveCallback() {
             @Override
@@ -203,7 +270,6 @@ public class FeedFragment extends Fragment {
     private void loadTopPosts() {
         final Job.Query postsQuery = new Job.Query();
         postsQuery.getTop().withUser();
-
         postsQuery.findInBackground(new FindCallback<Job>() {
             @Override
             public void done(List<Job> objects, ParseException e) {
@@ -236,21 +302,7 @@ public class FeedFragment extends Fragment {
                                     String subscribedObjectId = value.toString();
 
                                     Log.d("firebase listener", key + " and " + subscribedObjectId);
-                                    //Toast.makeText(getContext(), subscribedObjectId + " subscribed ", Toast.LENGTH_LONG).show();
-
-                                    //if (subscribedObjectId.equals(getCurrentUser().getObjectId())) {
-                                        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getContext(), "CHANNEL_ID");
-
-                                        notificationBuilder.setAutoCancel(true)
-                                                .setWhen(System.currentTimeMillis())
-                                                .setContentTitle("Message")
-                                                .setContentText("Message text")
-                                                .setSmallIcon(R.drawable.icon)
-                                                .setChannelId("CHANNEL_ID");
-
-                                        NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-                                        notificationManager.notify(1, notificationBuilder.build());
-                                    //}
+                                    Toast.makeText(getContext(), subscribedObjectId + " subscribed ", Toast.LENGTH_LONG).show();
 
                                 }
 
@@ -265,11 +317,24 @@ public class FeedFragment extends Fragment {
                         }
 
                         try {
-                            al.add(new SwipeCard(job.getTitle(), job.getDescription(), job.getImage().getUrl(), job));
+
+                            al.add(new SwipeCard(job.getTitle().toString(), job.getDescription().toString(), job.getImage().getUrl(), job));
+                            rankList(al);
+                            Collections.reverse(al);
+
+//                            al.add(new SwipeCard(job.getTitle(), job.getDescription(), job.getImage().getUrl(), job));
+
                         } catch (NullPointerException e2) {
+                            rankList(al);
+                            Collections.reverse(al);
                             al.add(new SwipeCard("EMPTY", "EMPTY", "EMPTY", null));
                         }
                         swipeCardAdapter.notifyDataSetChanged();
+                    }
+                    int count = 1;
+                    for (SwipeCard card: al) {
+                        Log.d("Card"+count, String.valueOf(getFOneScore(card.getJob())));
+                        count++;
                     }
 
                 } else {
@@ -278,4 +343,108 @@ public class FeedFragment extends Fragment {
             }
         });
     }
+
+
+    private void rankList(ArrayList<SwipeCard> jobList) {
+        Collections.sort(jobList, new Comparator<SwipeCard>() {
+            @Override
+            public int compare(SwipeCard sc1, SwipeCard sc2) {
+                return Double.compare(getFOneScore(sc1.getJob()), getFOneScore(sc2.getJob()));
+            }
+        });
+    }
+
+    private double getFOneScore(Job jobToComputeScore) {
+        double distanceInKm;
+        double userRatingForScore;
+
+        try {
+            try {
+                distanceInKm = mapsUtil.computeDistanceBetween(new LatLng(Double.valueOf((String) jobToComputeScore.get("latitude")), Double.valueOf((String) jobToComputeScore.get("longitude"))),
+                        new LatLng(userCurentLocation.getLatitude(), userCurentLocation.getLongitude()))/1000;
+            } catch (NullPointerException nullEx) {
+                distanceInKm = 1;
+//                nullEx.printStackTrace();
+            }
+
+        } catch (SecurityException secEx) {
+            distanceInKm = 1;   // ignore distance in calcualtion
+            secEx.printStackTrace();
+        }
+
+        double inverseDist = 1/distanceInKm;
+        try {
+            String retrievedRating = (String) ((ParseUser) jobToComputeScore.get("user")).fetchIfNeeded().get("rating");
+            if (retrievedRating == null) {
+                userRatingForScore = 0;
+            } else {
+                double ratingFraction = parseDouble(retrievedRating);
+                userRatingForScore = ratingFraction*5;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
+        Log.d((String) jobToComputeScore.get("title"), distanceInKm + ", " + inverseDist + ", " + userRatingForScore);
+        double score = (inverseDist*userRatingForScore)/(inverseDist+userRatingForScore);
+        return score;
+
+    }
+
+    double parseDouble(String ratio) {
+        if (ratio.contains("/")) {
+            String[] rat = ratio.split("/");
+            return Double.parseDouble(rat[0]) / Double.parseDouble(rat[1]);
+        } else {
+            return Double.parseDouble(ratio);
+        }
+    }
+
+    private void getDeviceLocation() {
+        mFusedLocationProvidentClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
+        try {
+//            if (mLocationPermissionsGranted) {
+            Task location = mFusedLocationProvidentClient.getLastLocation();
+            location.addOnCompleteListener(new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task) {
+                    if (task.isSuccessful()) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            userCurentLocation = (Location) task.getResult();
+
+                            double latitude = userCurentLocation.getLatitude();
+                            double longitude = userCurentLocation.getLongitude();
+
+                            StringBuilder result = new StringBuilder();
+
+                            loadTopPosts();
+                            try {
+                                Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+                                List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                                if (addresses.size() > 0) {
+                                    Address address = addresses.get(0);
+                                    Log.d(TAG, "onComplete: found location! " + task.getResult());
+//                                    result.append(address.getLocality());
+//                                    result.append(address.getCountryName());
+                                }
+                            } catch (IOException e) {
+                                Log.e("tag", e.getMessage());
+                            }
+
+//                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM, "My Location");
+                        }
+
+                    } else {
+                        Log.d(TAG, "onComplete: current location is null");
+                        Toast.makeText(getContext(), "unable to get current location", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+//            }
+        } catch (SecurityException e) {
+            Log.e(TAG, "getDeviceLocation: Security Exception: " + e.getMessage());
+        }
+    }
+
 }

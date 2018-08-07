@@ -21,4 +21,13 @@
         V-m2y7fBdgUJiOPQC-FPsBwryzYvuo6RmpOx65X3q_KPUwPRR_N_E5HEa27enEms38Q08_AqtmBVYS366UGn5fg4iVr
         mQD0Zc9CxxwI5b-Z3zRut0mFn3lQ</string>
 
+    <!-- Firebase Database Nodes -->
+    <string name="dbnode_users">users</string>
+    <string name="dbnode_messages">messages</string>
+
+    <!-- Firebase Database Fields -->
+    <string name="field_message">message</string>
+    <string name="field_user_id">user_id</string>
+    <string name="field_messaging_token">messaging_token</string>
+
 </resources>

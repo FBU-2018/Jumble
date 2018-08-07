@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.JobDetailsActivityOld">
+    tools:context=".activities.JobDetailsActivity">
 
     <TextView
         android:id="@+id/tv_jobDetailsPriceTitle"
@@ -107,9 +107,14 @@
         android:paddingEnd="10dp"
         android:paddingStart="20dp"
         android:text="TextView"
+
+        android:textAlignment="viewStart"
+        android:textColor="@android:color/black"
+
         android:maxLines="5"
         android:minLines="1"
         android:scrollbars = "vertical"
+
         tools:text="There should probably be some details here...?" />
 
     <TextView
@@ -119,12 +124,16 @@
         android:layout_alignParentStart="true"
         android:layout_below="@id/iv_jobDetailsJobPicture"
         android:layout_marginTop="15dp"
+        android:autoSizeTextType="uniform"
         android:gravity="center"
+        android:maxWidth="200dp"
         android:paddingStart="20dp"
         android:text="TextView"
+
+        android:textAlignment="viewStart"
+        android:textColor="@android:color/black"
+
         android:textSize="18sp"
-        android:maxWidth="200dp"
-        android:autoSizeTextType="uniform"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="163dp"
         tools:layout_editor_absoluteY="132dp" />
@@ -136,7 +145,8 @@
         android:layout_alignStart="@+id/tv_jobDetailsTimeTitle"
         android:layout_below="@id/tv_jobDetailsTimeTitle"
         android:layout_marginTop="5dp"
-        android:text="HH:MM" />
+        android:text="HH:MM"
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/tv_jobDetailsMatchTitle"
@@ -182,11 +192,12 @@
         android:id="@+id/tv_jobDetailsTimeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/tv_jobDetailsDateTitle"
         android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/tv_jobDetailsDateTitle"
         android:layout_centerVertical="true"
         android:layout_marginEnd="120dp"
         android:text="Time:"
+        android:textColor="@android:color/black"
         android:textStyle="bold" />
 
     <TextView
@@ -197,7 +208,7 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/tv_jobDetailsPriceTitle"
         android:maxWidth="150dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="4dp"
         android:autoSizeTextType="uniform"
         android:gravity="center_vertical"
         android:text="None what it does my guy"
@@ -268,16 +279,18 @@
         android:layout_below="@+id/tv_jobDetailsDateTitle"
         android:layout_marginStart="75dp"
         android:layout_marginTop="5dp"
-        android:text="MM/DD/YYYY" />
+        android:text="MM/DD/YYYY"
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/tv_jobDetailsDateTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/tv_jobDetailsDateValue"
-        android:layout_marginTop="20dp"
         android:layout_below="@+id/tv_jobDetailsJobDescription"
+        android:layout_marginTop="20dp"
         android:text="Date:"
+        android:textColor="@android:color/black"
         android:textStyle="bold" />
 
 </RelativeLayout>
