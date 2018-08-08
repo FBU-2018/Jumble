@@ -191,12 +191,19 @@ public class MatchPageFragment extends Fragment {
                                                     matchesModelList.add(new MatchDataModel(3));
                                                 }
 
+                                                // keep a count so if the jobs queried have matches the header saying "the following jobs have no matches yet..." doesn't pop up
+                                                int jobs_that_are_not_matches_count = 0;
                                                 for (int i = 0; i < objects.size(); i++) {
                                                     Log.d("Query JOB", objects.get(i).getObjectId());
 
                                                     if (!matchDict.keySet().contains(objects.get(i).getObjectId())) {
                                                         matchesModelList.add(new MatchDataModel(2, objects.get(i)));
+                                                        jobs_that_are_not_matches_count++;
                                                     }
+                                                }
+
+                                                if (jobs_that_are_not_matches_count == 0){
+                                                    matchesModelList.remove(matchesModelList.size()-1);
                                                 }
 
                                                 Log.d("Size",matchesModelList.toString());

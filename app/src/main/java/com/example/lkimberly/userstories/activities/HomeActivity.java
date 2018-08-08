@@ -32,10 +32,6 @@ import com.example.lkimberly.userstories.fragments.FeedFragment;
 import com.example.lkimberly.userstories.fragments.MatchPageFragment;
 import com.example.lkimberly.userstories.fragments.ProfileFragment;
 import com.example.lkimberly.userstories.models.Job;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -313,6 +309,7 @@ public class HomeActivity extends AppCompatActivity {
         // REQUEST_CODE is defined above
         Log.d("HomeActivity", "checking HomeActivity onActivityResult");
         if (resultCode == RESULT_OK) {
+            int temp = potentialIntent.getIntExtra("refresh", 0);
             if (potentialIntent.getBooleanExtra("refresh", false)) {
                 myMatchPageFragment.refresh();
             }

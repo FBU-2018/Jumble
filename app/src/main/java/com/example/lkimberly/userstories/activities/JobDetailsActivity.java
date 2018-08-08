@@ -156,7 +156,13 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                ratingBar.setRating((float) (parseDouble(userWhoMatchedWithMe.get("rating").toString()) * 5));
+
+                try {
+                    ratingBar.setRating((float) (parseDouble(userWhoMatchedWithMe.get("rating").toString()) * 5));
+                } catch (NullPointerException noExistingRating){
+                    ratingBar.setRating(0);
+                }
+
             }
 
 

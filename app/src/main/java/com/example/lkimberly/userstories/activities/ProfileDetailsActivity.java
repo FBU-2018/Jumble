@@ -89,15 +89,29 @@ public class ProfileDetailsActivity extends AppCompatActivity {
         // get the correct place holder and image view for the current orientation
         int placeholderId = R.drawable.ic_instagram_profile;
         try {
-            Glide.with(ivProfileImage.getContext())
-                    .load(user.fetchIfNeeded().getParseFile("profilePicture").getUrl())
-                    .apply(
-                            RequestOptions.placeholderOf(placeholderId)
-                                    .error(placeholderId)
-                                    .fitCenter()
-                    )
-                    .apply(requestOptions)
-                    .into(ivProfileImage);
+            try
+            {
+                Glide.with(ivProfileImage.getContext())
+                        .load(user.fetchIfNeeded().getParseFile("profilePicture").getUrl())
+                        .apply(
+                                RequestOptions.placeholderOf(placeholderId)
+                                        .error(placeholderId)
+                                        .fitCenter()
+                        )
+                        .apply(requestOptions)
+                        .into(ivProfileImage);
+            } catch (NullPointerException noProfilePic){
+                Glide.with(ivProfileImage.getContext())
+                        .load(placeholderId)
+                        .apply(
+                                RequestOptions.placeholderOf(placeholderId)
+                                        .error(placeholderId)
+                                        .fitCenter()
+                        )
+                        .apply(requestOptions)
+                        .into(ivProfileImage);
+            }
+
         } catch (com.parse.ParseException e) {
             e.printStackTrace();
         }
