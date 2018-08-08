@@ -2,7 +2,12 @@ package com.example.lkimberly.userstories.fragments;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.net.Uri;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,9 +31,13 @@ import com.example.lkimberly.userstories.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class ProfileFragment extends Fragment {
 
@@ -110,15 +119,47 @@ public class ProfileFragment extends Fragment {
         }
 
         try {
-            Log.d("testing", "visited!");
             Glide.with(ProfileFragment.this)
                     .load(user.getImage().getUrl())
                     .into(ivProfile);
         } catch (NullPointerException e) {
             Log.d("ProfileFragment", "No Profile Pic");
             Glide.with(ProfileFragment.this)
-                    .load(R.drawable.ic_instagram_profile)
+                    .load(R.drawable.instagram_user_outline_24)
                     .into(ivProfile);
+
+            Bitmap bitMap = BitmapFactory.decodeResource(getResources(),R.drawable.instagram_user_outline_24);
+
+            File file1 = Environment.getExternalStorageDirectory();
+
+            String fileName ="instagram_user_outline_24.png";
+
+            File file2 = new File(file1,fileName);
+            try {
+                FileOutputStream outStream;
+
+                outStream = new FileOutputStream(file2);
+
+                bitMap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+
+                outStream.flush();
+
+                outStream.close();
+
+            } catch (FileNotFoundException f) {
+                f.printStackTrace();
+            } catch (IOException i) {
+                i.printStackTrace();
+            }
+
+            String sdPath = file1.getAbsolutePath().toString() + "/" + fileName;
+
+            Log.d("imagePath", "imagePath is = " + sdPath);
+
+
+            ParseFile parseFile = new ParseFile(new File(sdPath));
+            user.put("profilePicture", parseFile);
+            user.saveInBackground();
         }
 
         try {
