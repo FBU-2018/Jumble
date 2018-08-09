@@ -23,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.lkimberly.userstories.R;
@@ -49,11 +50,12 @@ public class ProfileFragment extends Fragment {
     TextView tvUsername;
     TextView tvInstitution;
     TextView tvPhoneNumber;
-//    TextView tvSocialMedia;
 
     ImageButton facebook_ib;
     ImageButton linkedIn_ib;
     ImageButton twitter_ib;
+
+    User user;
 
     private String imagePath = "";
     public final String APP_TAG = "MyCustomApp";
@@ -71,8 +73,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        Log.d("fragment", "on Create is called!");
-        final User user = (User) ParseUser.getCurrentUser();
+        user = (User) ParseUser.getCurrentUser();
 
         // Grab a reference to our view pager.
         viewPager = getActivity().findViewById(R.id.pager);
@@ -87,13 +88,14 @@ public class ProfileFragment extends Fragment {
 
         if (user.getName() == null) {
             // a new user, has not set name yet
+            // set username as name
             String username = user.getUsername();
             tvUsername.setText(username);
             user.setName(username);
         } else {
             String name = user.getName();
             tvUsername.setText(name);
-            user.setName(name);
+            //user.setName(name);
         }
 
         if (user.getInstitution() == null) {
@@ -104,7 +106,7 @@ public class ProfileFragment extends Fragment {
         } else {
             String institution = user.getInstitution();
             tvInstitution.setText(institution);
-            user.setInstitution(institution);
+            //user.setInstitution(institution);
         }
 
         if (user.getPhoneNumber() == null) {
@@ -115,8 +117,10 @@ public class ProfileFragment extends Fragment {
         } else {
             String phoneNumber = user.getPhoneNumber();
             tvPhoneNumber.setText(phoneNumber);
-            user.setPhoneNumber(phoneNumber);
+            //user.setPhoneNumber(phoneNumber);
         }
+
+        user.saveInBackground();
 
         try {
             Glide.with(ProfileFragment.this)
@@ -124,6 +128,8 @@ public class ProfileFragment extends Fragment {
                     .into(ivProfile);
         } catch (NullPointerException e) {
             Log.d("ProfileFragment", "No Profile Pic");
+            e.printStackTrace();
+
             Glide.with(ProfileFragment.this)
                     .load(R.drawable.instagram_user_outline_24)
                     .into(ivProfile);
@@ -152,10 +158,9 @@ public class ProfileFragment extends Fragment {
                 i.printStackTrace();
             }
 
-            String sdPath = file1.getAbsolutePath().toString() + "/" + fileName;
+            String sdPath = file1.getAbsolutePath() + "/" + fileName;
 
             Log.d("imagePath", "imagePath is = " + sdPath);
-
 
             ParseFile parseFile = new ParseFile(new File(sdPath));
             user.put("profilePicture", parseFile);
@@ -191,17 +196,7 @@ public class ProfileFragment extends Fragment {
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(user.getFacebook()));
                     startActivity(browserIntent);
                 } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Notice")
-                            .setMessage("You did not provide a link to your Facebook yet!")
-                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.cancel();
-                                }
-                            })
-                            .setCancelable(false)
-                            .show();
+                    Toast.makeText(getContext(), "Please provide a link to your Facebook!", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -214,17 +209,7 @@ public class ProfileFragment extends Fragment {
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkedInLink));
                     startActivity(browserIntent);
                 } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Notice")
-                            .setMessage("You did not provide a link to your LinkedIn yet!")
-                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.cancel();
-                                }
-                            })
-                            .setCancelable(false)
-                            .show();
+                    Toast.makeText(getContext(), "Please provide a link to your LinkedIn!", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -237,17 +222,7 @@ public class ProfileFragment extends Fragment {
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitterLink));
                     startActivity(browserIntent);
                 } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Notice")
-                            .setMessage("You did not provide a link to your Twitter yet!")
-                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.cancel();
-                                }
-                            })
-                            .setCancelable(false)
-                            .show();
+                    Toast.makeText(getContext(), "Please provide a link to your Twitter!", Toast.LENGTH_LONG).show();
                 }
             }
         });

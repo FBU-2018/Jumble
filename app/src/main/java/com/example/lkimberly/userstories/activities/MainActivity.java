@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                     // to figure out what went wrong
                     Log.e("SignupActivity","Signup failure.");
                     e.printStackTrace();
-
+                    Toast.makeText(getApplicationContext(), "Please try another username, password, or email", Toast.LENGTH_LONG).show();
                     // return to avoid creating an account in firebase
                     return;
                 }

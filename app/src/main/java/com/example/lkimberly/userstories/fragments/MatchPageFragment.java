@@ -43,6 +43,8 @@ public class MatchPageFragment extends Fragment {
     // the adapter wired to the recycler view
     MatchPageAdapter adapter;
 
+    boolean jobsExist = false;
+
     public MatchPageFragment() {
 
     }
@@ -132,15 +134,7 @@ public class MatchPageFragment extends Fragment {
                             matchesModelList.clear();
                             Log.d("Objects", objects.toString());
 
-
-                            if (objects.size() == 0) {
-                                tv_no_matches.setVisibility(View.VISIBLE);
-                            }
-
-
                             for (int i = 0; i < objects.size(); i++) {
-
-                                Log.d("what is this", "this is a " + objects.get(i));
                                 Matches singleMatch = (Matches) objects.get(i);
                                 if (singleMatch.getJob() != null) {
                                     try {
@@ -187,6 +181,7 @@ public class MatchPageFragment extends Fragment {
                                         @Override
                                         public void done(List<Job> objects, ParseException e) {
                                             if (e == null) {
+
                                                 if (objects.size() > 0) {
                                                     matchesModelList.add(new MatchDataModel(3));
                                                 }
@@ -196,7 +191,14 @@ public class MatchPageFragment extends Fragment {
 
                                                     if (!matchDict.keySet().contains(objects.get(i).getObjectId())) {
                                                         matchesModelList.add(new MatchDataModel(2, objects.get(i)));
+                                                        jobsExist = true;
                                                     }
+                                                }
+
+                                                if (jobsExist) {
+                                                    tv_no_matches.setVisibility(View.INVISIBLE);
+                                                } else {
+                                                    tv_no_matches.setVisibility(View.VISIBLE);
                                                 }
 
                                                 Log.d("Size",matchesModelList.toString());
@@ -207,8 +209,6 @@ public class MatchPageFragment extends Fragment {
                                             }
                                         }
                                     });
-
-                            tv_no_matches.setVisibility(View.INVISIBLE);
                         } else {
                             e.printStackTrace();
                         }
