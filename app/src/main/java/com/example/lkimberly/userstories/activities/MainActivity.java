@@ -175,6 +175,9 @@ public class MainActivity extends AppCompatActivity {
         User user = new User();
         // Set core properties
         user.setUsername(username);
+        user.setName(username);
+        user.setInstitution("Unemployed");
+        user.setPhoneNumber("111-111-1111");
         user.setPassword(password);
         // Set custom properties
         // user.put("phone", "650-253-0000");

@@ -1,6 +1,8 @@
 package com.example.lkimberly.userstories.fragments;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,6 +16,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -30,6 +34,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.lkimberly.userstories.BitmapScaler;
+import com.example.lkimberly.userstories.activities.HomeActivity;
 import com.example.lkimberly.userstories.models.User;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -91,26 +96,26 @@ public class EditProfileFragment extends Fragment {
         saveProfileBtn = view.findViewById(R.id.save_profile_btn);
         ib_profile_photo = view.findViewById(R.id.ib_profile_photo);
         edit_profile_iv = view.findViewById(R.id.edit_profile_iv);
-        profile_iv = getActivity().findViewById(R.id.profile_iv);
 
         et_name = view.findViewById(R.id.profile_name);
         et_institution = view.findViewById(R.id.profile_institution);
         et_phoneNumber = view.findViewById(R.id.profile_phone_number);
 
-        tv_name = getActivity().findViewById(R.id.tv_profile_name);
-        tv_institution = getActivity().findViewById(R.id.tv_profile_institution);
-        tv_phoneNumber = getActivity().findViewById(R.id.tv_profile_phone_number);
-
         et_name.setText(user.getName());
-        Log.d("edit profile fragment", "et_name = " + et_name.getText() + ", user name = " + user.getName());
         et_institution.setText(user.getInstitution());
-        Log.d("edit profile fragment", "et_institution = " + et_institution.getText() + ", institution = " + user.getInstitution());
         et_phoneNumber.setText(user.getPhoneNumber());
-        Log.d("edit profile fragment", "et_name = " + et_phoneNumber.getText() + ", phone number = " + user.getPhoneNumber());
 
         ib_facebook = view.findViewById(R.id.ib_facebook);
         ib_linkedIn = view.findViewById(R.id.ib_linkedIn);
         ib_twitter = view.findViewById(R.id.ib_twitter);
+
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view2 = inflater.inflate(R.layout.fragment_profile, null);
+
+        tv_name = view2.findViewById(R.id.tv_profile_name);
+        tv_institution = view2.findViewById(R.id.tv_profile_institution);
+        tv_phoneNumber = view2.findViewById(R.id.tv_profile_phone_number);
+        profile_iv = view2.findViewById(R.id.profile_iv);
 
         saveProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +139,7 @@ public class EditProfileFragment extends Fragment {
                 }
 
                 user.saveInBackground();
+                HomeActivity.adapter.notifyDataSetChanged();
                 viewPager.setCurrentItem(0);
             }
         });

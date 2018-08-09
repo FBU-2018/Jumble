@@ -103,7 +103,7 @@ public class User extends ParseUser {
         public Query getTop() {
             orderByDescending("createdAt");
             setLimit(20);
-            return  this;
+            return this;
         }
 
 //        public Query withUser() {
