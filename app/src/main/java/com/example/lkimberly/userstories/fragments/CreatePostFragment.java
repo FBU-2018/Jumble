@@ -131,6 +131,8 @@ public class CreatePostFragment extends Fragment {
 
     static String jobTitle;
 
+    String dateString;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_create_post, container, false);
@@ -350,7 +352,7 @@ public class CreatePostFragment extends Fragment {
 
                 if (isTitleEmpty || isDescriptionEmpty || isTimeDateEmpty || isEstimationEmpty || isMoneyEmpty || isImagePathEmpty) {
 
-                    String message = "Please enter a ";
+                    String message = "Please enter a";
                     if (isTitleEmpty) {
                         message += "title";
                     }
@@ -359,7 +361,7 @@ public class CreatePostFragment extends Fragment {
                         if (isTitleEmpty) {
                             message += " and description";
                         } else {
-                            message += "description";
+                            message += " description";
                         }
                     }
 
@@ -367,7 +369,7 @@ public class CreatePostFragment extends Fragment {
                         if (isTitleEmpty || isDescriptionEmpty) {
                             message += " and time or date";
                         } else {
-                            message += "time or date";
+                            message += " time or date";
                         }
                     }
 
@@ -383,7 +385,7 @@ public class CreatePostFragment extends Fragment {
                         if (isTitleEmpty || isDescriptionEmpty || isTimeDateEmpty || isEstimationEmpty) {
                             message += " and fee";
                         } else {
-                            message += "fee";
+                            message += " fee";
                         }
                     }
 
@@ -462,6 +464,8 @@ public class CreatePostFragment extends Fragment {
                     etMoney.setText("");
                     etDescription.setText("");
                     etEstimation.setText("");
+                    etTime.setText("12:00 AM");
+                    etDate.setText(dateString);
                 }
             }
         });
@@ -475,7 +479,7 @@ public class CreatePostFragment extends Fragment {
 
         // init - set date to current date
         long currentDate = System.currentTimeMillis();
-        String dateString = sdf.format(currentDate);
+        dateString = sdf.format(currentDate);
         etDate.setText(dateString);
 
         // set calendar date and update editDate
@@ -576,7 +580,6 @@ public class CreatePostFragment extends Fragment {
         if (isServicesOK()) {
             init();
         }
-
     }
 
 

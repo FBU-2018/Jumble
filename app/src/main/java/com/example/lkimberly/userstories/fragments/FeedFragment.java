@@ -74,6 +74,7 @@ public class FeedFragment extends Fragment {
     ParseUser currentUser;
     ArrayList<Job> jobs;
 
+    boolean load = true;
 
     private static final int REQUEST_LOCATION = 1;
     LocationManager locationManager;
@@ -84,8 +85,6 @@ public class FeedFragment extends Fragment {
     private static final String TAG = "FeedFragment";
 
     TextView tvNoMoreJobs;
-    boolean isFull = true;
-
 
     public static List<ValueEventListener> ValueEventListenerList = new ArrayList<>();
 
@@ -103,6 +102,7 @@ public class FeedFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Setup any handles to view objects here
         // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
+
         getDeviceLocation();
 
         jobs = new ArrayList<>();
@@ -114,12 +114,15 @@ public class FeedFragment extends Fragment {
 
         al = new ArrayList<SwipeCard>();
 
-//        loadTopPosts();
-
-        if (isFull) {
+        Log.d("load", "load = " + load);
+        if (load) {
             loadTopPosts();
+            Log.d("here", "here");
         }
 
+        load = false;
+        
+        Log.d("load", "load = " + load);
 
         swipeCardAdapter = new SwipeCardAdapter(getContext(), getLayoutInflater(), al);
 
@@ -135,8 +138,6 @@ public class FeedFragment extends Fragment {
                 Log.d("LIST", "removed object!");
                 SwipeCard temp = al.remove(0);
                 swipeCardAdapter.notifyDataSetChanged();
-                isFull = false;
-
 
                 if (al.size() == 0) {
                     tvNoMoreJobs.setVisibility(View.VISIBLE);
@@ -237,8 +238,6 @@ public class FeedFragment extends Fragment {
 
 
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-
-
     }
 
     private void createMatch(SwipeCard currentCard) {
@@ -274,6 +273,12 @@ public class FeedFragment extends Fragment {
             @Override
             public void done(List<Job> objects, ParseException e) {
                 if (e == null) {
+
+                    if (objects.size() == 0) {
+                        tvNoMoreJobs.setVisibility(View.VISIBLE);
+                    } else {
+                        tvNoMoreJobs.setVisibility(View.INVISIBLE);
+                    }
 
                     for (int i = 0; i < objects.size(); ++i) {
                         Job job = objects.get(i);

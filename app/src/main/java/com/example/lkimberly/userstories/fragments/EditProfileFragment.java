@@ -41,6 +41,8 @@ import static com.parse.ParseUser.getCurrentUser;
 
 import com.example.lkimberly.userstories.R;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -58,7 +60,10 @@ public class EditProfileFragment extends Fragment {
     EditText et_name;
     EditText et_institution;
     EditText et_phoneNumber;
-//    EditText et_link;
+
+    TextView tv_name;
+    TextView tv_institution;
+    TextView tv_phoneNumber;
 
     ImageButton ib_facebook;
     ImageButton ib_linkedIn;
@@ -83,31 +88,33 @@ public class EditProfileFragment extends Fragment {
 
         // Grab a reference to our view pager.
         viewPager = getActivity().findViewById(R.id.pager);
-        saveProfileBtn = getActivity().findViewById(R.id.save_profile_btn);
-        ib_profile_photo = getActivity().findViewById(R.id.ib_profile_photo);
-        edit_profile_iv = getActivity().findViewById(R.id.edit_profile_iv);
+        saveProfileBtn = view.findViewById(R.id.save_profile_btn);
+        ib_profile_photo = view.findViewById(R.id.ib_profile_photo);
+        edit_profile_iv = view.findViewById(R.id.edit_profile_iv);
         profile_iv = getActivity().findViewById(R.id.profile_iv);
 
-        et_name = getActivity().findViewById(R.id.profile_name);
-        et_institution = getActivity().findViewById(R.id.profile_institution);
-        et_phoneNumber = getActivity().findViewById(R.id.profile_phone_number);
+        et_name = view.findViewById(R.id.profile_name);
+        et_institution = view.findViewById(R.id.profile_institution);
+        et_phoneNumber = view.findViewById(R.id.profile_phone_number);
+
+        tv_name = getActivity().findViewById(R.id.tv_profile_name);
+        tv_institution = getActivity().findViewById(R.id.tv_profile_institution);
+        tv_phoneNumber = getActivity().findViewById(R.id.tv_profile_phone_number);
 
         et_name.setText(user.getName());
+        Log.d("edit profile fragment", "et_name = " + et_name.getText() + ", user name = " + user.getName());
         et_institution.setText(user.getInstitution());
+        Log.d("edit profile fragment", "et_institution = " + et_institution.getText() + ", institution = " + user.getInstitution());
         et_phoneNumber.setText(user.getPhoneNumber());
+        Log.d("edit profile fragment", "et_name = " + et_phoneNumber.getText() + ", phone number = " + user.getPhoneNumber());
 
-        ib_facebook = getActivity().findViewById(R.id.ib_facebook);
-        ib_linkedIn = getActivity().findViewById(R.id.ib_linkedIn);
-        ib_twitter = getActivity().findViewById(R.id.ib_twitter);
+        ib_facebook = view.findViewById(R.id.ib_facebook);
+        ib_linkedIn = view.findViewById(R.id.ib_linkedIn);
+        ib_twitter = view.findViewById(R.id.ib_twitter);
 
         saveProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                TextView tv_name = getActivity().findViewById(R.id.tv_profile_name);
-                TextView tv_institution = getActivity().findViewById(R.id.tv_profile_institution);
-                TextView tv_phoneNumber = getActivity().findViewById(R.id.tv_profile_phone_number);
-
                 String name = et_name.getText().toString();
                 if (!name.equals("")) {
                     tv_name.setText(name);
@@ -126,8 +133,8 @@ public class EditProfileFragment extends Fragment {
                     user.setPhoneNumber(phoneNumber);
                 }
 
-                viewPager.setCurrentItem(0);
                 user.saveInBackground();
+                viewPager.setCurrentItem(0);
             }
         });
 

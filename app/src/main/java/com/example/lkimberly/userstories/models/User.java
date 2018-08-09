@@ -24,13 +24,13 @@ public class User extends ParseUser {
 
     // Get name
     public String getName() {
-        return  getString(KEY_NAME);
+        return getString(KEY_NAME);
     }
 
     public void setName(String name) { put(KEY_NAME, name); }
 
     public String getPhoneNumber() {
-        return  getString(KEY_PHONE_NUMBER);
+        return getString(KEY_PHONE_NUMBER);
     }
 
     public void setPhoneNumber(String phoneNumber) { put(KEY_PHONE_NUMBER, phoneNumber); }
@@ -52,7 +52,7 @@ public class User extends ParseUser {
 
     // Get linkedin url
     public String getLinkedIn() {
-        return  getString(KEY_LINKEDIN);
+        return getString(KEY_LINKEDIN);
     }
 
     public void setLinkedIn(String linkedin) {
@@ -62,7 +62,7 @@ public class User extends ParseUser {
 
     // Get twitter url
     public String getTwitter() {
-        return  getString(KEY_TWITTER);
+        return getString(KEY_TWITTER);
     }
 
     public void setTwitter(String name) {
@@ -72,7 +72,7 @@ public class User extends ParseUser {
 
     // Get institution
     public String getInstitution() {
-        return  getString(KEY_INSTITUTION);
+        return getString(KEY_INSTITUTION);
     }
 
     public void setInstitution(String institution) {
