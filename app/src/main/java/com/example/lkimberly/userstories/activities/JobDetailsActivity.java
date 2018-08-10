@@ -327,6 +327,7 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
                         final Matches matchToDelete = (Matches) job.get("match");
                         job.remove("match");
                         job.remove("userWhoMatched");
+                        job.put("hasBeenRated", false);
                         job.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
