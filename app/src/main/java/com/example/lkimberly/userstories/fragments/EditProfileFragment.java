@@ -61,6 +61,7 @@ public class EditProfileFragment extends Fragment {
     ImageView profile_iv;
 
     private ViewPager viewPager;
+    boolean isFilled = true;
 
     EditText et_name;
     EditText et_institution;
@@ -92,7 +93,7 @@ public class EditProfileFragment extends Fragment {
         final User user = (User) ParseUser.getCurrentUser();
 
         // Grab a reference to our view pager.
-        viewPager = getActivity().findViewById(R.id.pager);
+        viewPager = getActivity().findViewById(R.id.view_pager);
         saveProfileBtn = view.findViewById(R.id.save_profile_btn);
         ib_profile_photo = view.findViewById(R.id.ib_profile_photo);
         edit_profile_iv = view.findViewById(R.id.edit_profile_iv);
@@ -101,9 +102,17 @@ public class EditProfileFragment extends Fragment {
         et_institution = view.findViewById(R.id.profile_institution);
         et_phoneNumber = view.findViewById(R.id.profile_phone_number);
 
-        et_name.setText(user.getName());
-        et_institution.setText(user.getInstitution());
-        et_phoneNumber.setText(user.getPhoneNumber());
+        if (user.getName() != null) {
+            et_name.setText(user.getName());
+        }
+
+        if (user.getInstitution() != null) {
+            et_institution.setText(user.getInstitution());
+        }
+
+        if (user.getPhoneNumber() != null) {
+            et_phoneNumber.setText(user.getPhoneNumber());
+        }
 
         ib_facebook = view.findViewById(R.id.ib_facebook);
         ib_linkedIn = view.findViewById(R.id.ib_linkedIn);
@@ -124,23 +133,37 @@ public class EditProfileFragment extends Fragment {
                 if (!name.equals("")) {
                     tv_name.setText(name);
                     user.setName(name);
+                } else {
+                    Toast.makeText(getContext(), "Please provide a name", Toast.LENGTH_LONG).show();
+                    isFilled = false;
                 }
 
                 String institution = et_institution.getText().toString();
                 if (!institution.equals("")) {
                     tv_institution.setText(institution);
                     user.setInstitution(institution);
+                } else {
+                    Toast.makeText(getContext(), "Please provide an institution", Toast.LENGTH_LONG).show();
+                    isFilled = false;
                 }
 
                 String phoneNumber = et_phoneNumber.getText().toString();
                 if (!phoneNumber.equals("")) {
                     tv_phoneNumber.setText(phoneNumber);
                     user.setPhoneNumber(phoneNumber);
+                } else {
+                    Toast.makeText(getContext(), "Please provide a phone number", Toast.LENGTH_LONG).show();
+                    isFilled = false;
                 }
 
                 user.saveInBackground();
                 HomeActivity.adapter.notifyDataSetChanged();
-                viewPager.setCurrentItem(0);
+
+                if (isFilled) {
+                    viewPager.setCurrentItem(0);
+                }
+
+                isFilled = true;
             }
         });
 

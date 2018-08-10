@@ -1,5 +1,6 @@
 package com.example.lkimberly.userstories.fragments;
 
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -76,7 +77,7 @@ public class ProfileFragment extends Fragment {
         user = (User) ParseUser.getCurrentUser();
 
         // Grab a reference to our view pager.
-        viewPager = getActivity().findViewById(R.id.pager);
+        viewPager = getActivity().findViewById(R.id.view_pager);
         editProfileBtn = getActivity().findViewById(R.id.edit_profile_btn);
         logOutBtn = getActivity().findViewById(R.id.log_out_btn);
 
@@ -192,10 +193,13 @@ public class ProfileFragment extends Fragment {
         facebook_ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (user.getFacebook() != null) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(user.getFacebook()));
+                try {
+                    String facebookLink = user.getFacebook();
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(facebookLink));
                     startActivity(browserIntent);
-                } else {
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getContext(), "Your social media link wasn't valid. Please provide a valid link.", Toast.LENGTH_SHORT).show();
+                } catch (NullPointerException e) {
                     Toast.makeText(getContext(), "Please provide a link to your Facebook!", Toast.LENGTH_LONG).show();
                 }
             }
@@ -204,11 +208,13 @@ public class ProfileFragment extends Fragment {
         linkedIn_ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String linkedInLink = user.getLinkedIn();
-                if (linkedInLink != null) {
+                try {
+                    String linkedInLink = user.getLinkedIn();
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkedInLink));
                     startActivity(browserIntent);
-                } else {
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getContext(), "Your social media link wasn't valid. Please provide a valid link.", Toast.LENGTH_SHORT).show();
+                } catch (NullPointerException e) {
                     Toast.makeText(getContext(), "Please provide a link to your LinkedIn!", Toast.LENGTH_LONG).show();
                 }
             }
@@ -217,11 +223,13 @@ public class ProfileFragment extends Fragment {
         twitter_ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String twitterLink = user.getTwitter();
-                if (twitterLink != null) {
+                try {
+                    String twitterLink = user.getTwitter();
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitterLink));
                     startActivity(browserIntent);
-                } else {
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getContext(), "Your social media link wasn't valid. Please provide a valid link.", Toast.LENGTH_SHORT).show();
+                } catch (NullPointerException e) {
                     Toast.makeText(getContext(), "Please provide a link to your Twitter!", Toast.LENGTH_LONG).show();
                 }
             }

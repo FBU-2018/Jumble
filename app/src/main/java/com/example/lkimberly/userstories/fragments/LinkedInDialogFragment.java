@@ -27,6 +27,7 @@ public class LinkedInDialogFragment extends DialogFragment {
         final View view = inflater.inflate(R.layout.dialog_linkedin, null);
 
         final EditText etLinks = view.findViewById(R.id.etLinks);
+        etLinks.setText(user.getLinkedIn());
 
         builder.setView(view)
                 .setPositiveButton("Set link", new DialogInterface.OnClickListener() {
