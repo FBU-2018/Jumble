@@ -27,7 +27,6 @@ public class FacebookDialogFragment extends DialogFragment {
         final View view = inflater.inflate(R.layout.dialog_facebook, null);
 
         final EditText etLinks = view.findViewById(R.id.etLinks);
-        etLinks.setText(user.getFacebook());
 
         builder.setView(view)
                 .setPositiveButton("Set link", new DialogInterface.OnClickListener() {

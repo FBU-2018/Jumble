@@ -1,28 +1,17 @@
 package com.example.lkimberly.userstories.activities;
 
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.lkimberly.userstories.R;
-import com.example.lkimberly.userstories.fragments.EditProfileFragment;
-import com.example.lkimberly.userstories.fragments.FacebookDialogFragment;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.Matches;
 import com.example.lkimberly.userstories.models.User;
@@ -48,6 +37,7 @@ import java.util.List;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 import static java.security.AccessController.getContext;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -185,11 +175,10 @@ public class MainActivity extends AppCompatActivity {
         User user = new User();
         // Set core properties
         user.setUsername(username);
-        //user.setName(username);
-        //user.setInstitution("Unemployed");
-        //user.setPhoneNumber("111-111-1111");
+        user.setName(username);
+        user.setInstitution("Unemployed");
+        user.setPhoneNumber("111-111-1111");
         user.setPassword(password);
-
         // Set custom properties
         // user.put("phone", "650-253-0000");
         // Invoke signUpInBackground
@@ -198,10 +187,9 @@ public class MainActivity extends AppCompatActivity {
                 if (e == null) {
                     // Hooray! Let them use the app now.
                     Log.d("SignupActivity","Signup successful!");
-
-                   Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                   startActivity(intent);
-                   finish();
+                    final Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
                 } else {
                     // Sign up didn't succeed. Look at the ParseException
                     // to figure out what went wrong

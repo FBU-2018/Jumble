@@ -32,7 +32,6 @@ import com.example.lkimberly.userstories.fragments.FeedFragment;
 import com.example.lkimberly.userstories.fragments.MatchPageFragment;
 import com.example.lkimberly.userstories.fragments.ProfileFragment;
 import com.example.lkimberly.userstories.models.Job;
-import com.example.lkimberly.userstories.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -49,13 +48,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.parse.ParseUser.getCurrentUser;
-
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = "HomeActivity";
     ParseUser user;
-    User user1;
     static File photoFile;
 
     ImageButton ib_profile;
@@ -112,7 +108,7 @@ public class HomeActivity extends AppCompatActivity {
         fragments.add(myMatchPageFragment);
 
         // Grab a reference to our view pager.
-        viewPager = findViewById(R.id.view_pager);
+        viewPager = findViewById(R.id.pager);
 
         // Instantiate our ExampleAdapter which we will use in our ViewPager
         adapter = new JumbleFragmentAdapter(getSupportFragmentManager(), fragments);
@@ -209,6 +205,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+
         ib_profile = findViewById(R.id.ib_profile);
 
         ib_profile.setOnClickListener(new View.OnClickListener() {
@@ -232,12 +229,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
 
-        user1 = (User) getCurrentUser();
-        if (user1.getPhoneNumber() == null && user1.getInstitution() == null) {
-            viewPager.setCurrentItem(1);
-        } else {
-            viewPager.setCurrentItem(2);
-        }
+        viewPager.setCurrentItem(2);
     }
 
     @Override

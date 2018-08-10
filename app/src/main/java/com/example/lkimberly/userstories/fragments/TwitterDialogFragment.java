@@ -27,7 +27,6 @@ public class TwitterDialogFragment extends DialogFragment {
         final View view = inflater.inflate(R.layout.dialog_twitter, null);
 
         final EditText etLinks = view.findViewById(R.id.etLinks);
-        etLinks.setText(user.getTwitter());
 
         builder.setView(view)
                 .setPositiveButton("Set link", new DialogInterface.OnClickListener() {
