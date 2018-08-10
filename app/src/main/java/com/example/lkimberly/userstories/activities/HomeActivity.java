@@ -71,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
      * The adapter used to display information for our bottom navigation view.
      */
 
-    JumbleFragmentAdapter adapter;
+    public static JumbleFragmentAdapter adapter;
 
     CreatePostFragment myCreatePostFragment;
     MatchPageFragment myMatchPageFragment;
@@ -152,6 +152,7 @@ public class HomeActivity extends AppCompatActivity {
                         // Set the item to the first item in our list.
                         // This is the home placeholder fragment.
 
+                        adapter.notifyDataSetChanged();
                         ib_profile.setSelected(false);
 
                         // reset the activation of icons after user goes to profile
@@ -165,6 +166,8 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.action_discover:
                         // Set the item to the first item in our list.
                         // This is the discovery placeholder fragment.
+
+                        adapter.notifyDataSetChanged();
                         ib_profile.setSelected(false);
 
                         // reset the activation of icons after user goes to profile
@@ -179,7 +182,7 @@ public class HomeActivity extends AppCompatActivity {
                         // which is the profile fragment placeholder
 
 
-//                        adapter.notifyDataSetChanged();
+                        adapter.notifyDataSetChanged();
                         // myMatchPageFragment.refresh();
                         ib_profile.setSelected(false);
 

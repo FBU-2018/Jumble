@@ -120,19 +120,19 @@ public class FeedFragment extends Fragment {
         currentUser = getCurrentUser();
 
         final Job.Query postsQuery = new Job.Query();
-        postsQuery.getTop().withUser();
+
+        //if (load) {
+        //    postsQuery.getTop().withUser();
+        //}
 
         al = new ArrayList<SwipeCard>();
 
-        Log.d("load", "load = " + load);
         if (load) {
             loadTopPosts();
-            Log.d("here", "here");
+            Log.d("Here", "here");
         }
 
         load = false;
-        
-        Log.d("load", "load = " + load);
 
         swipeCardAdapter = new SwipeCardAdapter(getContext(), getLayoutInflater(), al);
 
@@ -140,18 +140,19 @@ public class FeedFragment extends Fragment {
 
         tvNoMoreJobs = getActivity().findViewById(R.id.tv_no_more_jobs);
 
+        if (al.size() == 0) {
+            tvNoMoreJobs.setVisibility(View.VISIBLE);
+        }
+
         flingContainer.setAdapter(swipeCardAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 Log.d("LIST", "removed object!");
-                SwipeCard temp = al.remove(0);
+                //SwipeCard temp = al.remove(0);
+                //al.remove(0);
                 swipeCardAdapter.notifyDataSetChanged();
-
-                if (al.size() == 0) {
-                    tvNoMoreJobs.setVisibility(View.VISIBLE);
-                }
             }
 
             @Override
@@ -278,7 +279,6 @@ public class FeedFragment extends Fragment {
             }
         });
 
-
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
     }
 
@@ -309,6 +309,7 @@ public class FeedFragment extends Fragment {
     }
 
     private void loadTopPosts() {
+
         List<String> jobPreferences = ((User) ParseUser.getCurrentUser()).getJobPreferences();
         boolean handlePreferences = false;
 
@@ -318,6 +319,9 @@ public class FeedFragment extends Fragment {
         }
 
         // initialize query
+
+        Log.d("Here2", "here");
+
         final Job.Query postsQuery = new Job.Query();
         postsQuery.getTop().withUser();
 
@@ -341,6 +345,7 @@ public class FeedFragment extends Fragment {
                     for (int i = 0; i < objects.size(); ++i) {
                         Job job = objects.get(i);
                         Log.d("Matched job id ", job.getObjectId());
+                        /*
                         if (job.getUser().getObjectId().equals(getCurrentUser().getObjectId())) {
                             String jobObjectId = job.getObjectId();
                             String jobTitle = job.getTitle();
@@ -378,21 +383,23 @@ public class FeedFragment extends Fragment {
                             myRef.addValueEventListener(listener);
                             ValueEventListenerList.add(listener);
                         }
+                        */
 
-                        try {
-
-                            al.add(new SwipeCard(job.getTitle().toString(), job.getDescription().toString(), job.getImage().getUrl(), job));
-                            rankList(al);
-                            Collections.reverse(al);
+                        if (!job.getUser().getObjectId().equals(getCurrentUser().getObjectId())) {
+                            try {
+                                al.add(new SwipeCard(job.getTitle(), job.getDescription(), job.getImage().getUrl(), job));
+                                rankList(al);
+                                Collections.reverse(al);
 
 //                            al.add(new SwipeCard(job.getTitle(), job.getDescription(), job.getImage().getUrl(), job));
 
-                        } catch (NullPointerException e2) {
-                            rankList(al);
-                            Collections.reverse(al);
-                            al.add(new SwipeCard("EMPTY", "EMPTY", "EMPTY", null));
+                            } catch (NullPointerException e2) {
+                                rankList(al);
+                                Collections.reverse(al);
+                                al.add(new SwipeCard("EMPTY", "EMPTY", "EMPTY", null));
+                            }
+                            swipeCardAdapter.notifyDataSetChanged();
                         }
-                        swipeCardAdapter.notifyDataSetChanged();
                     }
                     int count = 1;
                     for (SwipeCard card: al) {
