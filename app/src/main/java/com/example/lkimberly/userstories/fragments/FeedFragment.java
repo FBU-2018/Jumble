@@ -122,15 +122,15 @@ public class FeedFragment extends Fragment {
         final Job.Query postsQuery = new Job.Query();
 
         //if (load) {
-        //    postsQuery.getTop().withUser();
+            postsQuery.getTop().withUser();
         //}
 
         al = new ArrayList<SwipeCard>();
 
-        if (load) {
+//        if (load) {
             loadTopPosts();
             Log.d("Here", "here");
-        }
+//        }
 
         load = false;
 
@@ -151,7 +151,7 @@ public class FeedFragment extends Fragment {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 Log.d("LIST", "removed object!");
                 //SwipeCard temp = al.remove(0);
-                //al.remove(0);
+                al.remove(0);
                 swipeCardAdapter.notifyDataSetChanged();
             }
 

@@ -145,12 +145,20 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
             divider.setVisibility(View.GONE);
         } else {
             try {
-                userWhoMatchedWithMe = job.getParseUser("userWhoMatched").fetchIfNeeded();
+                if (job.getParseUser("userWhoMatched") != null) {
+                    userWhoMatchedWithMe = job.getParseUser("userWhoMatched").fetchIfNeeded();
+                } else {
+                    userWhoMatchedWithMe = null;
+                }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
             try {
-                userWhoMatchedWithMeRatingObject = ((Ratings) userWhoMatchedWithMe.get("myRating")).fetchIfNeeded();
+                if (userWhoMatchedWithMe != null){
+                    userWhoMatchedWithMeRatingObject = ((Ratings) userWhoMatchedWithMe.get("myRating")).fetchIfNeeded();
+                } else {
+                    userWhoMatchedWithMeRatingObject = null;
+                }
             } catch (ParseException e) {
                 e.printStackTrace();
             }

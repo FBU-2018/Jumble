@@ -307,21 +307,23 @@ public class HomeActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Intent potentialIntent = data;
-        // REQUEST_CODE is defined above
-        Log.d("HomeActivity", "checking HomeActivity onActivityResult");
-        if (resultCode == RESULT_OK) {
-            if (potentialIntent.getStringExtra("refresh") != null) {
-                if (potentialIntent.getStringExtra("refresh").equals("true")) {
-                    myMatchPageFragment.refresh();
-                }
-            }
 
-            if (potentialIntent.getBooleanExtra("returnFromMap", false)) {
-                Log.d("HomeActivity", "back from Map");
-                Job job = Parcels.unwrap(data.getParcelableExtra("newJob"));
-                // call create post fragment
-                myCreatePostFragment.updateLocation(job);
-            }
+        if (data != null) {
+            // REQUEST_CODE is defined above
+            Log.d("HomeActivity", "checking HomeActivity onActivityResult");
+            if (resultCode == RESULT_OK) {
+                if (potentialIntent.getStringExtra("refresh") != null) {
+                    if (potentialIntent.getStringExtra("refresh").equals("true")) {
+                        myMatchPageFragment.refresh();
+                    }
+                }
+
+                if (potentialIntent.getBooleanExtra("returnFromMap", false)) {
+                    Log.d("HomeActivity", "back from Map");
+                    Job job = Parcels.unwrap(data.getParcelableExtra("newJob"));
+                    // call create post fragment
+                    myCreatePostFragment.updateLocation(job);
+                }
 //            if (potentialIntent.getStringExtra("sendToMessage") != null) {
 //                if (potentialIntent.getStringExtra("sendToMessage").equals("true")) {
 //                    Intent intent = new Intent(Intent.ACTION_SEND);
@@ -331,6 +333,7 @@ public class HomeActivity extends AppCompatActivity {
 //                    startActivity(intent);
 //                }
 //            }
+            }
         }
     }
 
