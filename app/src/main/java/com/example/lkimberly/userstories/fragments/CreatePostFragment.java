@@ -138,6 +138,8 @@ public class CreatePostFragment extends Fragment {
 
     String dateString;
 
+    Boolean jobSelected = false;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_create_post, container, false);
@@ -305,6 +307,7 @@ public class CreatePostFragment extends Fragment {
                 boolean isEstimationEmpty = false;
                 boolean isMoneyEmpty = false;
                 boolean isImagePathEmpty = false;
+                boolean isLocationEmpty = false;
 
                 String title = etTitle.getText().toString();
 
@@ -355,49 +358,54 @@ public class CreatePostFragment extends Fragment {
                     newJob.setLocation(btnMap.getText().toString());
                 }
 
-                if (isTitleEmpty || isDescriptionEmpty || isTimeDateEmpty || isEstimationEmpty || isMoneyEmpty || isImagePathEmpty) {
+                if (jobSelected == false){
+                    isLocationEmpty = true;
+                }
 
-                    String message = "Please enter a";
-                    if (isTitleEmpty) {
-                        message += "title";
-                    }
+                if (isTitleEmpty || isDescriptionEmpty || isTimeDateEmpty || isEstimationEmpty || isMoneyEmpty || isImagePathEmpty || isLocationEmpty) {
 
-                    if (isDescriptionEmpty) {
-                        if (isTitleEmpty) {
-                            message += " and description";
-                        } else {
-                            message += " description";
-                        }
-                    }
-
-                    if (isTimeDateEmpty) {
-                        if (isTitleEmpty || isDescriptionEmpty) {
-                            message += " and time or date";
-                        } else {
-                            message += " time or date";
-                        }
-                    }
-
-                    if (isEstimationEmpty) {
-                        if (isTitleEmpty || isDescriptionEmpty || isTimeDateEmpty) {
-                            message += " and estimation";
-                        } else {
-                            message += "n estimation";
-                        }
-                    }
-
-                    if (isMoneyEmpty) {
-                        if (isTitleEmpty || isDescriptionEmpty || isTimeDateEmpty || isEstimationEmpty) {
-                            message += " and fee";
-                        } else {
-                            message += " fee";
-                        }
-                    }
-
-                    if (isImagePathEmpty) {
-                        message = "Please give this job a photo";
-                    }
-                    message += "!";
+//                    String message = "Please enter a";
+//                    if (isTitleEmpty) {
+//                        message += "title";
+//                    }
+//
+//                    if (isDescriptionEmpty) {
+//                        if (isTitleEmpty) {
+//                            message += " and description";
+//                        } else {
+//                            message += " description";
+//                        }
+//                    }
+//
+//                    if (isTimeDateEmpty) {
+//                        if (isTitleEmpty || isDescriptionEmpty) {
+//                            message += " and time or date";
+//                        } else {
+//                            message += " time or date";
+//                        }
+//                    }
+//
+//                    if (isEstimationEmpty) {
+//                        if (isTitleEmpty || isDescriptionEmpty || isTimeDateEmpty) {
+//                            message += " and estimation";
+//                        } else {
+//                            message += "n estimation";
+//                        }
+//                    }
+//
+//                    if (isMoneyEmpty) {
+//                        if (isTitleEmpty || isDescriptionEmpty || isTimeDateEmpty || isEstimationEmpty) {
+//                            message += " and fee";
+//                        } else {
+//                            message += " fee";
+//                        }
+//                    }
+//
+//                    if (isImagePathEmpty) {
+//                        message = "Please give this job a photo";
+//                    }
+//                    message += "!";
+                    String message = "Plese fill out all fields!";
                     Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
                 } else {
 
@@ -490,8 +498,12 @@ public class CreatePostFragment extends Fragment {
                     etMoney.setText("");
                     etDescription.setText("");
                     etEstimation.setText("");
-                    etTime.setText("12:00 AM");
-                    etDate.setText(dateString);
+                    etTime.setText("");
+                    etDate.setText("");
+                    btnMap.setText("");
+                    ivPhoto.setColorFilter(getContext().getResources().getColor(R.color.black));
+
+
                 }
             }
         });
@@ -506,7 +518,7 @@ public class CreatePostFragment extends Fragment {
         // init - set date to current date
         long currentDate = System.currentTimeMillis();
         dateString = sdf.format(currentDate);
-        etDate.setText(dateString);
+//        etDate.setText(dateString);
 
         // set calendar date and update editDate
         date = new DatePickerDialog.OnDateSetListener() {
@@ -550,7 +562,6 @@ public class CreatePostFragment extends Fragment {
         //SimpleDateFormat mdFormat = new SimpleDateFormat("hh:mm a");
         //String currentTime = mdFormat.format(calendar.getTime());
 
-        etTime.setText("12:00 AM");
 
         etTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -615,7 +626,7 @@ public class CreatePostFragment extends Fragment {
 
     private void init() {
         if (mLocationPermissionsGranted) {
-                getDeviceLocation();
+//                getDeviceLocation();
         }
 
         //btnMap = getActivity().findViewById(R.id.btnMap);
@@ -765,6 +776,7 @@ public class CreatePostFragment extends Fragment {
     public void updateLocation(Job job) {
         Log.d("CreatePostFragment", "trying to update location");
         newJob = job;
+        jobSelected = true;
         btnMap.setText(job.getLocation());
         iv_location_complete.setVisibility(View.VISIBLE);
     }

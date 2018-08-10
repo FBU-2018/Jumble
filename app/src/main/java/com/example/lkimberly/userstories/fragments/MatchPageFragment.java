@@ -25,11 +25,14 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class MatchPageFragment extends Fragment {
 
@@ -190,6 +193,10 @@ public class MatchPageFragment extends Fragment {
                                 matchesModelList.add(new MatchDataModel(0, usersList,jobOfCurrentUser));
                             }
 
+                            final List<Boolean> hasQueried = Arrays.asList(true);
+
+                            final Set<List<Job>> jobQuerySet = new HashSet<>();
+
                             // Query other jobs user may have
                             final Job.Query jobQuery = new Job.Query();
                             jobQuery.getTop()
@@ -198,42 +205,45 @@ public class MatchPageFragment extends Fragment {
                                         @Override
                                         public void done(List<Job> objects, ParseException e) {
                                             if (e == null) {
+                                                jobQuerySet.add(objects);
+                                                if (jobQuerySet.size() == 0) {
 
-                                                if (objects.size() > 0) {
-                                                    matchesModelList.add(new MatchDataModel(3));
-                                                }
-
-                                                // keep a count so if the jobs queried have matches the header saying "the following jobs have no matches yet..." doesn't pop up
-                                                int jobs_that_are_not_matches_count = 0;
-                                                for (int i = 0; i < objects.size(); i++) {
-                                                    Log.d("Query JOB", objects.get(i).getObjectId());
-
-                                                    if (!matchDict.keySet().contains(objects.get(i).getObjectId())) {
-                                                        matchesModelList.add(new MatchDataModel(2, objects.get(i)));
-
-                                                        jobs_that_are_not_matches_count++;
+                                                    if (objects.size() > 0) {
+                                                        matchesModelList.add(new MatchDataModel(3));
                                                     }
-                                                }
 
-                                                if (jobs_that_are_not_matches_count == 0){
-                                                    matchesModelList.remove(matchesModelList.size()-1);
+                                                    // keep a count so if the jobs queried have matches the header saying "the following jobs have no matches yet..." doesn't pop up
+                                                    int jobs_that_are_not_matches_count = 0;
+                                                    for (int i = 0; i < objects.size(); i++) {
+                                                        Log.d("Query JOB", objects.get(i).getObjectId());
+
+                                                        if (!matchDict.keySet().contains(objects.get(i).getObjectId())) {
+                                                            matchesModelList.add(new MatchDataModel(2, objects.get(i)));
+
+                                                            jobs_that_are_not_matches_count++;
+                                                        }
+                                                    }
+
+                                                    if (jobs_that_are_not_matches_count == 0) {
+                                                        matchesModelList.remove(matchesModelList.size() - 1);
 
                                                         jobsExist = true;
                                                     }
                                                 }
-
-                                                if (jobsExist) {
-                                                    tv_no_matches.setVisibility(View.INVISIBLE);
-                                                } else {
-                                                    tv_no_matches.setVisibility(View.VISIBLE);
-                                                }
-
-                                                Log.d("Size",matchesModelList.toString());
-                                                adapter.notifyDataSetChanged();
-                                                if (scrollToTop) {
-                                                    rvMatches.scrollToPosition(0);
-                                                }
                                             }
+
+                                            if (jobsExist) {
+                                                tv_no_matches.setVisibility(View.INVISIBLE);
+                                            } else {
+                                                tv_no_matches.setVisibility(View.VISIBLE);
+                                            }
+
+                                            Log.d("Size", matchesModelList.toString());
+                                            adapter.notifyDataSetChanged();
+                                            if (scrollToTop) {
+                                                rvMatches.scrollToPosition(0);
+                                            }
+                                        }
                                     });
                         } else {
                             e.printStackTrace();
