@@ -3,17 +3,17 @@ package com.example.lkimberly.userstories;
 import android.app.Application;
 
 import com.example.lkimberly.userstories.models.Job;
-
 import com.example.lkimberly.userstories.models.Matches;
+import com.example.lkimberly.userstories.models.Ratings;
 import com.example.lkimberly.userstories.models.User;
-
-//import com.onesignal.OneSignal;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+
+//import com.onesignal.OneSignal;
 
 public class ParseApp extends Application {
     @Override
@@ -29,6 +29,7 @@ public class ParseApp extends Application {
         ParseObject.registerSubclass(Job.class);
         ParseObject.registerSubclass(User.class);
         ParseObject.registerSubclass(Matches.class);
+        ParseObject.registerSubclass(Ratings.class);
 
         // FCM token will be automatically registered by ParseFirebaseJobService
         // Look for ParseFCM log messages to confirm

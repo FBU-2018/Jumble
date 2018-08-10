@@ -27,6 +27,10 @@ public class Job  extends ParseObject {
 
     private static final String KEY_MONEY = "money";
 
+    private static final String KEY_HAS_BEEN_RATED = "hasBeenRated";
+    private static final String KEY_CATEGORY = "category";
+
+
     public String getTitle() {
         return getString(KEY_TITLE);
     }
@@ -115,6 +119,12 @@ public class Job  extends ParseObject {
         put(KEY_MONEY, money);
     }
 
+    public void setHasBeenRated(boolean hasBeenRated) { put(KEY_HAS_BEEN_RATED, hasBeenRated);}
+
+    public String getCategory() { return getString(KEY_CATEGORY);}
+
+    public void setCategory(String category) {put(KEY_CATEGORY, category);}
+
     public static class Query extends ParseQuery<Job> {
 
         public Query() {
@@ -129,6 +139,11 @@ public class Job  extends ParseObject {
 
         public Query withUser() {
             include("user");
+            return this;
+        }
+
+        public Query withPreference(String preference){
+            whereEqualTo(KEY_CATEGORY, preference);
             return this;
         }
     }

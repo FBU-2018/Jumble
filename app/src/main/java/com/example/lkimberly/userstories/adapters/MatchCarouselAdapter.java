@@ -18,6 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.activities.ProfileDetailsActivity;
 import com.example.lkimberly.userstories.models.Job;
+import com.example.lkimberly.userstories.models.Ratings;
 import com.example.lkimberly.userstories.models.User;
 import com.parse.FindCallback;
 import com.parse.ParseUser;
@@ -82,7 +83,14 @@ public class MatchCarouselAdapter extends RecyclerView.Adapter<MatchCarouselAdap
 //        holder.tvDate.setText(getRelativeTimeAgo(post.createdAt()));
         holder.user = user;
 
-        int rating = (int) ((parseDouble((String)user.get("rating")))*5);
+        Ratings userRatingObject = null;
+        try {
+            userRatingObject = ((Ratings) user.get("myRating")).fetchIfNeeded();
+        } catch (com.parse.ParseException e) {
+            e.printStackTrace();
+        }
+        String userRating = userRatingObject.getRating().toString();
+        int rating = (int) ((parseDouble(userRating))*5);
         holder.rbRatings.setRating(rating);
 
         int round_radius = context.getResources().getInteger(R.integer.radius);

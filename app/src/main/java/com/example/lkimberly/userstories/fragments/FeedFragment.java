@@ -1,24 +1,19 @@
 package com.example.lkimberly.userstories.fragments;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
 import android.app.NotificationChannelGroup;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
-
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationBuilderWithBuilderAccessor;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,28 +22,24 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.lkimberly.userstories.JobMatchInfo;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.activities.HomeActivity;
 import com.example.lkimberly.userstories.adapters.SwipeCardAdapter;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.Matches;
 import com.example.lkimberly.userstories.models.SwipeCard;
-
+import com.example.lkimberly.userstories.models.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.maps.android.SphericalUtil;
-
-import com.example.lkimberly.userstories.models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
+import com.google.maps.android.SphericalUtil;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -57,10 +48,13 @@ import com.parse.SaveCallback;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import static com.parse.ParseUser.getCurrentUser;
 
@@ -86,6 +80,11 @@ public class FeedFragment extends Fragment {
 
     TextView tvNoMoreJobs;
 
+    int swipeCount;
+
+    List<Integer> categorySwipeCount;
+    Map<String, Integer> categoryToIdxMap = new HashMap<>();
+
     public static List<ValueEventListener> ValueEventListenerList = new ArrayList<>();
 
     // The onCreateView method is called when Fragment should create its View object hierarchy,
@@ -102,6 +101,17 @@ public class FeedFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Setup any handles to view objects here
         // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
+        swipeCount = 0;
+        initializeMap();
+
+        categorySwipeCount = ((User) ParseUser.getCurrentUser()).getCategorySwipeCount();
+
+        if (categorySwipeCount == null) {
+            Integer arr[] = new Integer[37];
+            for (int i = 0; i < arr.length; i++)
+                arr[i] = 0;
+            categorySwipeCount = Arrays.asList(arr);
+        }
 
         getDeviceLocation();
 
@@ -151,6 +161,8 @@ public class FeedFragment extends Fragment {
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
                 makeToast(getContext(), "Left!");
+                swipeCount++;
+
             }
 
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -209,6 +221,36 @@ public class FeedFragment extends Fragment {
                 notificationManager.notify(1, notificationBuilder.build());
                 //}
 
+                swipeCount++;
+                Job currentCardJob = currentCard.getJob();
+                String category = currentCardJob.getCategory();
+
+                // update swipe count for given card category for current user
+                if (category != null) {
+                    Integer categoryIdx = categoryToIdxMap.get(category);
+                    Integer currentSwipeCountForCategory = categorySwipeCount.get(categoryIdx);
+                    categorySwipeCount.set(categoryIdx, currentSwipeCountForCategory + 1);
+                } else {
+                    Integer currentSwipeCountForCategory = categorySwipeCount.get(36);
+                    categorySwipeCount.set(36, currentSwipeCountForCategory + 1);
+                }
+
+                // update info every 5 swipes
+                if (swipeCount%5 == 0){
+                    User user = (User) ParseUser.getCurrentUser();
+                    user.setCategorySwipeCount(categorySwipeCount);
+                    user.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                // run alg to learn preferences and update
+                            } else {
+                                e.printStackTrace();
+                                makeToast(getContext(), "Something went wrong with updating user preferences!");
+                            }
+                        }
+                    });
+                }
 
                 makeToast(getContext(), "Right!");
             }
@@ -267,9 +309,28 @@ public class FeedFragment extends Fragment {
     }
 
     private void loadTopPosts() {
+
+        List<String> jobPreferences = ((User) ParseUser.getCurrentUser()).getJobPreferences();
+        boolean handlePreferences = false;
+
+        // only handle preferences if user has them
+        if (jobPreferences != null){
+            handlePreferences = true;
+        }
+
+        // initialize query
+
         Log.d("Here2", "here");
+
         final Job.Query postsQuery = new Job.Query();
         postsQuery.getTop().withUser();
+
+        // handle preferences if needed
+        if (handlePreferences){
+            postsQuery.withPreference(jobPreferences.get(0));
+        }
+
+
         postsQuery.findInBackground(new FindCallback<Job>() {
             @Override
             public void done(List<Job> objects, ParseException e) {
@@ -454,6 +515,49 @@ public class FeedFragment extends Fragment {
         } catch (SecurityException e) {
             Log.e(TAG, "getDeviceLocation: Security Exception: " + e.getMessage());
         }
+    }
+
+
+    private void initializeMap(){
+
+        categoryToIdxMap.put("accountancy qualified jobs", 0);
+        categoryToIdxMap.put("accountancy jobs", 1);
+        categoryToIdxMap.put("banking jobs", 2);
+        categoryToIdxMap.put("finance jobs", 3);
+        categoryToIdxMap.put("purchasing jobs", 4);
+        categoryToIdxMap.put("sales jobs", 5);
+        categoryToIdxMap.put("marketing jobs",  6);
+        categoryToIdxMap.put("retail jobs", 7);
+        categoryToIdxMap.put("fmcg jobs", 8);
+        categoryToIdxMap.put("catering jobs", 9);
+        categoryToIdxMap.put("social care jobs", 10);
+        categoryToIdxMap.put("charity jobs", 11);
+        categoryToIdxMap.put("leisure tourism jobs", 12);
+        categoryToIdxMap.put("education jobs", 13);
+        categoryToIdxMap.put("admin secretarial pa jobs", 14);
+        categoryToIdxMap.put("graduate training internships jobs", 15);
+        categoryToIdxMap.put("training jobs", 16);
+        categoryToIdxMap.put("media digital creative jobs", 17);
+        categoryToIdxMap.put("apprenticeships jobs", 18);
+        categoryToIdxMap.put("security safety jobs", 19);
+        categoryToIdxMap.put("construction property jobs", 20);
+        categoryToIdxMap.put("motoring automotive jobs", 21);
+        categoryToIdxMap.put("factory jobs", 22);
+        categoryToIdxMap.put("science jobs", 23);
+        categoryToIdxMap.put("energy job", 24);
+        categoryToIdxMap.put("health jobs", 25);
+        categoryToIdxMap.put("engineering jobs", 26);
+        categoryToIdxMap.put("it jobs", 27);
+        categoryToIdxMap.put("logistics jobs", 28);
+        categoryToIdxMap.put("strategy consultancy jobs", 29);
+        categoryToIdxMap.put("law jobs", 30);
+        categoryToIdxMap.put("hr jobs", 31);
+        categoryToIdxMap.put("general insurance jobs", 32);
+        categoryToIdxMap.put("estate agent jobs", 33);
+        categoryToIdxMap.put("recruitment consultancy jobs", 34);
+        categoryToIdxMap.put("customer service jobs", 35);
+        categoryToIdxMap.put("other jobs", 36);
+
     }
 
 }

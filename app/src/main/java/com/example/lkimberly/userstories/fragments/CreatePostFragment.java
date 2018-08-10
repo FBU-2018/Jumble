@@ -6,15 +6,16 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.database.Cursor;
-import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -41,12 +42,11 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.lkimberly.userstories.BitmapScaler;
-import com.example.lkimberly.userstories.JobMatchInfo;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.activities.MapActivity;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.User;
-
+import com.example.lkimberly.userstories.server.BackendManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -65,12 +65,22 @@ import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import static android.app.Activity.RESULT_OK;
 import static com.example.lkimberly.userstories.fragments.ProfileFragment.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE;
@@ -441,6 +451,27 @@ public class CreatePostFragment extends Fragment {
                                             myRef.addValueEventListener(listener);
 
                                             FeedFragment.ValueEventListenerList.add(listener);
+
+//                                            GetTagTask tagAsync = new GetTagTask(newJob.getDescription());
+//                                            tagAsync.execute();
+//                                            String newJobTag = tagAsync.getTag();
+//                                            if (newJobTag == null) {
+//                                                newJobTag = "other jobs";
+//                                            }
+//
+//                                            newJob.setCategory(newJobTag);
+//
+//                                            newJob.saveInBackground(new SaveCallback() {
+//                                                @Override
+//                                                public void done(ParseException e) {
+//                                                    if (e == null) {
+//
+//                                                    } else {
+//                                                        e.printStackTrace();
+//                                                    }
+//                                                }
+//                                            });
+
 
                                         } else {
                                             Log.d("CreatePostProject", "save job failed!");
@@ -864,4 +895,136 @@ public class CreatePostFragment extends Fragment {
             Log.e(TAG, "getDeviceLocation: Security Exception: " + e.getMessage());
         }
     }
+
+
+    private List<String> locations = Arrays.asList("Quai Anatole France, Paris, France", "Rome, Metropolitan City of Rome, Italy", "Palm Coast, FL, USA",
+            "MIT, Cambridge, MA, USA", "Morven Museum & Garden, Stockton Street, Princeton, NJ, USA", "Oracle Arena, Coliseum Way, Oakland, CA, USA",
+            "Spectrum Center, East Trade Street, Charlotte, NC, USA", "Vancouver, BC, Canada");
+
+
+
+    private void makeJobs() throws IOException {
+
+        Log.d("get my file", Environment.getExternalStorageDirectory().toString());
+
+        InputStream is = getResources().openRawResource(R.raw.data_halved);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+        String line;
+
+        final String CATEGORY = "category";
+        final String DETAILS = "job_description";
+        final String [] FILE_HEADER_MAPPING = {"category", "city", "company_name", "geo", "job_board", "job_description", "job_requirements", "job_title", "job_type", "post_date", "salary_offered", "state"};
+
+
+        final List<Integer> count = new ArrayList<>();
+        count.add(0);
+//        while ((nextLine = reader.readNext()) != null) {
+        for (int i = 0; i < 340; i ++) {
+            line = bufferedReader.readLine();
+        }
+        while (count.get(0) != 500) {
+            line = "";
+            line = bufferedReader.readLine();
+            String [] tokensList = line.split("\t");
+            List<String> tokens =Arrays.asList(tokensList);
+            // nextLine[] is an array of values from the line
+            count.set(0, count.get(0) +1);
+
+
+            Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+
+            String name = "" + tokens.get(8);
+            String details = "" + tokens.get(6);
+            String fee = "1/Hour";
+            String estimation = "1 Hour";
+            String time = "10:00";
+            String date = "7/10/2020";
+            Random randomizer = new Random();
+            List<Address> addressList = geocoder.getFromLocationName(locations.get(randomizer.nextInt(locations.size())),1);
+            String lat = String.valueOf(addressList.get(0).getLatitude());
+            String longi = String.valueOf(addressList.get(0).getLongitude());
+
+            final Job makingJobs = new Job();
+            makingJobs.setUser(ParseUser.getCurrentUser());
+            makingJobs.setTitle(name);
+            makingJobs.setDescription(details);
+            makingJobs.setMoney(fee);
+            makingJobs.setEstimation(estimation);
+            makingJobs.setTime(time);
+            makingJobs.setDate(date);
+            makingJobs.setLatitude(lat);
+            makingJobs.setLongitude(longi);
+
+            String myPath = "/storage/emulated/0/DCIM/Camera/IMG_20180710_120811.jpg";
+
+
+            final ParseFile parseFile = new ParseFile(new File(myPath));
+
+            parseFile.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        makingJobs.setImage(parseFile);
+
+                        makingJobs.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e == null) {
+                                    Log.d("CreatePostProject", "save job success! Created job " + count.get(0));
+                                    Toast.makeText(getContext(), "Created job " + count.get(0), Toast.LENGTH_LONG).show();
+                                } else {
+                                    Log.d("CreatePostProject", "save job failed!");
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    } else {
+                        Log.d("CreatePostProject 2", "save job failed!");
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+        }
+
+    }
+
+
+    class GetTagTask extends AsyncTask {
+        private String jobDescription;
+        private String tag;
+
+        public GetTagTask(String jobDescription) {
+            super();
+            this.jobDescription = jobDescription;
+        }
+
+        @Override
+        protected String doInBackground(Object[] objects) {
+            URL url = null;
+
+            try {
+                url = BackendManager.getTaggingEndpoint(this.jobDescription);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                InputStream in = connection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                tag = reader.readLine();
+                connection.disconnect();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        private String getTag() {
+            //handle value
+            return this.tag;
+        }
+
+    }
+
+
+
 }
