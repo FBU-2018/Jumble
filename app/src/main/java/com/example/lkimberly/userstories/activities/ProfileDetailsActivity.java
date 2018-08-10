@@ -20,6 +20,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.Matches;
+import com.example.lkimberly.userstories.models.Ratings;
 import com.parse.FindCallback;
 import com.parse.ParseACL;
 import com.parse.ParseException;
@@ -124,7 +125,14 @@ public class ProfileDetailsActivity extends AppCompatActivity {
         tvPhoneNumber.setText(user.get("phoneNumber") != null ? user.get("phoneNumber").toString() : "None");
 
         try {
-            ratingBar.setRating((float) (parseDouble(user.get("rating").toString()) * 5));
+            Ratings myRating = null;
+            try {
+                myRating = ((Ratings) user.get("myRating")).fetchIfNeeded();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            double rating = parseDouble(myRating.getRating().toString()) * 5;
+            ratingBar.setRating((float) (rating));
         } catch (NullPointerException e) {
             ratingBar.setRating((float) (0));
         }
@@ -197,7 +205,8 @@ public class ProfileDetailsActivity extends AppCompatActivity {
                                             i.putExtra("User", Parcels.wrap(user));
                                             i.putExtra("job", Parcels.wrap(job));
                                             i.putExtra("match", Parcels.wrap(newMatch));
-                                            i.putExtra("refresh", true);
+                                            i.putExtra("refresh", "true");
+                                            i.putExtra("sendToMessage", "true");
                                             setResult(RESULT_OK, i); // set result code and bundle data for response
                                             finish();
 

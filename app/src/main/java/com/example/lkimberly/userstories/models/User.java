@@ -5,6 +5,8 @@ import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.List;
+
 
 @ParseClassName("_User")
 public class User extends ParseUser {
@@ -18,6 +20,13 @@ public class User extends ParseUser {
     private static final String KEY_USER = "user";
     private static final String KEY_DATE = "createdAt";
     private static final String KEY_INSTITUTION = "institution";
+    private static final String KEY_TOTAL_TIMES_RATED = "timesRated";
+    private static final String KEY_TOTAL_SCORE = "totalScore";
+    private static final String KEY_RATING = "rating";
+    private static final String KEY_CATEGORY_SWIPE_COUNT = "categorySwipeCount";
+    private static final String KEY_JOB_PREFERENCES = "jobPreferences";
+
+
 
     public User() {
     }
@@ -77,6 +86,40 @@ public class User extends ParseUser {
 
     public void setInstitution(String institution) {
         put(KEY_INSTITUTION, institution);
+    }
+
+    // get total times rated
+    public String getTotalTimesRated(){ return getString(KEY_TOTAL_TIMES_RATED);}
+
+    public void setTotalTimesRated(String timesRated) {put(KEY_TOTAL_TIMES_RATED, timesRated);}
+
+
+    // get total score
+    public String getTotalScore(){ return getString(KEY_TOTAL_SCORE);}
+
+    public void setTotalScore(String score) {put(KEY_TOTAL_SCORE, score);}
+
+
+    // get rating
+    public String getRating(){ return getString(KEY_RATING);}
+
+    public void setRating(String rating) {put(KEY_RATING, rating);}
+
+    public List<String> getJobPreferences() {
+        return getList(KEY_JOB_PREFERENCES);
+    }
+
+    public void setJobPreferences(List<String> jobPreferences) {
+        put(KEY_JOB_PREFERENCES, jobPreferences);
+    }
+
+
+    public List<Integer> getCategorySwipeCount() {
+        return getList(KEY_CATEGORY_SWIPE_COUNT);
+    }
+
+    public void setCategorySwipeCount(List<Integer> categorySwipeCount){
+        put(KEY_CATEGORY_SWIPE_COUNT, categorySwipeCount);
     }
 
 

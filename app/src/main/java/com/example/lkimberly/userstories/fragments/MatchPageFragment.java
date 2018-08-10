@@ -18,6 +18,7 @@ import com.example.lkimberly.userstories.adapters.MatchPageAdapter;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.MatchDataModel;
 import com.example.lkimberly.userstories.models.Matches;
+import com.example.lkimberly.userstories.models.Ratings;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -162,7 +163,23 @@ public class MatchPageFragment extends Fragment {
 
                                 Collections.sort(usersList, new Comparator<ParseUser>(){
                                     public int compare(ParseUser p1, ParseUser p2){
-                                        return Double.compare(parseDouble((String) p1.get("rating")),(parseDouble((String) p2.get("rating"))));
+                                        Ratings p1RatingsObject = null;
+                                        try {
+                                            p1RatingsObject = ((Ratings) p1.get("myRating")).fetchIfNeeded();
+                                        } catch (ParseException e1) {
+                                            e1.printStackTrace();
+                                        }
+                                        Ratings p2RatingsObject = null;
+                                        try {
+                                            p2RatingsObject = ((Ratings) p2.get("myRating")).fetchIfNeeded();
+                                        } catch (ParseException e1) {
+                                            e1.printStackTrace();
+                                        }
+
+                                        String p1Rating = p1RatingsObject.getRating().toString();
+                                        String p2Rating = p2RatingsObject.getRating().toString();
+
+                                        return Double.compare(parseDouble(p1Rating),(parseDouble(p2Rating)));
                                     }
                                 });
 
@@ -193,14 +210,14 @@ public class MatchPageFragment extends Fragment {
 
                                                     if (!matchDict.keySet().contains(objects.get(i).getObjectId())) {
                                                         matchesModelList.add(new MatchDataModel(2, objects.get(i)));
-<<<<<<< HEAD
+
                                                         jobs_that_are_not_matches_count++;
                                                     }
                                                 }
 
                                                 if (jobs_that_are_not_matches_count == 0){
                                                     matchesModelList.remove(matchesModelList.size()-1);
-=======
+
                                                         jobsExist = true;
                                                     }
                                                 }
@@ -209,7 +226,6 @@ public class MatchPageFragment extends Fragment {
                                                     tv_no_matches.setVisibility(View.INVISIBLE);
                                                 } else {
                                                     tv_no_matches.setVisibility(View.VISIBLE);
->>>>>>> 18c8f8f1b59952ce7a9fafe088851e0981b6d2e2
                                                 }
 
                                                 Log.d("Size",matchesModelList.toString());
@@ -218,7 +234,6 @@ public class MatchPageFragment extends Fragment {
                                                     rvMatches.scrollToPosition(0);
                                                 }
                                             }
-                                        }
                                     });
                         } else {
                             e.printStackTrace();

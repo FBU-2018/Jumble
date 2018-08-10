@@ -15,6 +15,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -45,6 +46,7 @@ import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.activities.MapActivity;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.User;
+import com.example.lkimberly.userstories.server.BackendManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -68,6 +70,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -446,6 +451,27 @@ public class CreatePostFragment extends Fragment {
                                             myRef.addValueEventListener(listener);
 
                                             FeedFragment.ValueEventListenerList.add(listener);
+
+//                                            GetTagTask tagAsync = new GetTagTask(newJob.getDescription());
+//                                            tagAsync.execute();
+//                                            String newJobTag = tagAsync.getTag();
+//                                            if (newJobTag == null) {
+//                                                newJobTag = "other jobs";
+//                                            }
+//
+//                                            newJob.setCategory(newJobTag);
+//
+//                                            newJob.saveInBackground(new SaveCallback() {
+//                                                @Override
+//                                                public void done(ParseException e) {
+//                                                    if (e == null) {
+//
+//                                                    } else {
+//                                                        e.printStackTrace();
+//                                                    }
+//                                                }
+//                                            });
+
 
                                         } else {
                                             Log.d("CreatePostProject", "save job failed!");
@@ -964,36 +990,40 @@ public class CreatePostFragment extends Fragment {
     }
 
 
-//    private class LongOperation extends AsyncTask<String, Void, String> {
-//
-//        @Override
-//        protected String doInBackground(String... params) {
-//            NoteApi.Builder builder = new NoteApi.Builder(AndroidHttp.newCompatibleTransport(),
-//                    new AndroidJsonFactory(), null)
-//                    .setRootUrl("http://10.0.2.2:8080/_ah/api/")
-//                    .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-//                        @Override
-//                        public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
-//                            abstractGoogleClientRequest.setDisableGZipContent(true);
-//                        }
-//                    });
-//
-//            myNotesService = builder.build();
-//            return "Executed";
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String result) {
-//            // might want to change "executed" for the returned string passed
-//            // into onPostExecute() but that is upto you
-//        }
-//
-//        @Override
-//        protected void onPreExecute() {}
-//
-//        @Override
-//        protected void onProgressUpdate(Void... values) {}
-//    }
+    class GetTagTask extends AsyncTask {
+        private String jobDescription;
+        private String tag;
+
+        public GetTagTask(String jobDescription) {
+            super();
+            this.jobDescription = jobDescription;
+        }
+
+        @Override
+        protected String doInBackground(Object[] objects) {
+            URL url = null;
+
+            try {
+                url = BackendManager.getTaggingEndpoint(this.jobDescription);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                InputStream in = connection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                tag = reader.readLine();
+                connection.disconnect();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        private String getTag() {
+            //handle value
+            return this.tag;
+        }
+
+    }
 
 
 

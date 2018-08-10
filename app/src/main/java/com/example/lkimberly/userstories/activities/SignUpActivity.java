@@ -2,7 +2,6 @@ package com.example.lkimberly.userstories.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -12,16 +11,16 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.lkimberly.userstories.R;
+import com.example.lkimberly.userstories.models.Ratings;
 import com.example.lkimberly.userstories.models.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.parse.ParseException;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -113,7 +112,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void signUp(String username, String password, String email) {
         // Create the ParseUser
-        User user = new User();
+        final User user = new User();
         // Set core properties
         user.setUsername(username);
         user.setPassword(password);
@@ -124,10 +123,49 @@ public class SignUpActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     // Hooray! Let them use the app now.
-                    Log.d("SignupActivity","Signup successful!");
-                    final Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                    finish();
+                    user.setRating("0/5");
+                    user.setTotalScore("0");
+                    user.setTotalTimesRated("0");
+
+                    final Ratings myRating = new Ratings();
+                    myRating.setRating("0/5");
+                    myRating.setTimesRated("0");
+                    myRating.setTotalScore("0");
+
+                    // save rating first, then update user with rating and other info and save that
+                    myRating.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                user.put("myRating", myRating);
+
+                                Integer arr[] = new Integer[37];
+                                for(int i=0;i<arr.length;i++)
+                                    arr[i] = 0;
+                                List<Integer> categorySwipeCount = Arrays.asList(arr);
+                                user.put("categorySwipeCount", categorySwipeCount);
+
+                                List<String> jP = new ArrayList<>();
+                                user.put("jobPreferences", jP);
+
+                                user.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if (e == null){
+                                            Log.d("SignupActivity","Signup successful!");
+                                            final Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        } else {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+
+
                 } else {
                     // Sign up didn't succeed. Look at the ParseException
                     // to figure out what went wrong

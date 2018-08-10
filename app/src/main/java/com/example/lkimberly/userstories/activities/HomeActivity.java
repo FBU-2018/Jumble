@@ -1,8 +1,6 @@
 package com.example.lkimberly.userstories.activities;
 
 import android.Manifest;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -305,13 +303,14 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Intent potentialIntent = getIntent();
+        Intent potentialIntent = data;
         // REQUEST_CODE is defined above
         Log.d("HomeActivity", "checking HomeActivity onActivityResult");
         if (resultCode == RESULT_OK) {
-            int temp = potentialIntent.getIntExtra("refresh", 0);
-            if (potentialIntent.getBooleanExtra("refresh", false)) {
-                myMatchPageFragment.refresh();
+            if (potentialIntent.getStringExtra("refresh") != null) {
+                if (potentialIntent.getStringExtra("refresh").equals("true")) {
+                    myMatchPageFragment.refresh();
+                }
             }
 
             if (potentialIntent.getBooleanExtra("returnFromMap", false)) {
@@ -320,6 +319,15 @@ public class HomeActivity extends AppCompatActivity {
                 // call create post fragment
                 myCreatePostFragment.updateLocation(job);
             }
+//            if (potentialIntent.getStringExtra("sendToMessage") != null) {
+//                if (potentialIntent.getStringExtra("sendToMessage").equals("true")) {
+//                    Intent intent = new Intent(Intent.ACTION_SEND);
+//                    intent.setData(Uri.parse("smsto:" + user.get("phoneNumber")));  // This ensures only SMS apps respond
+//                    intent.putExtra("sms_body", "Hi! You matched with my job on Jumble and I'd like to hire you.");
+//
+//                    startActivity(intent);
+//                }
+//            }
         }
     }
 
