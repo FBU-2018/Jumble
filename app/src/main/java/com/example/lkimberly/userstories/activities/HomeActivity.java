@@ -223,7 +223,27 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
 
-        viewPager.setCurrentItem(2);
+        Intent potentialIntent = getIntent();
+        if (potentialIntent != null) {
+            if (potentialIntent.getStringExtra("account").equals("login")) {
+                Log.d("HI", "login");
+                viewPager.setCurrentItem(2);
+            } else if (potentialIntent.getStringExtra("account").equals("signup")) {
+                Log.d("HI", "signup");
+                viewPager.setCurrentItem(1);
+
+                ib_profile.setSelected(true);
+
+                // other icons need to be blank when user is on the profile page
+                bottomNavigation.getMenu().getItem(0).setIcon(R.drawable.instagram_home_outline_24);
+                bottomNavigation.getMenu().getItem(1).setIcon(R.drawable.instagram_new_post_outline_24);
+                bottomNavigation.getMenu().getItem(2).setIcon(R.drawable.ic_chat_bubble_outline_24dp);
+            }
+        } else {
+//            viewPager.setCurrentItem(2);
+            Log.d("no", "no");
+        }
+
     }
 
     @Override
@@ -324,6 +344,7 @@ public class HomeActivity extends AppCompatActivity {
                     // call create post fragment
                     myCreatePostFragment.updateLocation(job);
                 }
+
 //            if (potentialIntent.getStringExtra("sendToMessage") != null) {
 //                if (potentialIntent.getStringExtra("sendToMessage").equals("true")) {
 //                    Intent intent = new Intent(Intent.ACTION_SEND);
