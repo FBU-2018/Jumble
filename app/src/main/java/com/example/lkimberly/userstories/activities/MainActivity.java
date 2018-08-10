@@ -14,29 +14,22 @@ import android.widget.Toast;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.Matches;
+import com.example.lkimberly.userstories.models.Ratings;
 import com.example.lkimberly.userstories.models.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.parse.LogInCallback;
-import com.parse.ParseCloud;
 import com.parse.ParseException;
-import com.parse.ParseInstallation;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
-import static java.security.AccessController.getContext;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -155,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);
                     finish();
-                    Log.d("MainActivity", "Login was successful!");
+                    Log.d("MainActivity", "Login was successful!" + ParseUser.getCurrentUser());
                 } else {
                     Log.d("MainActivity", "Login failed!");
                     e.printStackTrace();
@@ -172,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void signUp(String username, String password, String email) {
         // Create the ParseUser
-        User user = new User();
+        final User user = new User();
         // Set core properties
         user.setUsername(username);
         user.setName(username);
@@ -186,18 +179,52 @@ public class MainActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     // Hooray! Let them use the app now.
-                    Log.d("SignupActivity","Signup successful!");
-                    final Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                    finish();
+                    user.setRating("0/5");
+                    user.setTotalScore("0");
+                    user.setTotalTimesRated("0");
+                    final Ratings myRating = new Ratings();
+                    myRating.setRating("0/5");
+                    myRating.setTimesRated("0");
+                    myRating.setTotalScore("0");
+
+                    // save rating first, then update user with rating and other info and save that
+                    myRating.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                user.put("myRating", myRating);
+
+                                Integer arr[] = new Integer[37];
+                                for(int i=0;i<arr.length;i++)
+                                    arr[i] = 0;
+                                List<Integer> categorySwipeCount = Arrays.asList(arr);
+                                user.put("categorySwipeCount", categorySwipeCount);
+
+                                List<String> jP = new ArrayList<>();
+                                user.put("jobPreferences", jP);
+
+                                user.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if (e == null){
+                                            Log.d("SignupActivity","Signup successful!");
+                                            final Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        } else {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+
                 } else {
                     // Sign up didn't succeed. Look at the ParseException
                     // to figure out what went wrong
                     Log.e("SignupActivity","Signup failure.");
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Please try another username, password, or email", Toast.LENGTH_LONG).show();
-                    // return to avoid creating an account in firebase
-                    return;
                 }
             }
         });

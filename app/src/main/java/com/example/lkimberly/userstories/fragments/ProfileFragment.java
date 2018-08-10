@@ -1,19 +1,15 @@
 package com.example.lkimberly.userstories.fragments;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +24,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.activities.MainActivity;
+import com.example.lkimberly.userstories.models.Ratings;
 import com.example.lkimberly.userstories.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.parse.LogOutCallback;
@@ -168,7 +165,14 @@ public class ProfileFragment extends Fragment {
         }
 
         try {
-            ratingBar.setRating((float) (parseDouble(user.get("rating").toString()) * 5));
+            Ratings myRating = null;
+            try {
+                myRating = ((Ratings)  user.get("myRating")).fetchIfNeeded();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            double rating = parseDouble(myRating.getRating().toString()) * 5;
+            ratingBar.setRating((float) (rating));
         } catch (NullPointerException noRatingError) {}
 
         editProfileBtn.setOnClickListener(new View.OnClickListener() {

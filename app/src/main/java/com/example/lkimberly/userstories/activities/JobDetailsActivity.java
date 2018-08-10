@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.Matches;
+import com.example.lkimberly.userstories.models.Ratings;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -52,6 +53,7 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
     public RatingBar ratingBar;
     private GoogleMap gmap;
     public ParseUser userWhoMatchedWithMe;
+    public Ratings userWhoMatchedWithMeRatingObject;
     public TextView compensation;
     public TextView ratingTitle;
     public TextView matchTitle;
@@ -110,6 +112,7 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
             hasBeenRated = (boolean) job.get("hasBeenRated");
         }
 
+
         try {
             Glide.with(JobDetailsActivity.this).load(((ParseFile) job.get("image")).getUrl()).into(ivJobImage);
         } catch(NullPointerException e) {
@@ -141,7 +144,26 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
             myRatingTV.setVisibility(View.GONE);
             divider.setVisibility(View.GONE);
         } else {
-            userWhoMatchedWithMe = job.getParseUser("userWhoMatched");
+            try {
+                if (job.getParseUser("userWhoMatched") != null) {
+                    userWhoMatchedWithMe = job.getParseUser("userWhoMatched").fetchIfNeeded();
+                } else {
+                    userWhoMatchedWithMe = null;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (userWhoMatchedWithMe != null){
+                    userWhoMatchedWithMeRatingObject = ((Ratings) userWhoMatchedWithMe.get("myRating")).fetchIfNeeded();
+                } else {
+                    userWhoMatchedWithMeRatingObject = null;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
             if (userWhoMatchedWithMe == null) {
                 ratingBar.setVisibility(View.GONE);
                 matchName.setVisibility(View.GONE);
@@ -156,7 +178,13 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                ratingBar.setRating((float) (parseDouble(userWhoMatchedWithMe.get("rating").toString()) * 5));
+
+                try {
+                    ratingBar.setRating((float) (parseDouble(userWhoMatchedWithMeRatingObject.get("rating").toString()) * 5));
+                } catch (NullPointerException noExistingRating){
+                    ratingBar.setRating(0);
+                }
+
             }
 
 
@@ -202,14 +230,36 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
             }
         });
 
+        if (hasBeenRated) {
+            int rating = (int) parseDouble((String) userWhoMatchedWithMeRatingObject.get("rating"))*5;
+            myRatingTV.setText(String.valueOf(rating));
+        }
+
+
     }
 
     public void updateMyRating(int value){
-        int userWhoMatchedTotalScore = Integer.valueOf((String) userWhoMatchedWithMe.get("totalScore"));
-        int userWhoMatchedTimesRated = Integer.valueOf((String) userWhoMatchedWithMe.get("timesRated"));
+        int userWhoMatchedTotalScore;
+        String totalScoreString = (String) userWhoMatchedWithMeRatingObject.get("totalScore");
+        if (totalScoreString == null) {
+            userWhoMatchedTotalScore = 0;
+        } else {
+            userWhoMatchedTotalScore = Integer.valueOf(totalScoreString);
+        }
+
+        int userWhoMatchedTimesRated;
+        String timesRatedString = (String) userWhoMatchedWithMeRatingObject.get("timesRated");
+        if (timesRatedString == null){
+            userWhoMatchedTimesRated = 0;
+        } else {
+            userWhoMatchedTimesRated = Integer.valueOf(timesRatedString);
+        }
 
         if (hasBeenRated != true) {
             hasBeenRated = true;
+            job.setHasBeenRated(true);
+            job.saveInBackground();
+
             myRatingValue = value;
 
             userWhoMatchedTotalScore += value;
@@ -226,14 +276,19 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
 
         final int updatedRating = (int) userWhoMatchedTotalScore/userWhoMatchedTimesRated;
 
-        userWhoMatchedWithMe.put("rating", String.valueOf(updatedRating) + "/" + String .valueOf(5));
-        userWhoMatchedWithMe.put("timesRated", String.valueOf(userWhoMatchedTimesRated));
-        userWhoMatchedWithMe.put("totalScore", String.valueOf(userWhoMatchedTotalScore));
-        userWhoMatchedWithMe.saveInBackground(new SaveCallback() {
+//        userWhoMatchedWithMeRatingObject.put("hasBeenRated", true);
+        userWhoMatchedWithMeRatingObject.put("rating", String.valueOf(updatedRating) + "/" + String .valueOf(5));
+        userWhoMatchedWithMeRatingObject.put("timesRated", String.valueOf(userWhoMatchedTimesRated));
+        userWhoMatchedWithMeRatingObject.put("totalScore", String.valueOf(userWhoMatchedTotalScore));
+        userWhoMatchedWithMeRatingObject.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                Toast.makeText(getBaseContext(), "Rating received!", Toast.LENGTH_SHORT).show();
-                Log.d("Rating", String.valueOf(updatedRating));
+                if (e == null) {
+                    Toast.makeText(getBaseContext(), "Rating received!", Toast.LENGTH_SHORT).show();
+                    Log.d("Rating", String.valueOf(updatedRating));
+                } else {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -250,14 +305,14 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
         Intent i = new Intent();
         // Pass relevant data back as a result
         // Activity finished ok, return the data
-        i.putExtra("refresh", true);
+        i.putExtra("refresh", "true");
         setResult(RESULT_OK, i); // set result code and bundle data for response
         finish(); // closes the activity, pass data to parent
     }
 
     public void endJobOrMatchDialogue() {
         final AlertDialog.Builder endJobAlertBuilder = new AlertDialog.Builder(this);
-        endJobAlertBuilder.setMessage("Would you lke to end the job or just the match?")
+        endJobAlertBuilder.setMessage("Would you like to end the job or just the match?")
                 .setCancelable(false)
                 .setPositiveButton("Job (including the match)", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -272,6 +327,7 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
                         final Matches matchToDelete = (Matches) job.get("match");
                         job.remove("match");
                         job.remove("userWhoMatched");
+                        job.put("hasBeenRated", false);
                         job.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {

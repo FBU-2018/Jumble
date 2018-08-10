@@ -1,8 +1,6 @@
 package com.example.lkimberly.userstories.activities;
 
 import android.Manifest;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -32,10 +30,6 @@ import com.example.lkimberly.userstories.fragments.FeedFragment;
 import com.example.lkimberly.userstories.fragments.MatchPageFragment;
 import com.example.lkimberly.userstories.fragments.ProfileFragment;
 import com.example.lkimberly.userstories.models.Job;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -312,19 +306,33 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Intent potentialIntent = getIntent();
-        // REQUEST_CODE is defined above
-        Log.d("HomeActivity", "checking HomeActivity onActivityResult");
-        if (resultCode == RESULT_OK) {
-            if (potentialIntent.getBooleanExtra("refresh", false)) {
-                myMatchPageFragment.refresh();
-            }
+        Intent potentialIntent = data;
 
-            if (potentialIntent.getBooleanExtra("returnFromMap", false)) {
-                Log.d("HomeActivity", "back from Map");
-                Job job = Parcels.unwrap(data.getParcelableExtra("newJob"));
-                // call create post fragment
-                myCreatePostFragment.updateLocation(job);
+        if (data != null) {
+            // REQUEST_CODE is defined above
+            Log.d("HomeActivity", "checking HomeActivity onActivityResult");
+            if (resultCode == RESULT_OK) {
+                if (potentialIntent.getStringExtra("refresh") != null) {
+                    if (potentialIntent.getStringExtra("refresh").equals("true")) {
+                        myMatchPageFragment.refresh();
+                    }
+                }
+
+                if (potentialIntent.getBooleanExtra("returnFromMap", false)) {
+                    Log.d("HomeActivity", "back from Map");
+                    Job job = Parcels.unwrap(data.getParcelableExtra("newJob"));
+                    // call create post fragment
+                    myCreatePostFragment.updateLocation(job);
+                }
+//            if (potentialIntent.getStringExtra("sendToMessage") != null) {
+//                if (potentialIntent.getStringExtra("sendToMessage").equals("true")) {
+//                    Intent intent = new Intent(Intent.ACTION_SEND);
+//                    intent.setData(Uri.parse("smsto:" + user.get("phoneNumber")));  // This ensures only SMS apps respond
+//                    intent.putExtra("sms_body", "Hi! You matched with my job on Jumble and I'd like to hire you.");
+//
+//                    startActivity(intent);
+//                }
+//            }
             }
         }
     }

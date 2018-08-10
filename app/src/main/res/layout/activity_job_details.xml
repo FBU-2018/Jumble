@@ -248,6 +248,7 @@
         android:layout_height="100dp"
         android:layout_alignBottom="@+id/rb_jobDetailsRatingsBar"
         android:layout_alignStart="@+id/tv_jobDetailsTime"
+        android:layout_marginStart="5dp"
 
         android:background="#90909090" />
 
