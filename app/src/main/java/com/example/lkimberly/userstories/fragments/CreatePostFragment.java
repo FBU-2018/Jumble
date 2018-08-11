@@ -25,6 +25,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -480,6 +481,9 @@ public class CreatePostFragment extends Fragment {
 //                                                }
 //                                            });
 
+                                            // Go to feed fragment after job created
+                                            ViewPager viewPager = getActivity().findViewById(R.id.pager);
+                                            viewPager.setCurrentItem(2);
 
                                         } else {
                                             Log.d("CreatePostProject", "save job failed!");
@@ -502,8 +506,6 @@ public class CreatePostFragment extends Fragment {
                     etDate.setText("");
                     btnMap.setText("");
                     ivPhoto.setColorFilter(getContext().getResources().getColor(R.color.black));
-
-
                 }
             }
         });
