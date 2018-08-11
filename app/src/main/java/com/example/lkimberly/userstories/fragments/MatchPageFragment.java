@@ -29,13 +29,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class MatchPageFragment extends Fragment {
-
+    final List<Integer> count = Arrays.asList(0);
+    public int countstuff = 0;
     // match dictionary
     final Map<String, List<ParseUser>> matchDict= new HashMap<>();
     // the recycler view
@@ -139,7 +138,7 @@ public class MatchPageFragment extends Fragment {
                             Log.d("Objects", objects.toString());
 
                             for (int i = 0; i < objects.size(); i++) {
-                                Matches singleMatch = (Matches) objects.get(i);
+                                Matches singleMatch = objects.get(i);
                                 if (singleMatch.getJob() != null) {
                                     try {
                                         if (matchDict.containsKey(singleMatch.getJob().getObjectId())) {
@@ -195,8 +194,7 @@ public class MatchPageFragment extends Fragment {
 
                             final List<Boolean> hasQueried = Arrays.asList(true);
 
-                            final Set<List<Job>> jobQuerySet = new HashSet<>();
-
+                            final List<MatchDataModel> duplicateCheck = new ArrayList<>();
                             // Query other jobs user may have
                             final Job.Query jobQuery = new Job.Query();
                             jobQuery.getTop()
@@ -205,44 +203,53 @@ public class MatchPageFragment extends Fragment {
                                         @Override
                                         public void done(List<Job> objects, ParseException e) {
                                             if (e == null) {
-                                                jobQuerySet.add(objects);
-                                                if (jobQuerySet.size() == 0) {
 
-                                                    if (objects.size() > 0) {
-                                                        matchesModelList.add(new MatchDataModel(3));
-                                                    }
+                                                if (objects.size() > 0) {
+                                                    MatchDataModel header = new MatchDataModel(3);
+                                                    if (!duplicateCheck.contains(header)) {
+                                                        matchesModelList.add(header);
+                                                        Log.d("not caught", String.valueOf(duplicateCheck.contains(header)));
+                                                        duplicateCheck.add(header);
 
-                                                    // keep a count so if the jobs queried have matches the header saying "the following jobs have no matches yet..." doesn't pop up
-                                                    int jobs_that_are_not_matches_count = 0;
-                                                    for (int i = 0; i < objects.size(); i++) {
-                                                        Log.d("Query JOB", objects.get(i).getObjectId());
-
-                                                        if (!matchDict.keySet().contains(objects.get(i).getObjectId())) {
-                                                            matchesModelList.add(new MatchDataModel(2, objects.get(i)));
-
-                                                            jobs_that_are_not_matches_count++;
-                                                        }
-                                                    }
-
-                                                    if (jobs_that_are_not_matches_count == 0) {
-                                                        matchesModelList.remove(matchesModelList.size() - 1);
-
-                                                        jobsExist = true;
                                                     }
                                                 }
-                                            }
 
-                                            if (jobsExist) {
-                                                tv_no_matches.setVisibility(View.INVISIBLE);
+                                                // keep a count so if the jobs queried have matches the header saying "the following jobs have no matches yet..." doesn't pop up
+                                                int jobs_that_are_not_matches_count = 0;
+                                                for (int i = 0; i < objects.size(); i++) {
+                                                    Log.d("Query JOB", objects.get(i).getObjectId());
+
+                                                    if (!matchDict.keySet().contains(objects.get(i).getObjectId())) {
+                                                        MatchDataModel jobToAdd = new MatchDataModel(2, objects.get(i));
+
+                                                        if (!duplicateCheck.contains(jobToAdd)) {
+                                                            matchesModelList.add(jobToAdd);
+                                                            duplicateCheck.add(jobToAdd);
+                                                            Log.d("not caught 2", String.valueOf(duplicateCheck.contains(jobToAdd)));
+                                                        }
+                                                        jobs_that_are_not_matches_count++;
+                                                    }
+                                                }
+
+                                                if (jobs_that_are_not_matches_count == 0) {
+                                                    matchesModelList.remove(matchesModelList.size() - 1);
+                                                }
+                                                Log.d("MatchesModelList", matchesModelList.toString());
+
+                                                if (matchesModelList.size() == 0) {
+                                                    tv_no_matches.setVisibility(View.VISIBLE);
+                                                }
+
+                                                Log.d("Size", matchesModelList.toString());
+                                                adapter.notifyDataSetChanged();
+                                                if (scrollToTop) {
+                                                    rvMatches.scrollToPosition(0);
+                                                }
+
                                             } else {
-                                                tv_no_matches.setVisibility(View.VISIBLE);
+                                                e.printStackTrace();
                                             }
 
-                                            Log.d("Size", matchesModelList.toString());
-                                            adapter.notifyDataSetChanged();
-                                            if (scrollToTop) {
-                                                rvMatches.scrollToPosition(0);
-                                            }
                                         }
                                     });
                         } else {
@@ -251,5 +258,7 @@ public class MatchPageFragment extends Fragment {
                         swipeContainer.setRefreshing(false);
                     }
                 });
+
     }
+
 }

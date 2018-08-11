@@ -111,7 +111,7 @@ public class FeedFragment extends Fragment {
             categorySwipeCount = Arrays.asList(arr);
         }
 
-        getDeviceLocation();
+//        getDeviceLocation();
 
         jobs = new ArrayList<>();
 

@@ -71,13 +71,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
-//        if (currentUser != null) {
-//            // do stuff with the user
-//            Log.d("LoginActivity", "Login successful");
-//            final Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-//            startActivity(intent);
-//            finish();
-//        }
+        if (currentUser != null) {
+            // do stuff with the user
+            Log.d("LoginActivity", "Login successful");
+            final Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         signInButton = findViewById(R.id.sign_in_btn);
         signupButton = findViewById(R.id.sign_up_button);
