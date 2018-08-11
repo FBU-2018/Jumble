@@ -5,13 +5,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
@@ -30,10 +27,7 @@ import com.example.lkimberly.userstories.models.Matches;
 import com.example.lkimberly.userstories.models.SwipeCard;
 import com.example.lkimberly.userstories.models.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -44,14 +38,12 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import static com.parse.ParseUser.getCurrentUser;
@@ -97,6 +89,7 @@ public class FeedFragment extends Fragment {
     // Any view setup should occur here.  E.g., view lookups and attaching view listeners.
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        setRetainInstance(true);
         // Setup any handles to view objects here
         // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
         swipeCount = 0;
@@ -345,45 +338,7 @@ public class FeedFragment extends Fragment {
                     for (int i = 0; i < objects.size(); ++i) {
                         Job job = objects.get(i);
                         Log.d("Matched job id ", job.getObjectId());
-                        /*
-                        if (job.getUser().getObjectId().equals(getCurrentUser().getObjectId())) {
-                            String jobObjectId = job.getObjectId();
-                            String jobTitle = job.getTitle();
 
-                            Log.d("Found id", jobObjectId);
-                            FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference myRef = database.getReference("JobMatchInfo")
-                                    .child(jobObjectId).child("Details");
-                            myRef.setValue("");
-
-                            ValueEventListener listener;
-                            listener = new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    String key = dataSnapshot.getKey();
-                                    Object value = dataSnapshot.getValue();
-
-                                    if (value == null) {
-                                        return;
-                                    }
-
-                                    String subscribedObjectId = value.toString();
-
-                                    Log.d("firebase listener", key + " and " + subscribedObjectId);
-                                    //Toast.makeText(getContext(), subscribedObjectId + " subscribed ", Toast.LENGTH_LONG).show();
-
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                            };
-
-                            myRef.addValueEventListener(listener);
-                            ValueEventListenerList.add(listener);
-                        }
-                        */
 
                         if (!job.getUser().getObjectId().equals(getCurrentUser().getObjectId())) {
                             try {
@@ -469,53 +424,53 @@ public class FeedFragment extends Fragment {
             return Double.parseDouble(ratio);
         }
     }
-
-    private void getDeviceLocation() {
-        mFusedLocationProvidentClient = LocationServices.getFusedLocationProviderClient(getActivity());
-
-        try {
-//            if (mLocationPermissionsGranted) {
-            Task location = mFusedLocationProvidentClient.getLastLocation();
-            location.addOnCompleteListener(new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull Task task) {
-                    if (task.isSuccessful()) {
-                        if (task.isSuccessful() && task.getResult() != null) {
-                            userCurentLocation = (Location) task.getResult();
-
-                            double latitude = userCurentLocation.getLatitude();
-                            double longitude = userCurentLocation.getLongitude();
-
-                            StringBuilder result = new StringBuilder();
-
-                            loadTopPosts();
-                            try {
-                                Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
-                                List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
-                                if (addresses.size() > 0) {
-                                    Address address = addresses.get(0);
-                                    Log.d(TAG, "onComplete: found location! " + task.getResult());
-//                                    result.append(address.getLocality());
-//                                    result.append(address.getCountryName());
-                                }
-                            } catch (IOException e) {
-                                Log.e("tag", e.getMessage());
-                            }
-
-//                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM, "My Location");
-                        }
-
-                    } else {
-                        Log.d(TAG, "onComplete: current location is null");
-                        Toast.makeText(getContext(), "unable to get current location", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-//            }
-        } catch (SecurityException e) {
-            Log.e(TAG, "getDeviceLocation: Security Exception: " + e.getMessage());
-        }
-    }
+//
+//    private void getDeviceLocation() {
+//        mFusedLocationProvidentClient = LocationServices.getFusedLocationProviderClient(getActivity());
+//
+//        try {
+////            if (mLocationPermissionsGranted) {
+//            Task location = mFusedLocationProvidentClient.getLastLocation();
+//            location.addOnCompleteListener(new OnCompleteListener() {
+//                @Override
+//                public void onComplete(@NonNull Task task) {
+//                    if (task.isSuccessful()) {
+//                        if (task.isSuccessful() && task.getResult() != null) {
+//                            userCurentLocation = (Location) task.getResult();
+//
+//                            double latitude = userCurentLocation.getLatitude();
+//                            double longitude = userCurentLocation.getLongitude();
+//
+//                            StringBuilder result = new StringBuilder();
+//
+//                            loadTopPosts();
+//                            try {
+//                                Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+//                                List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+//                                if (addresses.size() > 0) {
+//                                    Address address = addresses.get(0);
+//                                    Log.d(TAG, "onComplete: found location! " + task.getResult());
+////                                    result.append(address.getLocality());
+////                                    result.append(address.getCountryName());
+//                                }
+//                            } catch (IOException e) {
+//                                Log.e("tag", e.getMessage());
+//                            }
+//
+////                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM, "My Location");
+//                        }
+//
+//                    } else {
+//                        Log.d(TAG, "onComplete: current location is null");
+//                        Toast.makeText(getContext(), "unable to get current location", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            });
+////            }
+//        } catch (SecurityException e) {
+//            Log.e(TAG, "getDeviceLocation: Security Exception: " + e.getMessage());
+//        }
+//    }
 
 
     private void initializeMap(){

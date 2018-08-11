@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
             // do stuff with the user
-            Log.d("LoginActivity", "Login successful");
-            final Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            intent.putExtra("account", "login");
             startActivity(intent);
             finish();
         }
@@ -146,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
             public void done(ParseUser user, ParseException e) {
                 if (e == null) {
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                    intent.putExtra("account", "login");
                     startActivity(intent);
                     finish();
                     Log.d("MainActivity", "Login was successful!" + ParseUser.getCurrentUser());
@@ -209,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
                                         if (e == null){
                                             Log.d("SignupActivity","Signup successful!");
                                             final Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                            intent.putExtra("account", "signup");
                                             startActivity(intent);
                                             finish();
                                         } else {
