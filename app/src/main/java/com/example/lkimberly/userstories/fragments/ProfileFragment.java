@@ -1,5 +1,6 @@
 package com.example.lkimberly.userstories.fragments;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -197,8 +198,13 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (user.getFacebook() != null) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(user.getFacebook()));
-                    startActivity(browserIntent);
+                    try {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(user.getFacebook()));
+                        startActivity(browserIntent);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(getContext(), "Please provide a complete link (including 'https')", Toast.LENGTH_LONG).show();
+
+                    }
                 } else {
                     Toast.makeText(getContext(), "Please provide a link to your Facebook!", Toast.LENGTH_LONG).show();
                 }
@@ -210,8 +216,14 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 String linkedInLink = user.getLinkedIn();
                 if (linkedInLink != null) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkedInLink));
-                    startActivity(browserIntent);
+                    try {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkedInLink));
+                        startActivity(browserIntent);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(getContext(), "Please provide a complete link (including 'https')" + linkedInLink, Toast.LENGTH_LONG).show();
+
+                    }
+
                 } else {
                     Toast.makeText(getContext(), "Please provide a link to your LinkedIn!", Toast.LENGTH_LONG).show();
                 }
@@ -223,8 +235,12 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 String twitterLink = user.getTwitter();
                 if (twitterLink != null) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitterLink));
-                    startActivity(browserIntent);
+                    try {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitterLink));
+                        startActivity(browserIntent);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(getContext(), "Please provide a complete link (including 'https')", Toast.LENGTH_LONG).show();
+                    }
                 } else {
                     Toast.makeText(getContext(), "Please provide a link to your Twitter!", Toast.LENGTH_LONG).show();
                 }
