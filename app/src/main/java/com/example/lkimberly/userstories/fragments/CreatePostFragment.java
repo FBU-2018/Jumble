@@ -294,6 +294,12 @@ public class CreatePostFragment extends Fragment {
                     // position the text type in the left top corner
                     btnMap.setGravity(Gravity.START | Gravity.TOP);
                 }
+
+                if (start == 0 && count == 0) {
+                    iv_location_complete.setVisibility(View.INVISIBLE);
+                } else {
+                    iv_location_complete.setVisibility(View.VISIBLE);
+                }
             }
         });
 

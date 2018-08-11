@@ -108,7 +108,6 @@
         android:paddingStart="20dp"
         android:text="TextView"
 
-        android:textAlignment="viewStart"
         android:textColor="@android:color/black"
 
         android:maxLines="5"
@@ -130,7 +129,6 @@
         android:paddingStart="20dp"
         android:text="TextView"
 
-        android:textAlignment="viewStart"
         android:textColor="@android:color/black"
 
         android:textSize="18sp"
@@ -257,8 +255,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/rb_jobDetailsRatingsBar"
-        android:layout_toEndOf="@+id/place_autocomplete_separator"
         android:layout_marginStart="45dp"
+        android:layout_toEndOf="@+id/place_autocomplete_separator"
         android:text="\?"
         android:textSize="36sp" />
 
@@ -270,6 +268,7 @@
         android:layout_toEndOf="@+id/tv_jobDetailsMyRatingValue"
         android:layout_marginTop="12dp"
         android:layout_marginStart="5dp"
+        android:tint="#ff004d"
         app:srcCompat="@android:drawable/star_off" />
 
     <TextView
