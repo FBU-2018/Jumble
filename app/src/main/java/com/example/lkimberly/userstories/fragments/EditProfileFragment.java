@@ -1,6 +1,5 @@
 package com.example.lkimberly.userstories.fragments;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,10 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -34,22 +30,18 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.lkimberly.userstories.BitmapScaler;
-import com.example.lkimberly.userstories.activities.HomeActivity;
+import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.models.User;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
+
+import java.io.File;
+import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
 import static com.example.lkimberly.userstories.fragments.ProfileFragment.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE;
 import static com.example.lkimberly.userstories.fragments.ProfileFragment.GET_FROM_GALLERY;
 import static com.parse.ParseUser.getCurrentUser;
-
-import com.example.lkimberly.userstories.R;
-
-import org.w3c.dom.Text;
-
-import java.io.File;
-import java.io.IOException;
 
 public class EditProfileFragment extends Fragment {
 
@@ -139,7 +131,7 @@ public class EditProfileFragment extends Fragment {
                 }
 
                 user.saveInBackground();
-                HomeActivity.adapter.notifyDataSetChanged();
+//                HomeActivity.adapter.notifyDataSetChanged();
                 viewPager.setCurrentItem(0);
             }
         });

@@ -231,7 +231,7 @@ public class MatchPageFragment extends Fragment {
                                                     }
                                                 }
 
-                                                if (jobs_that_are_not_matches_count == 0) {
+                                                if (jobs_that_are_not_matches_count == 0 && matchesModelList.size() > 0) {
                                                     matchesModelList.remove(matchesModelList.size() - 1);
                                                 }
                                                 Log.d("MatchesModelList", matchesModelList.toString());

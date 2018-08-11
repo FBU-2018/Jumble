@@ -71,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
      * The adapter used to display information for our bottom navigation view.
      */
 
-    public static JumbleFragmentAdapter adapter;
+    JumbleFragmentAdapter adapter;
 
     CreatePostFragment myCreatePostFragment;
     MatchPageFragment myMatchPageFragment;
@@ -152,7 +152,6 @@ public class HomeActivity extends AppCompatActivity {
                         // Set the item to the first item in our list.
                         // This is the home placeholder fragment.
 
-                        adapter.notifyDataSetChanged();
                         ib_profile.setSelected(false);
 
                         // reset the activation of icons after user goes to profile
@@ -167,7 +166,6 @@ public class HomeActivity extends AppCompatActivity {
                         // Set the item to the first item in our list.
                         // This is the discovery placeholder fragment.
 
-                        adapter.notifyDataSetChanged();
                         ib_profile.setSelected(false);
 
                         // reset the activation of icons after user goes to profile
@@ -182,7 +180,6 @@ public class HomeActivity extends AppCompatActivity {
                         // which is the profile fragment placeholder
 
 
-                        adapter.notifyDataSetChanged();
                         // myMatchPageFragment.refresh();
                         ib_profile.setSelected(false);
 
@@ -224,6 +221,8 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         viewPager.setCurrentItem(2);
+
+        viewPager.setOnPageChangeListener(myOnPageChangeListener);
     }
 
     @Override
@@ -336,6 +335,30 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
     }
+
+    ViewPager.OnPageChangeListener myOnPageChangeListener =
+            new ViewPager.OnPageChangeListener(){
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+                    //Called when the scroll state changes.
+                }
+
+                @Override
+                public void onPageScrolled(int position,
+                                           float positionOffset, int positionOffsetPixels) {
+                    //This method will be invoked when the current page is scrolled,
+                    //either as part of a programmatically initiated smooth scroll
+                    //or a user initiated touch scroll.
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    //This method will be invoked when a new page becomes selected.
+                    if (position == 0) {
+                        adapter.notifyDataSetChanged();
+                    }
+                }};
 
 //    private void createNotificationChannel() {
 //        // Create the NotificationChannel, but only on API 26+ because

@@ -358,6 +358,7 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
                         //do things
 
                         endJobAction();
+                        returnToMatchesFeedRefresh();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
