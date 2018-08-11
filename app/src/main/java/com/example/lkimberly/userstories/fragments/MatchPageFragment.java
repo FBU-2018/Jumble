@@ -208,7 +208,6 @@ public class MatchPageFragment extends Fragment {
                                                     MatchDataModel header = new MatchDataModel(3);
                                                     if (!duplicateCheck.contains(header)) {
                                                         matchesModelList.add(header);
-                                                        Log.d("not caught", String.valueOf(duplicateCheck.contains(header)));
                                                         duplicateCheck.add(header);
 
                                                     }
@@ -217,7 +216,6 @@ public class MatchPageFragment extends Fragment {
                                                 // keep a count so if the jobs queried have matches the header saying "the following jobs have no matches yet..." doesn't pop up
                                                 int jobs_that_are_not_matches_count = 0;
                                                 for (int i = 0; i < objects.size(); i++) {
-                                                    Log.d("Query JOB", objects.get(i).getObjectId());
 
                                                     if (!matchDict.keySet().contains(objects.get(i).getObjectId())) {
                                                         MatchDataModel jobToAdd = new MatchDataModel(2, objects.get(i));
@@ -225,7 +223,6 @@ public class MatchPageFragment extends Fragment {
                                                         if (!duplicateCheck.contains(jobToAdd)) {
                                                             matchesModelList.add(jobToAdd);
                                                             duplicateCheck.add(jobToAdd);
-                                                            Log.d("not caught 2", String.valueOf(duplicateCheck.contains(jobToAdd)));
                                                         }
                                                         jobs_that_are_not_matches_count++;
                                                     }
@@ -234,7 +231,6 @@ public class MatchPageFragment extends Fragment {
                                                 if (jobs_that_are_not_matches_count == 0 && matchesModelList.size() > 0) {
                                                     matchesModelList.remove(matchesModelList.size() - 1);
                                                 }
-                                                Log.d("MatchesModelList", matchesModelList.toString());
 
                                                 if (matchesModelList.size() == 0) {
                                                     tv_no_matches.setVisibility(View.VISIBLE);
