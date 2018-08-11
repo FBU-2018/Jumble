@@ -93,9 +93,17 @@ public class EditProfileFragment extends Fragment {
         et_institution = view.findViewById(R.id.profile_institution);
         et_phoneNumber = view.findViewById(R.id.profile_phone_number);
 
-        et_name.setText(user.getName());
-        et_institution.setText(user.getInstitution());
-        et_phoneNumber.setText(user.getPhoneNumber());
+        if (user.getName() != null) {
+            et_name.setText(user.getName());
+        }
+
+        if (user.getInstitution() != null) {
+            et_institution.setText(user.getInstitution());
+        }
+
+        if (user.getPhoneNumber() != null) {
+            et_phoneNumber.setText(user.getPhoneNumber());
+        }
 
         ib_facebook = view.findViewById(R.id.ib_facebook);
         ib_linkedIn = view.findViewById(R.id.ib_linkedIn);
@@ -116,18 +124,24 @@ public class EditProfileFragment extends Fragment {
                 if (!name.equals("")) {
                     tv_name.setText(name);
                     user.setName(name);
+                } else {
+                    Toast.makeText(getContext(), "Please provide a name", Toast.LENGTH_LONG).show();
                 }
 
                 String institution = et_institution.getText().toString();
                 if (!institution.equals("")) {
                     tv_institution.setText(institution);
                     user.setInstitution(institution);
+                } else {
+                    Toast.makeText(getContext(), "Please provide an institution", Toast.LENGTH_LONG).show();
                 }
 
                 String phoneNumber = et_phoneNumber.getText().toString();
                 if (!phoneNumber.equals("")) {
                     tv_phoneNumber.setText(phoneNumber);
                     user.setPhoneNumber(phoneNumber);
+                } else {
+                    Toast.makeText(getContext(), "Please provide a phone number", Toast.LENGTH_LONG).show();
                 }
 
                 user.saveInBackground();
