@@ -231,8 +231,10 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
         });
 
         if (hasBeenRated) {
-            int rating = (int) parseDouble((String) userWhoMatchedWithMeRatingObject.get("rating"))*5;
-            myRatingTV.setText(String.valueOf(rating));
+            if (userWhoMatchedWithMeRatingObject != null) {
+                int rating = (int) parseDouble((String) userWhoMatchedWithMeRatingObject.get("rating")) * 5;
+                myRatingTV.setText(String.valueOf(rating));
+            }
         }
 
 
