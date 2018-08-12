@@ -26,7 +26,7 @@ public class FeePickerFragment extends DialogFragment {
 
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        final View view = layoutInflater.inflate(R.layout.dialog_number_picker, null);
+        final View view = layoutInflater.inflate(R.layout.dialog_fee_picker, null);
 
         final NumberPicker numberPicker = view.findViewById(R.id.numberPicker);
         numberPicker.setMaxValue(100);
