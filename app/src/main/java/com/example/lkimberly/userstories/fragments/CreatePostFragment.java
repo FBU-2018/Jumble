@@ -471,6 +471,9 @@ public class CreatePostFragment extends Fragment {
                     btnMap.setText("");
 //                    ivPhoto.setColorFilter(getContext().getResources().getColor(R.color.black));
                     ivPhoto.setImageResource(android.R.color.black);
+
+                    // reset calendar
+                    myCalendar = Calendar.getInstance();
                 }
             }
         });
