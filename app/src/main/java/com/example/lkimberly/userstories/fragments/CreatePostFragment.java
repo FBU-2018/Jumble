@@ -469,7 +469,8 @@ public class CreatePostFragment extends Fragment {
                     etTime.setText("");
                     etDate.setText("");
                     btnMap.setText("");
-                    ivPhoto.setColorFilter(getContext().getResources().getColor(R.color.black));
+//                    ivPhoto.setColorFilter(getContext().getResources().getColor(R.color.black));
+                    ivPhoto.setImageResource(android.R.color.black);
                 }
             }
         });
