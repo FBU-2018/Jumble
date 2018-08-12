@@ -469,6 +469,8 @@ public class CreatePostFragment extends Fragment {
                     etTime.setText("");
                     etDate.setText("");
                     btnMap.setText("");
+
+                    btnMap.setGravity(Gravity.LEFT | Gravity.CENTER);
 //                    ivPhoto.setColorFilter(getContext().getResources().getColor(R.color.black));
                     ivPhoto.setImageResource(android.R.color.black);
 
