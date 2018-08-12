@@ -370,7 +370,7 @@ public class CreatePostFragment extends Fragment {
                 }
 
                 if (isTitleEmpty || isDescriptionEmpty || isTimeDateEmpty || isEstimationEmpty || isMoneyEmpty || isImagePathEmpty || isLocationEmpty) {
-                    String message = "Plese fill out all fields!";
+                    String message = "Please fill out all fields!";
                     Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
                 } else {
 
