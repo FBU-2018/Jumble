@@ -28,7 +28,7 @@ public class LinkedInDialogFragment extends DialogFragment {
 
         final EditText etLinks = view.findViewById(R.id.etLinks);
 
-        etLinks.setText("https://");
+        etLinks.setText("https://www.");
 
         if (user.getLinkedIn() != null) {
             etLinks.setText(user.getLinkedIn());

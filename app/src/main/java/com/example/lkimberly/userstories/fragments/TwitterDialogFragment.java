@@ -28,7 +28,7 @@ public class TwitterDialogFragment extends DialogFragment {
 
         final EditText etLinks = view.findViewById(R.id.etLinks);
 
-        etLinks.setText("https://");
+        etLinks.setText("https://www.");
 
         if (user.getTwitter() != null) {
             etLinks.setText(user.getTwitter());

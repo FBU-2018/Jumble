@@ -28,7 +28,7 @@ public class FacebookDialogFragment extends DialogFragment {
 
         final EditText etLinks = view.findViewById(R.id.etLinks);
 
-        etLinks.setText("https://");
+        etLinks.setText("https://www.");
 
         if (user.getFacebook() != null) {
             etLinks.setText(user.getFacebook());
