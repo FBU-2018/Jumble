@@ -30,6 +30,10 @@ public class LinkedInDialogFragment extends DialogFragment {
 
         etLinks.setText("https://");
 
+        if (user.getLinkedIn() != null) {
+            etLinks.setText(user.getLinkedIn());
+        }
+
         builder.setView(view)
                 .setPositiveButton("Set link", new DialogInterface.OnClickListener() {
 

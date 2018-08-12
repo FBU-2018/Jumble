@@ -30,6 +30,10 @@ public class FacebookDialogFragment extends DialogFragment {
 
         etLinks.setText("https://");
 
+        if (user.getFacebook() != null) {
+            etLinks.setText(user.getFacebook());
+        }
+
         builder.setView(view)
                 .setPositiveButton("Set link", new DialogInterface.OnClickListener() {
 

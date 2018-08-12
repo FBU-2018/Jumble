@@ -30,6 +30,10 @@ public class TwitterDialogFragment extends DialogFragment {
 
         etLinks.setText("https://");
 
+        if (user.getTwitter() != null) {
+            etLinks.setText(user.getTwitter());
+        }
+
         builder.setView(view)
                 .setPositiveButton("Set link", new DialogInterface.OnClickListener() {
 
