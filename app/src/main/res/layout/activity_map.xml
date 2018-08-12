@@ -48,11 +48,11 @@
 
     <ImageView
         android:id="@+id/ic_gps"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="100dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/gps_circle_shape"
         android:scaleType="centerCrop"
@@ -60,8 +60,8 @@
 
     <ImageButton
         android:id="@+id/ic_navigation"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="30dp"
