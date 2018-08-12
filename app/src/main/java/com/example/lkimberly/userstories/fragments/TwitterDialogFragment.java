@@ -28,6 +28,8 @@ public class TwitterDialogFragment extends DialogFragment {
 
         final EditText etLinks = view.findViewById(R.id.etLinks);
 
+        etLinks.setText("https://");
+
         builder.setView(view)
                 .setPositiveButton("Set link", new DialogInterface.OnClickListener() {
 
