@@ -148,8 +148,13 @@ public class CreatePostFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-
         getLocationPermission();
+
+//        try {
+//            makeJobs();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         etTitle = view.findViewById(R.id.etTitle);
         etDescription = view.findViewById(R.id.etDescription);
@@ -899,69 +904,74 @@ public class CreatePostFragment extends Fragment {
         for (int i = 0; i < 340; i ++) {
             line = bufferedReader.readLine();
         }
-        while (count.get(0) != 500) {
+        int countjobs = 0;
+        while (count.get(0) != 5000 && countjobs<20) {
             line = "";
             line = bufferedReader.readLine();
-            String [] tokensList = line.split("\t");
-            List<String> tokens =Arrays.asList(tokensList);
+            String[] tokensList = line.split("\t");
+            List<String> tokens = Arrays.asList(tokensList);
             // nextLine[] is an array of values from the line
-            count.set(0, count.get(0) +1);
+            count.set(0, count.get(0) + 1);
 
 
             Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
 
-            String name = "" + tokens.get(8);
-            String details = "" + tokens.get(6);
-            String fee = "1/Hour";
-            String estimation = "1 Hour";
-            String time = "10:00";
-            String date = "7/10/2020";
-            Random randomizer = new Random();
-            List<Address> addressList = geocoder.getFromLocationName(locations.get(randomizer.nextInt(locations.size())),1);
-            String lat = String.valueOf(addressList.get(0).getLatitude());
-            String longi = String.valueOf(addressList.get(0).getLongitude());
+            if (tokens.get(1).contains("banking jobs")) {
+                countjobs++;
+                String name = "" + tokens.get(8);
+                String details = "" + tokens.get(6);
+                String fee = "1/Hour";
+                String estimation = "1 Hour";
+                String time = "10:00";
+                String date = "7/10/2020";
+                Random randomizer = new Random();
+                List<Address> addressList = geocoder.getFromLocationName(locations.get(randomizer.nextInt(locations.size())), 1);
+                String lat = String.valueOf(addressList.get(0).getLatitude());
+                String longi = String.valueOf(addressList.get(0).getLongitude());
 
-            final Job makingJobs = new Job();
-            makingJobs.setUser(ParseUser.getCurrentUser());
-            makingJobs.setTitle(name);
-            makingJobs.setDescription(details);
-            makingJobs.setMoney(fee);
-            makingJobs.setEstimation(estimation);
-            makingJobs.setTime(time);
-            makingJobs.setDate(date);
-            makingJobs.setLatitude(lat);
-            makingJobs.setLongitude(longi);
+                final Job makingJobs = new Job();
+                makingJobs.setUser(ParseUser.getCurrentUser());
+                makingJobs.setTitle(name);
+                makingJobs.setDescription(details);
+                makingJobs.setMoney(fee);
+                makingJobs.setEstimation(estimation);
+                makingJobs.setTime(time);
+                makingJobs.setDate(date);
+                makingJobs.setLatitude(lat);
+                makingJobs.setLongitude(longi);
 
-            String myPath = "/storage/emulated/0/DCIM/Camera/IMG_20180710_120811.jpg";
+//            String myPath = "/storage/emulated/0/DCIM/Camera/IMG_20180710_120811.jpg";
+                String myPath = "/storage/emulated/0/Download/time-is-money_o_1624855.jpg";
 
 
-            final ParseFile parseFile = new ParseFile(new File(myPath));
+                final ParseFile parseFile = new ParseFile(new File(myPath));
 
-            parseFile.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if (e == null) {
-                        makingJobs.setImage(parseFile);
+                parseFile.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            makingJobs.setImage(parseFile);
 
-                        makingJobs.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                if (e == null) {
-                                    Log.d("CreatePostProject", "save job success! Created job " + count.get(0));
-                                    Toast.makeText(getContext(), "Created job " + count.get(0), Toast.LENGTH_LONG).show();
-                                } else {
-                                    Log.d("CreatePostProject", "save job failed!");
-                                    e.printStackTrace();
+                            makingJobs.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e == null) {
+                                        Log.d("CreatePostProject", "save job success! Created job " + count.get(0));
+                                        Toast.makeText(getContext(), "Created job " + count.get(0), Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Log.d("CreatePostProject", "save job failed!");
+                                        e.printStackTrace();
+                                    }
                                 }
-                            }
-                        });
-                    } else {
-                        Log.d("CreatePostProject 2", "save job failed!");
-                        e.printStackTrace();
+                            });
+                        } else {
+                            Log.d("CreatePostProject 2", "save job failed!");
+                            e.printStackTrace();
+                        }
                     }
-                }
-            });
+                });
 
+            }
         }
 
     }

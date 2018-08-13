@@ -326,7 +326,6 @@ public class FeedFragment extends Fragment {
 
         // initialize query
 
-        Log.d("Here2", "here");
 
         final Job.Query postsQuery = new Job.Query();
         postsQuery.getTop().withUser();
@@ -336,7 +335,8 @@ public class FeedFragment extends Fragment {
         // handle preferences if needed
         if (handlePreferences){
             String category = jobIdxToStringCategory((Integer) jobPreferences.get(0));
-//            postsQuery.withPreference(category);
+//
+            postsQuery.withPreference(category);
         }
 
 
