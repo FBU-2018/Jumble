@@ -314,7 +314,7 @@ public class FeedFragment extends Fragment {
 
     private void loadTopPosts() {
 
-        List<String> jobPreferences = ((User) ParseUser.getCurrentUser()).getJobPreferences();
+        List<Integer> jobPreferences = ((User) ParseUser.getCurrentUser()).getJobPreferences();
         boolean handlePreferences = false;
 
         // only handle preferences if user has them
@@ -331,7 +331,7 @@ public class FeedFragment extends Fragment {
         final Job.Query postsQuery = new Job.Query();
         postsQuery.getTop().withUser();
 
-        String category = jobIdxToStringCategory(Integer.valueOf((String) jobPreferences.get(0)));
+        String category = jobIdxToStringCategory((Integer) jobPreferences.get(0));
 
         // handle preferences if needed
         if (handlePreferences){

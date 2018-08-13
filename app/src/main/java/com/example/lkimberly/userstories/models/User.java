@@ -105,7 +105,7 @@ public class User extends ParseUser {
 
     public void setRating(String rating) {put(KEY_RATING, rating);}
 
-    public List<String> getJobPreferences() {
+    public List<Integer> getJobPreferences() {
         return getList(KEY_JOB_PREFERENCES);
     }
 
