@@ -149,7 +149,7 @@ public class CreatePostFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        getLocationPermisison();
+        getLocationPermission();
 
         etTitle = view.findViewById(R.id.etTitle);
         etDescription = view.findViewById(R.id.etDescription);
@@ -795,7 +795,7 @@ public class CreatePostFragment extends Fragment {
                 matrix, true);
     }
 
-    private void getLocationPermisison() {
+    private void getLocationPermission() {
         String[] permissions = {FINE_LOCATION, COARSE_LOCATION};
 
         if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), FINE_LOCATION)
