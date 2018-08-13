@@ -331,9 +331,11 @@ public class FeedFragment extends Fragment {
         final Job.Query postsQuery = new Job.Query();
         postsQuery.getTop().withUser();
 
+        String category = jobIdxToStringCategory(Integer.valueOf((String) jobPreferences.get(0)));
+
         // handle preferences if needed
         if (handlePreferences){
-//            postsQuery.withPreference(jobPreferences.get(0));
+            postsQuery.withPreference(category);
         }
 
 
@@ -526,6 +528,17 @@ public class FeedFragment extends Fragment {
         categoryToIdxMap.put("customer service jobs", 35);
         categoryToIdxMap.put("other jobs", 36);
 
+    }
+
+
+    private String jobIdxToStringCategory(Integer categoryIdx) {
+        for (String category : categoryToIdxMap.keySet())
+        {
+            if (categoryToIdxMap.get(category) == categoryIdx) {
+                return category;
+            }
+        }
+        return "other jobs";
     }
 
     private List<List<Integer>> formatUserPreferenceData() {
