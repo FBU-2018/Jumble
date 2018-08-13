@@ -319,14 +319,13 @@ public class FeedFragment extends Fragment {
 
         // only handle preferences if user has them
         if (jobPreferences != null){
-            if (jobPreferences .size() > 0) {
+            if (jobPreferences.size() > 0) {
                 handlePreferences = true;
             }
         }
 
         // initialize query
-
-
+        
         final Job.Query postsQuery = new Job.Query();
         postsQuery.getTop().withUser();
 

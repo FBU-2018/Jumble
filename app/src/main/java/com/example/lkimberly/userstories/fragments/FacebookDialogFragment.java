@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.lkimberly.userstories.R;
@@ -16,6 +17,8 @@ import com.example.lkimberly.userstories.models.User;
 import static com.parse.ParseUser.getCurrentUser;
 
 public class FacebookDialogFragment extends DialogFragment {
+
+    static final String DEFAULT_URL = "https://www.";
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -28,7 +31,7 @@ public class FacebookDialogFragment extends DialogFragment {
 
         final EditText etLinks = view.findViewById(R.id.etLinks);
 
-        etLinks.setText("https://www.");
+        etLinks.setText(DEFAULT_URL);
 
         if (user.getFacebook() != null) {
             etLinks.setText(user.getFacebook());
@@ -41,9 +44,14 @@ public class FacebookDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialogInterface, int id) {
 
                         final String link = etLinks.getText().toString();
+
                         if (!link.equals("")) {
-                            user.setFacebook(link);
-                            user.saveInBackground();
+                            if (link.contains("https://www.") && link.contains(".com")) {
+                                user.setFacebook(link);
+                                user.saveInBackground();
+                            } else {
+                                Toast.makeText(getActivity(), "You did not enter a valid url", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             Toast.makeText(getActivity(), "You did not enter a url", Toast.LENGTH_SHORT).show();
                         }
