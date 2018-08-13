@@ -149,7 +149,7 @@ public class CreatePostFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        getLocationPermisison();
+        getLocationPermission();
 
         etTitle = view.findViewById(R.id.etTitle);
         etDescription = view.findViewById(R.id.etDescription);
@@ -294,6 +294,12 @@ public class CreatePostFragment extends Fragment {
                     // position the text type in the left top corner
                     btnMap.setGravity(Gravity.START | Gravity.TOP);
                 }
+
+                if (start == 0 && count == 0) {
+                    iv_location_complete.setVisibility(View.INVISIBLE);
+                } else {
+                    iv_location_complete.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -364,8 +370,7 @@ public class CreatePostFragment extends Fragment {
                 }
 
                 if (isTitleEmpty || isDescriptionEmpty || isTimeDateEmpty || isEstimationEmpty || isMoneyEmpty || isImagePathEmpty || isLocationEmpty) {
-
-                    String message = "Plese fill out all fields!";
+                    String message = "Please fill out all fields!";
                     Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
                 } else {
 
@@ -449,7 +454,13 @@ public class CreatePostFragment extends Fragment {
                     etTime.setText("");
                     etDate.setText("");
                     btnMap.setText("");
-                    ivPhoto.setColorFilter(getContext().getResources().getColor(R.color.black));
+
+                    btnMap.setGravity(Gravity.LEFT | Gravity.CENTER);
+//                    ivPhoto.setColorFilter(getContext().getResources().getColor(R.color.black));
+                    ivPhoto.setImageResource(android.R.color.black);
+
+                    // reset calendar
+                    myCalendar = Calendar.getInstance();
                 }
             }
         });
@@ -769,7 +780,7 @@ public class CreatePostFragment extends Fragment {
                 matrix, true);
     }
 
-    private void getLocationPermisison() {
+    private void getLocationPermission() {
         String[] permissions = {FINE_LOCATION, COARSE_LOCATION};
 
         if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), FINE_LOCATION)

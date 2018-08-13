@@ -129,14 +129,14 @@ public class ProfileFragment extends Fragment {
             e.printStackTrace();
 
             Glide.with(ProfileFragment.this)
-                    .load(R.drawable.instagram_user_outline_24)
+                    .load(R.drawable.default_avatar)
                     .into(ivProfile);
 
-            Bitmap bitMap = BitmapFactory.decodeResource(getResources(),R.drawable.instagram_user_outline_24);
+            Bitmap bitMap = BitmapFactory.decodeResource(getResources(),R.drawable.default_avatar);
 
             File file1 = Environment.getExternalStorageDirectory();
 
-            String fileName ="instagram_user_outline_24.png";
+            String fileName ="default_avatar.png";
 
             File file2 = new File(file1,fileName);
             try {

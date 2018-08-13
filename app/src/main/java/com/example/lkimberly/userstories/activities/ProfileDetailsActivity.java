@@ -88,7 +88,7 @@ public class ProfileDetailsActivity extends AppCompatActivity {
 
 
         // get the correct place holder and image view for the current orientation
-        int placeholderId = R.drawable.ic_instagram_profile;
+        int placeholderId = R.drawable.default_avatar;
         try {
             try
             {
@@ -230,10 +230,12 @@ public class ProfileDetailsActivity extends AppCompatActivity {
         facebookIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (user.get("facebook") != null) {
+                try {
                     browseSocialMedia(user.get("facebook").toString());
-                } else {
-                    Toast.makeText(getBaseContext(), "I'm sorry, this user doesn't have a Facebook link.", Toast.LENGTH_SHORT).show();
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getBaseContext(), "I'm sorry, this user seems to have an error in this social media link", Toast.LENGTH_SHORT).show();
+                } catch (NullPointerException e){
+                    Toast.makeText(getBaseContext(), "I'm sorry, this user doesn't have a LinkedIn link.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -241,10 +243,12 @@ public class ProfileDetailsActivity extends AppCompatActivity {
         twitterIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (user.get("twitter") != null) {
+                try {
                     browseSocialMedia(user.get("twitter").toString());
-                } else {
-                    Toast.makeText(getBaseContext(), "I'm sorry, this user doesn't have a Twitter link.", Toast.LENGTH_SHORT).show();
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getBaseContext(), "I'm sorry, this user seems to have an error in this social media link", Toast.LENGTH_SHORT).show();
+                } catch (NullPointerException e){
+                    Toast.makeText(getBaseContext(), "I'm sorry, this user doesn't have a LinkedIn link.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -253,13 +257,11 @@ public class ProfileDetailsActivity extends AppCompatActivity {
         linkedinIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (user.get("linkedin") != null) {
-                    try {
-                        browseSocialMedia(user.get("linkedin").toString());
-                    } catch (ActivityNotFoundException e) {
-                        Toast.makeText(getBaseContext(), "I'm sorry, this user seems to have an error in this social media link", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
+                try {
+                    browseSocialMedia(user.get("linkedin").toString());
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getBaseContext(), "I'm sorry, this user seems to have an error in this social media link", Toast.LENGTH_SHORT).show();
+                } catch (NullPointerException e) {
                     Toast.makeText(getBaseContext(), "I'm sorry, this user doesn't have a LinkedIn link.", Toast.LENGTH_SHORT).show();
                 }
             }

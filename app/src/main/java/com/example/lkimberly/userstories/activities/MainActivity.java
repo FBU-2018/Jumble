@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     Button signupButton;
     EditText username_et;
     EditText password_et;
-    EditText email_et;
+//    EditText email_et;
 
     ImageView iv_username_check;
     ImageView iv_password_check;
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         signupButton = findViewById(R.id.sign_up_button);
         username_et = findViewById(R.id.username_et);
         password_et = findViewById(R.id.password_et);
-        email_et = findViewById(R.id.email_et);
+//        email_et = findViewById(R.id.email_et);
 
         iv_username_check = findViewById(R.id.iv_username_check);
         iv_password_check = findViewById(R.id.iv_password_check);
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    Toast.makeText(getBaseContext(), "Successfully signed in with: " + user.getEmail(), Toast.LENGTH_SHORT);
+                    Toast.makeText(getBaseContext(), "Successfully signed in.", Toast.LENGTH_SHORT);
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -115,11 +115,11 @@ public class MainActivity extends AppCompatActivity {
 
                 String username = username_et.getText().toString();
                 String password = password_et.getText().toString();
-                String email = email_et.getText().toString();
+//                String email = email_et.getText().toString();
 
-                boolean isFilled = checkIfFilled(username, password, email);
+                boolean isFilled = checkIfFilled(username, password);
                 if (isFilled) {
-                    login(username, password, email);
+                    login(username, password);
                 }
             }
         });
@@ -129,18 +129,18 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String username = username_et.getText().toString();
                 String password = password_et.getText().toString();
-                String email = email_et.getText().toString();
+//                String email = email_et.getText().toString();
 
-                boolean isFilled = checkIfFilled(username, password, email);
+                boolean isFilled = checkIfFilled(username, password);
 
                 if (isFilled) {
-                    signUp(username, password, email);
+                    signUp(username, password);
                 }
             }
         });
     }
 
-    private void login(String username, String password, String email) {
+    private void login(String username, String password) {
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
@@ -161,17 +161,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mAuth.signInWithEmailAndPassword(email,password);
+//        mAuth.signInWithEmailAndPassword(email,password);
     }
 
-    private void signUp(String username, String password, String email) {
+    private void signUp(String username, String password) {
         // Create the ParseUser
         final User user = new User();
         // Set core properties
         user.setUsername(username);
-        user.setName(username);
-        user.setInstitution("Unemployed");
-        user.setPhoneNumber("111-111-1111");
         user.setPassword(password);
         // Set custom properties
         // user.put("phone", "650-253-0000");
@@ -233,11 +230,11 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
-        mAuth.createUserWithEmailAndPassword(email, password);
+//        mAuth.createUserWithEmailAndPassword(email, password);
 
     }
 
-    public boolean checkIfFilled(String username, String password, String email) {
+    public boolean checkIfFilled(String username, String password) {
 
         boolean isUsernameEmpty = false;
         boolean isPasswordEmpty = false;
@@ -256,12 +253,12 @@ public class MainActivity extends AppCompatActivity {
             iv_password_check.setVisibility(INVISIBLE);
         }
 
-        if (!email.equals("")) {
-//                    iv_password_check.setVisibility(VISIBLE);
-        } else {
-//                    isPasswordEmpty = true;
-//                    iv_password_check.setVisibility(INVISIBLE);
-        }
+//        if (!email.equals("")) {
+////                    iv_password_check.setVisibility(VISIBLE);
+//        } else {
+////                    isPasswordEmpty = true;
+////                    iv_password_check.setVisibility(INVISIBLE);
+//        }
 
         if (isUsernameEmpty || isPasswordEmpty) {
             String requirement = "Please enter a";
