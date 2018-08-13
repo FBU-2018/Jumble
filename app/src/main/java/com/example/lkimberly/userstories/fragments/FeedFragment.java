@@ -336,7 +336,7 @@ public class FeedFragment extends Fragment {
         // handle preferences if needed
         if (handlePreferences){
             String category = jobIdxToStringCategory((Integer) jobPreferences.get(0));
-            postsQuery.withPreference(category);
+//            postsQuery.withPreference(category);
         }
 
 
