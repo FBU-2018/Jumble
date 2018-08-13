@@ -305,6 +305,14 @@ public class CreatePostFragment extends Fragment {
 
         newJob = new Job();
 
+        etTitle.setText("Teaching Assistant");
+        etMoney.setText("15/Hour");
+        etDescription.setText("Apply now SEN Teaching Assistant - Waltham forest Applications are now being accepted for Graduates to join leading primary schools in Waltham forest, East London; this is a great opportunity for resolute individuals looking to join exciting and forward-thinking schools and those who are considering a career as a teacher");
+        etEstimation.setText("5 Hours");
+        etTime.setText("12:00 PM");
+        etDate.setText("08/30/18");
+
+
         bCreateJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
