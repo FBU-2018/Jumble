@@ -18,7 +18,7 @@ public class BackendManager {
 //    }
 
     public static URL getRecommendationsEndpoint(List<List<Integer>> new_user_data) throws MalformedURLException {
-        return new URL("http://" + SERVER_HOST_NAME + "/barcode/" + new_user_data);
+        return new URL("http://" + SERVER_HOST_NAME + "/recommending/" + new_user_data);
     }
 
 }

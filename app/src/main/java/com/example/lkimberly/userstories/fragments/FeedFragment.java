@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -26,6 +27,7 @@ import com.example.lkimberly.userstories.models.Job;
 import com.example.lkimberly.userstories.models.Matches;
 import com.example.lkimberly.userstories.models.SwipeCard;
 import com.example.lkimberly.userstories.models.User;
+import com.example.lkimberly.userstories.server.BackendManager;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +40,13 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -228,13 +237,17 @@ public class FeedFragment extends Fragment {
 
                 // update info every 5 swipes
                 if (swipeCount%5 == 0){
-                    User user = (User) ParseUser.getCurrentUser();
+                    final User user = (User) ParseUser.getCurrentUser();
                     user.setCategorySwipeCount(categorySwipeCount);
                     user.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
                             if (e == null) {
                                 // run alg to learn preferences and update
+
+                                List<List<Integer>>formattedUserData = formatUserPreferenceData();
+                                UpdatePreferencesTask tagAsync = new UpdatePreferencesTask(formattedUserData, user);
+                                tagAsync.execute();
                             } else {
                                 e.printStackTrace();
                                 makeToast(getContext(), "Something went wrong with updating user preferences!");
@@ -320,7 +333,7 @@ public class FeedFragment extends Fragment {
 
         // handle preferences if needed
         if (handlePreferences){
-            postsQuery.withPreference(jobPreferences.get(0));
+//            postsQuery.withPreference(jobPreferences.get(0));
         }
 
 
@@ -512,6 +525,73 @@ public class FeedFragment extends Fragment {
         categoryToIdxMap.put("recruitment consultancy jobs", 34);
         categoryToIdxMap.put("customer service jobs", 35);
         categoryToIdxMap.put("other jobs", 36);
+
+    }
+
+    private List<List<Integer>> formatUserPreferenceData() {
+        List<List<Integer>> formattedData = new ArrayList<>();
+        for (int i = 0; i < categorySwipeCount.size(); i++) {
+            List<Integer> tempList = new ArrayList<>();
+            tempList.add(0);
+            tempList.add(i);
+            tempList.add(categorySwipeCount.get(0));
+            formattedData.add(tempList);
+        }
+
+        return  formattedData;
+    }
+
+
+    class UpdatePreferencesTask extends AsyncTask {
+        private List<List<Integer>> userPreferenceData;
+        private List<String> preferences;
+        private User userToUpdate;
+
+        public UpdatePreferencesTask(List<List<Integer>> userPreferenceData, User user) {
+            super();
+            this.userPreferenceData = userPreferenceData;
+            this.userToUpdate = user;
+        }
+
+        @Override
+        protected String doInBackground(Object[] objects) {
+            URL url = null;
+
+            try {
+                url = BackendManager.getRecommendationsEndpoint(this.userPreferenceData);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                InputStream in = connection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    preferences.add(line);
+                }
+
+                List<String> preferences = this.preferences;
+                if (preferences == null) {
+                } else {
+                    userToUpdate.setJobPreferences(preferences);
+
+                    userToUpdate.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+
+                            } else {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+                connection.disconnect();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
 
     }
 

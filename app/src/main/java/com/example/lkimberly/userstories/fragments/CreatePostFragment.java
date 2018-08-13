@@ -420,25 +420,10 @@ public class CreatePostFragment extends Fragment {
 
                                             FeedFragment.ValueEventListenerList.add(listener);
 
-//                                            GetTagTask tagAsync = new GetTagTask(newJob.getDescription());
-//                                            tagAsync.execute();
-//                                            String newJobTag = tagAsync.getTag();
-//                                            if (newJobTag == null) {
-//                                                newJobTag = "other jobs";
-//                                            }
-//
-//                                            newJob.setCategory(newJobTag);
-//
-//                                            newJob.saveInBackground(new SaveCallback() {
-//                                                @Override
-//                                                public void done(ParseException e) {
-//                                                    if (e == null) {
-//
-//                                                    } else {
-//                                                        e.printStackTrace();
-//                                                    }
-//                                                }
-//                                            });
+                                            // Classify job and label in backend
+                                            GetTagTask tagAsync = new GetTagTask(newJob.getDescription());
+                                            tagAsync.execute();
+
 
                                             // Go to feed fragment after job created
                                             ViewPager viewPager = getActivity().findViewById(R.id.pager);
@@ -982,6 +967,24 @@ public class CreatePostFragment extends Fragment {
                 InputStream in = connection.getInputStream();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 tag = reader.readLine();
+
+                String newJobTag = this.tag;
+                if (newJobTag == null) {
+                    newJobTag = "other jobs";
+                }
+
+                newJob.setCategory(newJobTag);
+
+                newJob.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+
+                        } else {
+                            e.printStackTrace();
+                        }
+                    }
+                });
                 connection.disconnect();
             } catch (MalformedURLException e) {
                 e.printStackTrace();
