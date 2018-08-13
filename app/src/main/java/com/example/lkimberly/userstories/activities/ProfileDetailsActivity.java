@@ -88,7 +88,7 @@ public class ProfileDetailsActivity extends AppCompatActivity {
 
 
         // get the correct place holder and image view for the current orientation
-        int placeholderId = R.drawable.ic_instagram_profile;
+        int placeholderId = R.drawable.default_avatar;
         try {
             try
             {

@@ -151,7 +151,7 @@ public class FeedFragment extends Fragment {
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
-                makeToast(getContext(), "Left!");
+                makeToast(getContext(), "Not interested!");
                 swipeCount++;
 
             }
@@ -243,12 +243,12 @@ public class FeedFragment extends Fragment {
                     });
                 }
 
-                makeToast(getContext(), "Right!");
+                makeToast(getContext(), "Interested!");
             }
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-//                 Ask for more data here
+                // Ask for more data here
                 Log.d("onAdapterAboutToEmpty", "No more!");
             }
 

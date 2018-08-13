@@ -174,7 +174,7 @@ public class MatchPageAdapter extends RecyclerView.Adapter {
 
 
                                 // get the correct place holder and image view for the current orientation
-                                int placeholderId = R.drawable.ic_instagram_profile;
+                                int placeholderId = R.drawable.default_avatar;
                                 ImageView imageView = VHheader.jobPic;
 
 
@@ -225,7 +225,7 @@ public class MatchPageAdapter extends RecyclerView.Adapter {
 
 
             // get the correct place holder and image view for the current orientation
-            int placeholderId = R.drawable.ic_instagram_profile;
+            int placeholderId = R.drawable.default_avatar;
             ImageView imageView = VHNoMatches.jobPic;
 
 
