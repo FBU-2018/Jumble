@@ -268,12 +268,12 @@ public class JobDetailsActivity extends AppCompatActivity implements OnMapReadyC
             userWhoMatchedTimesRated += 1;
 
         } else {
-            int myOldRating = myRatingValue;
-            myRatingValue = value;
-
-            userWhoMatchedTotalScore -= myOldRating;
-
-            userWhoMatchedTotalScore += value;
+//            int myOldRating = myRatingValue;
+//            myRatingValue = value;
+//
+//            userWhoMatchedTotalScore -= myOldRating;
+//
+//            userWhoMatchedTotalScore += value;
         }
 
         final int updatedRating = (int) userWhoMatchedTotalScore/userWhoMatchedTimesRated;
