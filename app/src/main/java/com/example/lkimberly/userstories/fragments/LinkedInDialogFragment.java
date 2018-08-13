@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.lkimberly.userstories.R;
 import com.example.lkimberly.userstories.models.User;
 
+import static com.example.lkimberly.userstories.fragments.FacebookDialogFragment.DEFAULT_URL;
 import static com.parse.ParseUser.getCurrentUser;
 
 public class LinkedInDialogFragment extends DialogFragment {
@@ -28,7 +29,7 @@ public class LinkedInDialogFragment extends DialogFragment {
 
         final EditText etLinks = view.findViewById(R.id.etLinks);
 
-        etLinks.setText("https://www.");
+        etLinks.setText(DEFAULT_URL);
 
         if (user.getLinkedIn() != null) {
             etLinks.setText(user.getLinkedIn());
@@ -42,8 +43,12 @@ public class LinkedInDialogFragment extends DialogFragment {
 
                         final String link = etLinks.getText().toString();
                         if (!link.equals("")) {
-                            user.setLinkedIn(link);
-                            user.saveInBackground();
+                            if (link.contains("https://www.") && link.contains(".com")) {
+                                user.setLinkedIn(link);
+                                user.saveInBackground();
+                            } else {
+                                Toast.makeText(getActivity(), "You did not enter a valid url", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             Toast.makeText(getActivity(), "You did not enter a url", Toast.LENGTH_SHORT).show();
                         }
