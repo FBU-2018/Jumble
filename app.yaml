@@ -3,10 +3,10 @@ env: flex
 
 env_variables:
   # --REQUIRED--
-  DATABASE_URI: mongodb://heroku_86l8nj5d:nthvbkpajohdnjqtbd2vjspvbv@ds111562.mlab.com:11562/heroku_86l8nj5d
-  APP_ID: fbu-2018
-  MASTER_KEY: fbu-2018-key
-  SERVER_URL: https://fbu-2018.herokuapp.com/parse
+  DATABASE_URI: mongodb://heroku_jk2jb9x2:n84fnp51qk6csd18rpjm46ajtu@ds119732.mlab.com:19732/heroku_jk2jb9x2
+  APP_ID: final-jumble-id
+  MASTER_KEY: final-jumble-key
+  SERVER_URL: https://final-jumble.herokuapp.com/parse
   # --OPTIONAL--
   # FILE_KEY: <your-file-key>
   # PARSE_MOUNT: /parse

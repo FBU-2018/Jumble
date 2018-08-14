@@ -6,12 +6,12 @@ ADD . /parse
 WORKDIR /parse
 RUN npm install
 
-ENV APP_ID fbu-2018
-ENV MASTER_KEY fbu-2018-key
-ENV DATABASE_URI mongodb://heroku_86l8nj5d:nthvbkpajohdnjqtbd2vjspvbv@ds111562.mlab.com:11562/heroku_86l8nj5d
+ENV APP_ID final-jumble-id
+ENV MASTER_KEY final-jumble-key
+ENV DATABASE_URI mongodb://heroku_jk2jb9x2:n84fnp51qk6csd18rpjm46ajtu@ds119732.mlab.com:19732/heroku_jk2jb9x2
 
 ENV FCM_API_KEY AAAAto1Azj4:APA91bEEDuiH6lHJyX4fsOn9RZfIW5f5UvizIl0NZeJV-m2y7fBdgUJiOPQC-FPsBwryzYvuo6RmpOx65X3q_KPUwPRR_N_E5HEa27enEms38Q08_AqtmBVYS366UGn5fg4iVrmQD0Zc9CxxwI5b-Z3zRut0mFn3lQ
-ENV SERVER_URL https://fbu-2018.herokuapp.com/parse
+ENV SERVER_URL https://final-jumble.herokuapp.com/parse
 ENV SENDER_ID 784053882430
 
 # Optional (default : 'parse/cloud/main.js')

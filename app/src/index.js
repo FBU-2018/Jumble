@@ -20,13 +20,13 @@ if (process.env.FCM_API_KEY) {
 
 
 var api = new ParseServer({
-  databaseURI: databaseUri || 'mongodb://heroku_86l8nj5d:nthvbkpajohdnjqtbd2vjspvbv@ds111562.mlab.com:11562/heroku_86l8nj5d',
+  databaseURI: databaseUri || 'mongodb://heroku_jk2jb9x2:n84fnp51qk6csd18rpjm46ajtu@ds119732.mlab.com:19732/heroku_jk2jb9x2',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
-  appId: process.env.APP_ID || 'fbu-2018',
-  masterKey: process.env.MASTER_KEY || 'fbu-2018-key', //Add your master key here. Keep it secret!
+  appId: process.env.APP_ID || 'final-jumble-id',
+  masterKey: process.env.MASTER_KEY || 'final-jumble-key', //Add your master key here. Keep it secret!
   push: pushConfig,
   liveQuery: { classNames: ["Message"]},
-  serverURL: process.env.SERVER_URL || 'http://fbu-2018.herokuapp.com/parse'  // needed for Parse Cloud and push notifications
+  serverURL: process.env.SERVER_URL || 'http://final-jumble.herokuapp.com/parse'  // needed for Parse Cloud and push notifications
 });
 // Client-keys like the javascript key or the .NET key are not necessary with parse-server
 // If you wish you require them, you can set them as options in the initialization above:

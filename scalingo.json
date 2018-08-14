@@ -9,11 +9,11 @@
     },
     "APP_ID": {
       "description": "A unique identifier for your app.",
-      "value": "fbu-2018"
+      "value": "final-jumble-id"
     },
     "MASTER_KEY": {
       "description": "A key that overrides all permissions. Keep this secret.",
-      "value": "fbu-2018-key"
+      "value": "final-jumble-key"
     },
     "DATABASE_URI": {
       "description": "Connection string for your database.",

@@ -44,9 +44,9 @@ public class ParseApp extends Application {
         builder.networkInterceptors().add(httpLoggingInterceptor);
 
         final Parse.Configuration configuration = new Parse.Configuration.Builder(this)
-                .applicationId("fbu-2018")
-                .clientKey("fbu-2018-key")
-                .server("http://fbu-2018.herokuapp.com/parse")
+                .applicationId("final-jumble-id")
+                .clientKey("final-jumble-key")
+                .server("http://final-jumble.herokuapp.com/parse")
                 .build();
 
         Parse.initialize(configuration);
