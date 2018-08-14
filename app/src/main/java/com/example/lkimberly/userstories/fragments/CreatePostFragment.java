@@ -154,7 +154,7 @@ public class CreatePostFragment extends Fragment {
 //            makeJobs();
 //        } catch (IOException e) {
 //            e.printStackTrace();
-//        }
+//        } 
 
         etTitle = view.findViewById(R.id.etTitle);
         etDescription = view.findViewById(R.id.etDescription);
